@@ -11,12 +11,15 @@ import OSLog
 import Observation
 import QuartzCore
 import Spatial
+import SwiftUI.Radar163532015
+import SwiftUI.Radar164105942
 import Symbols
 import UIKit
 import UniformTypeIdentifiers
 import os
 import os.log
 import os.log
+import simd
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol AXChartDescriptorRepresentable {
@@ -6924,6 +6927,12 @@ extension EnvironmentValues {
     public var accessibilityDimFlashingLights: Bool { get }
 
     public var accessibilityPlayAnimatedImages: Bool { get }
+}
+
+@available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
+extension EnvironmentValues {
+
+    public var accessibilityReduceHighlightingEffects: Bool { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -14567,7 +14576,7 @@ extension ReferenceFileDocument {
 @available(watchOS, unavailable)
 @MainActor @preconcurrency public struct ReferenceFileDocumentConfiguration<Document> where Document : ReferenceFileDocument {
 
-    @ObservedObject @MainActor @preconcurrency public var document: Document
+    @ObservedObject<Document> @MainActor @preconcurrency public var document: Document
 
     @MainActor @preconcurrency public var $document: ObservedObject<Document>.Wrapper { get }
 
@@ -24269,10 +24278,14 @@ extension View {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension View {
 
-    @inlinable nonisolated public func task(priority: TaskPriority = .userInitiated, _ action: @escaping @Sendable () async -> Void) -> some View
+    nonisolated public func task(name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View
 
 
-    @inlinable nonisolated public func task<T>(id value: T, priority: TaskPriority = .userInitiated, _ action: @escaping @Sendable () async -> Void) -> some View where T : Equatable
+    @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
+    nonisolated public func task(name: String? = nil, executorPreference taskExecutor: any TaskExecutor, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, action: sending @escaping @isolated(any) () async -> Void) -> some View
+
+
+    nonisolated public func task<T>(id: T, name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View where T : Equatable
 
 
     @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
@@ -29668,10 +29681,14 @@ extension View {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension View {
 
-    @inlinable nonisolated public func task(priority: TaskPriority = .userInitiated, _ action: @escaping @Sendable () async -> Void) -> some View
+    nonisolated public func task(name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View
 
 
-    @inlinable nonisolated public func task<T>(id value: T, priority: TaskPriority = .userInitiated, _ action: @escaping @Sendable () async -> Void) -> some View where T : Equatable
+    @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
+    nonisolated public func task(name: String? = nil, executorPreference taskExecutor: any TaskExecutor, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, action: sending @escaping @isolated(any) () async -> Void) -> some View
+
+
+    nonisolated public func task<T>(id: T, name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View where T : Equatable
 
 
     @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
@@ -33474,11 +33491,117 @@ extension Never : Commands {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var layoutDirection: LayoutDirection
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension CGPoint : Animatable {
 
     public typealias AnimatableData = AnimatablePair<CGFloat, CGFloat>
 
     public var animatableData: CGPoint.AnimatableData
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var isEnabled: Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func disabled(_ disabled: Bool) -> some View
+
+}
+
+extension ScrollGeometry {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(contentOffset: CGPoint, contentSize: CGSize, contentInsets: EdgeInsets, containerSize: CGSize)
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollGeometry : CustomDebugStringConvertible {
+
+    public var debugDescription: String { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    public enum ResizingMode : Sendable {
+
+        case tile
+
+        case stretch
+
+        public static func == (a: Image.ResizingMode, b: Image.ResizingMode) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public func resizable(capInsets: EdgeInsets = EdgeInsets(), resizingMode: Image.ResizingMode = .stretch) -> Image
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self == LinearGradient {
+
+    public static func linearGradient(_ gradient: Gradient, startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+
+    public static func linearGradient(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+
+    public static func linearGradient(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self == RadialGradient {
+
+    public static func radialGradient(_ gradient: Gradient, center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+
+    public static func radialGradient(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+
+    public static func radialGradient(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ShapeStyle where Self == EllipticalGradient {
+
+    public static func ellipticalGradient(_ gradient: Gradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+
+    public static func ellipticalGradient(colors: [Color], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+
+    public static func ellipticalGradient(stops: [Gradient.Stop], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self == AngularGradient {
+
+    public static func angularGradient(_ gradient: Gradient, center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+
+    public static func angularGradient(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+
+    public static func angularGradient(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self == AngularGradient {
+
+    public static func conicGradient(_ gradient: Gradient, center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+
+    public static func conicGradient(colors: [Color], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+
+    public static func conicGradient(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPhase : CustomDebugStringConvertible {
+
+    public var debugDescription: String { get }
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -33487,10 +33610,865 @@ extension FormatStyle where Self == SystemFormatStyle.DateReference {
     public static func reference(to date: Date, allowedFields: Set<Date.RelativeFormatStyle.Field> = [.year, .month, .day, .hour, .minute], maxFieldCount: Int = 2, thresholdField: Date.RelativeFormatStyle.Field = .day) -> SystemFormatStyle.DateReference
 }
 
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle {
+
+    public struct DateReference : Sendable {
+
+        public init(to date: Date, allowedFields: Set<Date.RelativeFormatStyle.Field> = [.year, .month, .day, .hour, .minute], maxFieldCount: Int = 2, thresholdField: Date.RelativeFormatStyle.Field = .day)
+
+        public func calendar(_ calendar: Calendar) -> SystemFormatStyle.DateReference
+    }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.DateReference : FormatStyle {
+
+    public func format(_ referenceDate: Date) -> AttributedString
+
+    public func locale(_ locale: Locale) -> SystemFormatStyle.DateReference
+
+    public static func == (a: SystemFormatStyle.DateReference, b: SystemFormatStyle.DateReference) -> Bool
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias FormatInput = Date
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias FormatOutput = AttributedString
+
+    public func encode(to encoder: any Encoder) throws
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.DateReference : DiscreteFormatStyle {
+
+    public func discreteInput(before referenceDate: Date) -> Date?
+
+    public func discreteInput(after referenceDate: Date) -> Date?
+
+    public func input(before referenceDate: Date) -> Date?
+
+    public func input(after referenceDate: Date) -> Date?
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPosition {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(id: some Hashable & Sendable, anchor: UnitPoint? = nil)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(idType: (some Hashable & Sendable).Type = Never.self)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(idType: (some Hashable & Sendable).Type = Never.self, edge: Edge)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(idType: (some Hashable & Sendable).Type = Never.self, point: CGPoint)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(idType: (some Hashable & Sendable).Type = Never.self, x: CGFloat, y: CGFloat)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(idType: (some Hashable & Sendable).Type = Never.self, x: CGFloat)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init(idType: (some Hashable & Sendable).Type = Never.self, y: CGFloat)
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPosition {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func scrollTo(id: some Hashable & Sendable, anchor: UnitPoint? = nil)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func scrollTo(edge: Edge)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func scrollTo(point: CGPoint)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func scrollTo(x: CGFloat, y: CGFloat)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func scrollTo(x: CGFloat)
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func scrollTo(y: CGFloat)
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPosition {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public var isPositionedByUser: Bool
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public var edge: Edge? { get }
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public var point: CGPoint? { get }
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public var x: CGFloat? { get }
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public var y: CGFloat? { get }
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public var viewID: (any Hashable & Sendable)? { get }
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public func viewID<T>(type: T.Type) -> T? where T : Hashable, T : Sendable
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPosition : Equatable {
+
+    public static func == (lhs: ScrollPosition, rhs: ScrollPosition) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public static func modifier<E>(active: E, identity: E) -> AnyTransition where E : ViewModifier
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollTarget : Hashable, Equatable {
+
+    public func hash(into hasher: inout Hasher)
+
+    public static func == (a: ScrollTarget, b: ScrollTarget) -> Bool
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func offset(_ offset: CGSize) -> some View
+
+
+    @inlinable nonisolated public func offset(x: CGFloat = 0, y: CGFloat = 0) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public static func offset(_ offset: CGSize) -> AnyTransition
+
+    public static func offset(x: CGFloat = 0, y: CGFloat = 0) -> AnyTransition
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == OffsetTransition {
+
+    @MainActor @preconcurrency public static func offset(_ offset: CGSize) -> Self
+
+    @MainActor @preconcurrency public static func offset(x: CGFloat = 0, y: CGFloat = 0) -> Self
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func offset(_ offset: CGSize) -> some VisualEffect
+
+
+    public func offset(x: CGFloat = 0, y: CGFloat = 0) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Gesture {
+
+    @inlinable nonisolated public func simultaneously<Other>(with other: Other) -> SimultaneousGesture<Self, Other> where Other : Gesture
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension SimultaneousGesture.Value : Sendable where First.Value : Sendable, Second.Value : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension SimultaneousGesture.Value : Equatable where First.Value : Equatable, Second.Value : Equatable {
+
+    public static func == (a: SimultaneousGesture<First, Second>.Value, b: SimultaneousGesture<First, Second>.Value) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension SimultaneousGesture.Value : Hashable where First.Value : Hashable, Second.Value : Hashable {
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ViewDimensions : Equatable {
+
+    public static func == (lhs: ViewDimensions, rhs: ViewDimensions) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func fixedSize(horizontal: Bool, vertical: Bool) -> some View
+
+
+    nonisolated public func fixedSize() -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation {
+
+    public static let `default`: Animation
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ForEach {
+
+    public init<V>(sections view: V, @ViewBuilder content: @escaping (SectionConfiguration) -> Content) where Data == ForEachSectionCollection<Content>, ID == SectionConfiguration.ID, Content : View, V : View
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension CustomHoverEffect where Self.Body == Never {
+
+    public func body(content: Self.Content) -> Self.Body
+}
+
 @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 extension Never : CustomHoverEffect {
+}
+
+@available(iOS 17.0, tvOS 17.0, visionOS 1.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension EnvironmentValues {
+
+    public var isHoverEffectEnabled: Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color : ShapeStyle {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Gesture {
+
+    @inlinable nonisolated public func exclusively<Other>(before other: Other) -> ExclusiveGesture<Self, Other> where Other : Gesture
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ExclusiveGesture.Value : Sendable where First.Value : Sendable, Second.Value : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ExclusiveGesture.Value : Equatable where First.Value : Equatable, Second.Value : Equatable {
+
+    public static func == (a: ExclusiveGesture<First, Second>.Value, b: ExclusiveGesture<First, Second>.Value) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func rotationEffect(_ angle: Angle, anchor: UnitPoint = .center) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func rotationEffect(_ angle: Angle, anchor: UnitPoint = .center) -> some VisualEffect
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle where Self == LinearGradient {
+
+    public static func linearGradient(_ gradient: AnyGradient, startPoint: UnitPoint, endPoint: UnitPoint) -> some ShapeStyle
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle where Self == RadialGradient {
+
+    public static func radialGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadius: CGFloat = 0, endRadius: CGFloat) -> some ShapeStyle
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle where Self == EllipticalGradient {
+
+    public static func ellipticalGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> some ShapeStyle
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle where Self == AngularGradient {
+
+    public static func angularGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startAngle: Angle, endAngle: Angle) -> some ShapeStyle
+
+
+    public static func conicGradient(_ gradient: AnyGradient, center: UnitPoint = .center, angle: Angle = .zero) -> some ShapeStyle
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation {
+
+    public func speed(_ speed: Double) -> Animation
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @inlinable nonisolated public func foregroundColor(_ color: Color?) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color {
+
+    public static var accentColor: Color { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use the asset catalog's accent color or View.tint(_:) instead.")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use the asset catalog's accent color or View.tint(_:) instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Use the asset catalog's accent color or View.tint(_:) instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use the asset catalog's accent color or View.tint(_:) instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use the asset catalog's accent color or View.tint(_:) instead.")
+    @inlinable nonisolated public func accentColor(_ accentColor: Color?) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self == ImagePaint {
+
+    public static func image(_ image: Image, sourceRect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) -> ImagePaint
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
+extension VisualEffect {
+
+    public func colorEffect(_ shader: Shader, isEnabled: Bool = true) -> some VisualEffect
+
+
+    public func distortionEffect(_ shader: Shader, maxSampleOffset: CGSize, isEnabled: Bool = true) -> some VisualEffect
+
+
+    public func layerEffect(_ shader: Shader, maxSampleOffset: CGSize, isEnabled: Bool = true) -> some VisualEffect
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension TimelineSchedule where Self == PeriodicTimelineSchedule {
+
+    public static func periodic(from startDate: Date, by interval: TimeInterval) -> PeriodicTimelineSchedule
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension TimelineSchedule where Self == EveryMinuteTimelineSchedule {
+
+    public static var everyMinute: EveryMinuteTimelineSchedule { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension TimelineSchedule {
+
+    public static func explicit<S>(_ dates: S) -> ExplicitTimelineSchedule<S> where Self == ExplicitTimelineSchedule<S>, S : Sequence, S.Element == Date
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Gradient : Hashable {
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Gradient.Stop : Hashable {
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Gradient : ShapeStyle {
+
+    @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+    public typealias Resolved = Never
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color {
+
+    @frozen public struct Resolved : Hashable {
+
+        public var linearRed: Float
+
+        public var linearGreen: Float
+
+        public var linearBlue: Float
+
+        public var opacity: Float
+
+        public static func == (a: Color.Resolved, b: Color.Resolved) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public init(_ resolved: Color.Resolved)
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color.Resolved : ShapeStyle {
+
+    @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+    public typealias Resolved = Never
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color.Resolved : CustomStringConvertible {
+
+    public var description: String { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color.Resolved : Animatable {
+
+    public typealias AnimatableData = AnimatablePair<Float, AnimatablePair<Float, AnimatablePair<Float, Float>>>
+
+    public var animatableData: Color.Resolved.AnimatableData
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color.Resolved {
+
+    public init(colorSpace: Color.RGBColorSpace = .sRGB, red: Float, green: Float, blue: Float, opacity: Float = 1)
+
+    public var red: Float
+
+    public var green: Float
+
+    public var blue: Float
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color.Resolved : Codable {
+
+    public func encode(to encoder: any Encoder) throws
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Text {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public func textVariant<V>(_ preference: V) -> some View where V : TextVariantPreference
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension TextVariantPreference where Self == FixedTextVariant {
+
+    public static var fixed: FixedTextVariant { get }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension TextVariantPreference where Self == SizeDependentTextVariant {
+
+    public static var sizeDependent: SizeDependentTextVariant { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func keyframeAnimator<Value>(initialValue: Value, trigger: some Equatable, @ViewBuilder content: @escaping @Sendable (PlaceholderContentView<Self>, Value) -> some View, @KeyframesBuilder<Value> keyframes: @escaping (Value) -> some Keyframes) -> some View
+
+
+    nonisolated public func keyframeAnimator<Value>(initialValue: Value, repeating: Bool = true, @ViewBuilder content: @escaping @Sendable (PlaceholderContentView<Self>, Value) -> some View, @KeyframesBuilder<Value> keyframes: @escaping (Value) -> some Keyframes) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis : CustomStringConvertible {
+
+    public var description: String { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func padding(_ insets: EdgeInsets) -> some View
+
+
+    @inlinable nonisolated public func padding(_ edges: Edge.Set = .all, _ length: CGFloat? = nil) -> some View
+
+
+    @inlinable nonisolated public func padding(_ length: CGFloat) -> some View
+
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    @available(visionOS, unavailable)
+    nonisolated public func glassEffect(_ glass: Glass = .regular, in shape: some Shape = DefaultGlassEffectShape()) -> some View
+
+}
+
+extension EdgeInsets {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func inset(by corners: RectangleCornerInsets, edges: Edge.Set = .all) -> EdgeInsets
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func blendMode(_ blendMode: BlendMode) -> some View
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VisualEffect {
+
+    public func blendMode(_ blendMode: BlendMode) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Group : View where Content : View {
+
+    @inlinable nonisolated public init(@ViewBuilder content: () -> Content)
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func privacySensitive(_ sensitive: Bool = true) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func contrast(_ amount: Double) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func contrast(_ amount: Double) -> some VisualEffect
+
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    @available(visionOS, unavailable)
+    @MainActor @preconcurrency public func glassEffectTransition(_ transition: GlassEffectTransition) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    @frozen public enum Orientation : UInt8, CaseIterable, Hashable {
+
+        case up
+
+        case upMirrored
+
+        case down
+
+        case downMirrored
+
+        case left
+
+        case leftMirrored
+
+        case right
+
+        case rightMirrored
+
+        public init?(rawValue: UInt8)
+
+        @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+        public typealias AllCases = [Image.Orientation]
+
+        @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+        public typealias RawValue = UInt8
+
+        nonisolated public static var allCases: [Image.Orientation] { get }
+
+        public var rawValue: UInt8 { get }
+    }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension UnitCurve : Sendable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension UnitCurve : Hashable {
+
+    public static func == (a: UnitCurve, b: UnitCurve) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension UnitCurve {
+
+    @available(*, deprecated, message: "Use easeInOut instead")
+    public static let easeInEaseOut: UnitCurve
+
+    public static let easeInOut: UnitCurve
+
+    public static let easeIn: UnitCurve
+
+    public static let easeOut: UnitCurve
+
+    public static let circularEaseIn: UnitCurve
+
+    public static let circularEaseOut: UnitCurve
+
+    public static let circularEaseInOut: UnitCurve
+
+    public static let linear: UnitCurve
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Animation {
+
+    public static func timingCurve(_ curve: UnitCurve, duration: TimeInterval) -> Animation
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    @inlinable nonisolated public func matchedGeometryEffect<ID>(id: ID, in namespace: Namespace.ID, properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center, isSource: Bool = true) -> some View where ID : Hashable
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func environment<V>(_ keyPath: WritableKeyPath<EnvironmentValues, V>, _ value: V) -> some View
+
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension EnvironmentValues {
+
+    @MainActor @preconcurrency public var openURL: OpenURLAction
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    @MainActor @preconcurrency public func onOpenURL(prefersInApp: Bool) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Spring {
+
+    public init(duration: TimeInterval = 0.5, bounce: Double = 0.0)
+
+    public var duration: TimeInterval { get }
+
+    public var bounce: Double { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Spring {
+
+    public init(response: Double, dampingRatio: Double)
+
+    public var response: Double { get }
+
+    public var dampingRatio: Double { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Spring {
+
+    public init(mass: Double = 1.0, stiffness: Double, damping: Double, allowOverDamping: Bool = false)
+
+    public var mass: Double { get }
+
+    public var stiffness: Double { get }
+
+    public var damping: Double { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Spring {
+
+    public init(settlingDuration: TimeInterval, dampingRatio: Double, epsilon: Double = 0.001)
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Spring {
+
+    public var settlingDuration: TimeInterval { get }
+
+    public func settlingDuration<V>(target: V, initialVelocity: V = .zero, epsilon: Double) -> TimeInterval where V : VectorArithmetic
+
+    public func value<V>(target: V, initialVelocity: V = .zero, time: TimeInterval) -> V where V : VectorArithmetic
+
+    public func velocity<V>(target: V, initialVelocity: V = .zero, time: TimeInterval) -> V where V : VectorArithmetic
+
+    public func update<V>(value: inout V, velocity: inout V, target: V, deltaTime: TimeInterval) where V : VectorArithmetic
+
+    public func force<V>(target: V, position: V, velocity: V) -> V where V : VectorArithmetic
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Spring {
+
+    public func settlingDuration<V>(fromValue: V, toValue: V, initialVelocity: V, epsilon: Double) -> TimeInterval where V : Animatable
+
+    public func value<V>(fromValue: V, toValue: V, initialVelocity: V, time: TimeInterval) -> V where V : Animatable
+
+    public func velocity<V>(fromValue: V, toValue: V, initialVelocity: V, time: TimeInterval) -> V where V : Animatable
+
+    public func force<V>(fromValue: V, toValue: V, position: V, velocity: V) -> V where V : Animatable
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Spring {
+
+    public static var smooth: Spring { get }
+
+    public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+
+    public static var snappy: Spring { get }
+
+    public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+
+    public static var bouncy: Spring { get }
+
+    public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Animation {
+
+    public static func spring(_ spring: Spring, blendDuration: TimeInterval = 0.0) -> Animation
+
+    public static func interpolatingSpring(_ spring: Spring, initialVelocity: Double = 0.0) -> Animation
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use `overlay(alignment:content:)` instead.")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use `overlay(alignment:content:)` instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Use `overlay(alignment:content:)` instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use `overlay(alignment:content:)` instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use `overlay(alignment:content:)` instead.")
+    @inlinable nonisolated public func overlay<Overlay>(_ overlay: Overlay, alignment: Alignment = .center) -> some View where Overlay : View
+
+
+    @inlinable nonisolated public func border<S>(_ content: S, width: CGFloat = 1) -> some View where S : ShapeStyle
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func overlay<V>(alignment: Alignment = .center, @ViewBuilder content: () -> V) -> some View where V : View
+
+
+    @inlinable nonisolated public func overlay<S>(_ style: S, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View where S : ShapeStyle
+
+
+    @inlinable nonisolated public func overlay<S, T>(_ style: S, in shape: T, fillStyle: FillStyle = FillStyle()) -> some View where S : ShapeStyle, T : Shape
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font {
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
+    public struct Context : Hashable, Sendable {
+
+        public static func == (a: Font.Context, b: Font.Context) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Font.Context : CustomDebugStringConvertible {
+
+    public var debugDescription: String { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
+extension EnvironmentValues {
+
+    public var fontResolutionContext: Font.Context { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension EnvironmentValues {
+
+    public var buttonSizing: ButtonSizing { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension View {
+
+    nonisolated public func buttonSizing(_ sizing: ButtonSizing) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public static func move(edge: Edge) -> AnyTransition
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == MoveTransition {
+
+    @MainActor @preconcurrency public static func move(edge: Edge) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -33501,14 +34479,1034 @@ extension CGSize : Animatable {
     public var animatableData: CGSize.AnimatableData
 }
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color {
+
+    public enum RGBColorSpace : Sendable {
+
+        case sRGB
+
+        case sRGBLinear
+
+        case displayP3
+
+        public static func == (a: Color.RGBColorSpace, b: Color.RGBColorSpace) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public init(_ colorSpace: Color.RGBColorSpace = .sRGB, red: Double, green: Double, blue: Double, opacity: Double = 1)
+
+    public init(_ colorSpace: Color.RGBColorSpace = .sRGB, white: Double, opacity: Double = 1)
+
+    public init(hue: Double, saturation: Double, brightness: Double, opacity: Double = 1)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func blur(radius: CGFloat, opaque: Bool = false) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func blur(radius: CGFloat, opaque: Bool = false) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func colorInvert() -> some View
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Color {
+
+    public var gradient: AnyGradient { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func grayscale(_ amount: Double) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func grayscale(_ amount: Double) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Anchor.Source : Sendable where Value : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Anchor : Sendable where Value : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Anchor : Equatable where Value : Equatable {
+
+    public static func == (lhs: Anchor<Value>, rhs: Anchor<Value>) -> Bool
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Anchor : Hashable where Value : Hashable {
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnchorBoxBase : @unchecked Sendable where T : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnchorValueBoxBase : @unchecked Sendable where T : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Anchor.Source {
+
+    public init<T>(_ array: [Anchor<T>.Source]) where Value == [T]
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Anchor.Source {
+
+    public init<T>(_ anchor: Anchor<T>.Source?) where Value == T?
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func rotation3DEffect(_ angle: Angle, axis: (x: CGFloat, y: CGFloat, z: CGFloat), anchor: UnitPoint = .center, anchorZ: CGFloat = 0, perspective: CGFloat = 1) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func rotation3DEffect(_ angle: Angle, axis: (x: CGFloat, y: CGFloat, z: CGFloat), anchor: UnitPoint = .center, anchorZ: CGFloat = 0, perspective: CGFloat = 1) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func opacity(_ opacity: Double) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func opacity(_ opacity: Double) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    nonisolated(unsafe) public static let opacity: AnyTransition
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == OpacityTransition {
+
+    @MainActor @preconcurrency public static var opacity: OpacityTransition { get }
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle where Self == AnyShapeStyle {
+
+    public static func opacity(_ opacity: Double) -> some ShapeStyle
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ShapeStyle {
+
+    @inlinable public func opacity(_ opacity: Double) -> some ShapeStyle
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func shadow(color: Color = Color(.sRGBLinear, white: 0, opacity: 0.33), radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func drawingGroup(opaque: Bool = false, colorMode: ColorRenderingMode = .nonLinear) -> some View
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var isLuminanceReduced: Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func brightness(_ amount: Double) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func brightness(_ amount: Double) -> some VisualEffect
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func geometryGroup() -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public static func asymmetric(insertion: AnyTransition, removal: AnyTransition) -> AnyTransition
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Anchor.Source where Value == CGPoint {
+
+    public static func point(_ p: CGPoint) -> Anchor<Value>.Source
+
+    public static func unitPoint(_ p: UnitPoint) -> Anchor<Value>.Source
+
+    public static var topLeading: Anchor<CGPoint>.Source { get }
+
+    public static var top: Anchor<CGPoint>.Source { get }
+
+    public static var topTrailing: Anchor<CGPoint>.Source { get }
+
+    public static var leading: Anchor<CGPoint>.Source { get }
+
+    public static var center: Anchor<CGPoint>.Source { get }
+
+    public static var trailing: Anchor<CGPoint>.Source { get }
+
+    public static var bottomLeading: Anchor<CGPoint>.Source { get }
+
+    public static var bottom: Anchor<CGPoint>.Source { get }
+
+    public static var bottomTrailing: Anchor<CGPoint>.Source { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ViewBuilder {
+
+    public static func buildIf<Content>(_ content: Content?) -> Content? where Content : View
+
+    public static func buildEither<TrueContent, FalseContent>(first: TrueContent) -> _ConditionalContent<TrueContent, FalseContent> where TrueContent : View, FalseContent : View
+
+    public static func buildEither<TrueContent, FalseContent>(second: FalseContent) -> _ConditionalContent<TrueContent, FalseContent> where TrueContent : View, FalseContent : View
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ViewBuilder {
+
+    public static func buildLimitedAvailability<Content>(_ content: Content) -> AnyView where Content : View
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func environmentObject<T>(_ object: T) -> some View where T : ObservableObject
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func mask<Mask>(alignment: Alignment = .center, @ViewBuilder _ mask: () -> Mask) -> some View where Mask : View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS, deprecated: 100000.0, message: "Use overload where mask accepts a @ViewBuilder instead.")
+    @available(macOS, deprecated: 100000.0, message: "Use overload where mask accepts a @ViewBuilder instead.")
+    @available(tvOS, deprecated: 100000.0, message: "Use overload where mask accepts a @ViewBuilder instead.")
+    @available(watchOS, deprecated: 100000.0, message: "Use overload where mask accepts a @ViewBuilder instead.")
+    @available(visionOS, deprecated: 100000.0, message: "Use overload where mask accepts a @ViewBuilder instead.")
+    @inlinable nonisolated public func mask<Mask>(_ mask: Mask) -> some View where Mask : View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text {
+
+    public init(_ key: LocalizedStringKey, tableName: String? = nil, bundle: Bundle? = nil, comment: StaticString? = nil)
+}
+
+@available(iOS 15.0, macOS 12.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+extension TextSelectability where Self == EnabledTextSelectability {
+
+    public static var enabled: EnabledTextSelectability { get }
+}
+
+@available(iOS 15.0, macOS 12.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+extension TextSelectability where Self == DisabledTextSelectability {
+
+    public static var disabled: DisabledTextSelectability { get }
+}
+
+@available(iOS 16.0, macOS 13, tvOS 16.0, watchOS 9.0, *)
+extension Text {
+
+    @available(iOS 16.0, macOS 13, tvOS 16.0, watchOS 9.0, *)
+    public init(_ resource: LocalizedStringResource)
+}
+
+@available(iOS 16.0, macOS 13, tvOS 16.0, watchOS 9.0, *)
+extension LocalizedStringKey.StringInterpolation {
+
+    @available(iOS 16.0, macOS 13, tvOS 16.0, watchOS 9.0, *)
+    public mutating func appendInterpolation(_ resource: LocalizedStringResource)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func compositingGroup() -> some View
+
+}
+
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Never : Keyframes {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AnyShapeStyle.Storage : @unchecked Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func position(_ position: CGPoint) -> some View
+
+
+    @inlinable nonisolated public func position(x: CGFloat = 0, y: CGFloat = 0) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AccessibilityCustomContentKey : Equatable {
+
+    public static func == (a: AccessibilityCustomContentKey, b: AccessibilityCustomContentKey) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape {
+
+    @inlinable nonisolated public func trim(from startFraction: CGFloat = 0, to endFraction: CGFloat = 1) -> some Shape
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Gesture {
+
+    nonisolated public func onEnded(_ action: @escaping (Self.Value) -> Void) -> _EndedGesture<Self>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Gesture where Self.Value : Equatable {
+
+    @MainActor @preconcurrency public func onChanged(_ action: @escaping (Self.Value) -> Void) -> _ChangedGesture<Self>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text : View {
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias Body = Never
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AXChartDescriptorRepresentable {
+
+    public func updateChartDescriptor(_ descriptor: AXChartDescriptor)
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text {
+
+    public struct LineStyle : Hashable, Sendable {
+
+        public init(pattern: Text.LineStyle.Pattern = .solid, color: Color? = nil)
+
+        public struct Pattern : Sendable {
+
+            public static let solid: Text.LineStyle.Pattern
+
+            public static let dot: Text.LineStyle.Pattern
+
+            public static let dash: Text.LineStyle.Pattern
+
+            public static let dashDot: Text.LineStyle.Pattern
+
+            public static let dashDotDot: Text.LineStyle.Pattern
+        }
+
+        public static let single: Text.LineStyle
+
+        public static func == (a: Text.LineStyle, b: Text.LineStyle) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func underline(_ isActive: Bool = true, pattern: Text.LineStyle.Pattern = .solid, color: Color? = nil) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func strikethrough(_ isActive: Bool = true, pattern: Text.LineStyle.Pattern = .solid, color: Color? = nil) -> some View
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    @preconcurrency nonisolated public func onGeometryChange<T>(for type: T.Type, of transform: @escaping @Sendable (GeometryProxy) -> T, action: @escaping (_ newValue: T) -> Void) -> some View where T : Equatable, T : Sendable
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 10.0, *)
+extension View {
+
+    @preconcurrency nonisolated public func onGeometryChange<T>(for type: T.Type, of transform: @escaping @Sendable (GeometryProxy) -> T, action: @escaping (_ oldValue: T, _ newValue: T) -> Void) -> some View where T : Equatable, T : Sendable
+
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    nonisolated public func redacted(reason: RedactionReasons) -> some View
+
+
+    nonisolated public func unredacted() -> some View
+
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension EnvironmentValues {
+
+    public var redactionReasons: RedactionReasons
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension ControlSize : Comparable {
+
+    public static func < (lhs: ControlSize, rhs: ControlSize) -> Bool
+}
+
+@available(iOS 15.0, macOS 10.15, tvOS 15.0, visionOS 1.0, watchOS 9.0, *)
+extension EnvironmentValues {
+
+    public var controlSize: ControlSize
+}
+
+@available(iOS 15.0, macOS 10.15, tvOS 15.0, visionOS 1.0, watchOS 9.0, *)
+extension View {
+
+    @inlinable nonisolated public func controlSize(_ controlSize: ControlSize) -> some View
+
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func controlSize<T>(_ range: T) -> some View where T : RangeExpression, T.Bound == ControlSize
+
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension FormatStyle where Self == SystemFormatStyle.DateOffset {
 
     public static func offset(to anchor: Date, allowedFields: Set<Date.ComponentsFormatStyle.Field> = [.year, .month, .day, .hour, .minute, .second], maxFieldCount: Int = 2, sign: NumberFormatStyleConfiguration.SignDisplayStrategy = .automatic) -> SystemFormatStyle.DateOffset
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle {
+
+    public struct DateOffset : Sendable {
+
+        public init(to anchor: Date, allowedFields: Set<Date.ComponentsFormatStyle.Field> = [.year, .month, .week, .day, .hour, .minute, .second], maxFieldCount: Int = 2, sign: NumberFormatStyleConfiguration.SignDisplayStrategy = .automatic)
+
+        public func calendar(_ calendar: Calendar) -> SystemFormatStyle.DateOffset
+
+        public func locale(_ locale: Locale) -> SystemFormatStyle.DateOffset
+    }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.DateOffset : FormatStyle {
+
+    public func format(_ referenceDate: Date) -> AttributedString
+
+    public static func == (a: SystemFormatStyle.DateOffset, b: SystemFormatStyle.DateOffset) -> Bool
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias FormatInput = Date
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias FormatOutput = AttributedString
+
+    public func encode(to encoder: any Encoder) throws
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.DateOffset : DiscreteFormatStyle {
+
+    public func discreteInput(before referenceDate: Date) -> Date?
+
+    public func discreteInput(after referenceDate: Date) -> Date?
+
+    public func input(before referenceDate: Date) -> Date?
+
+    public func input(after referenceDate: Date) -> Date?
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ShapeStyle {
+
+    @inlinable public func blendMode(_ mode: BlendMode) -> some ShapeStyle
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle where Self == AnyShapeStyle {
+
+    public static func blendMode(_ mode: BlendMode) -> some ShapeStyle
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 10.0, *)
+extension ShapeStyle where Self == Material {
+
+    public static var regularMaterial: Material { get }
+
+    public static var thickMaterial: Material { get }
+
+    public static var thinMaterial: Material { get }
+
+    public static var ultraThinMaterial: Material { get }
+
+    public static var ultraThickMaterial: Material { get }
+}
+
+@available(iOS 15.0, macOS 12.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+extension ShapeStyle where Self == Material {
+
+    public static var bar: Material { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 10.0, *)
+extension Material {
+
+    public static let regular: Material
+
+    public static let thick: Material
+
+    public static let thin: Material
+
+    public static let ultraThin: Material
+
+    public static let ultraThick: Material
+}
+
+@available(iOS 15.0, macOS 12.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+extension Material {
+
+    public static let bar: Material
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var backgroundMaterial: Material?
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Material : ShapeStyle {
+
+    @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+    public typealias Resolved = Never
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension EnvironmentValues {
+
+    public var materialActiveAppearance: MaterialActiveAppearance
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Material {
+
+    public func materialActiveAppearance(_ appearance: MaterialActiveAppearance) -> Material
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ShapeStyle {
+
+    public func materialActiveAppearance(_ appearance: MaterialActiveAppearance) -> some ShapeStyle
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension View {
+
+    nonisolated public func materialActiveAppearance(_ appearance: MaterialActiveAppearance) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    public enum Interpolation : Sendable {
+
+        case none
+
+        case low
+
+        case medium
+
+        case high
+
+        public static func == (a: Image.Interpolation, b: Image.Interpolation) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    public func interpolation(_ interpolation: Image.Interpolation) -> Image
+
+    public func antialiased(_ isAntialiased: Bool) -> Image
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func transformEffect(_ transform: CGAffineTransform) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func transformEffect(_ transform: ProjectionTransform) -> some VisualEffect
+
+
+    public func transformEffect(_ transform: CGAffineTransform) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension _VariadicView.Tree : View where Root : _VariadicView_ViewRoot, Content : View {
+
+    public typealias Body = Never
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ShapeStyle where Self == HierarchicalShapeStyle {
+
+    public static var primary: HierarchicalShapeStyle { get }
+
+    public static var secondary: HierarchicalShapeStyle { get }
+
+    public static var tertiary: HierarchicalShapeStyle { get }
+
+    public static var quaternary: HierarchicalShapeStyle { get }
+}
+
+@available(iOS 16.0, macOS 12.0, macCatalyst 15.0, tvOS 17.0, watchOS 10.0, *)
+extension ShapeStyle where Self == HierarchicalShapeStyle {
+
+    public static var quinary: HierarchicalShapeStyle { get }
+}
+
+@available(iOS 16.0, macOS 12.0, macCatalyst 15.0, tvOS 17.0, watchOS 10.0, *)
+extension HierarchicalShapeStyle {
+
+    public static let quinary: HierarchicalShapeStyle
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ShapeStyle {
+
+    public var secondary: some ShapeStyle { get }
+
+    public var tertiary: some ShapeStyle { get }
+
+    public var quaternary: some ShapeStyle { get }
+
+    public var quinary: some ShapeStyle { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension DynamicProperty {
+
+    public mutating func update()
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func symbolRenderingMode(_ mode: SymbolRenderingMode?) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Image {
+
+    public func symbolRenderingMode(_ mode: SymbolRenderingMode?) -> Image
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var symbolRenderingMode: SymbolRenderingMode?
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension View {
+
+    nonisolated public func symbolVariableValueMode(_ mode: SymbolVariableValueMode?) -> some View
+
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Image {
+
+    public func symbolVariableValueMode(_ mode: SymbolVariableValueMode?) -> Image
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension EnvironmentValues {
+
+    public var symbolVariableValueMode: SymbolVariableValueMode?
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension View {
+
+    nonisolated public func symbolColorRenderingMode(_ mode: SymbolColorRenderingMode?) -> some View
+
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Image {
+
+    public func symbolColorRenderingMode(_ mode: SymbolColorRenderingMode?) -> Image
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension EnvironmentValues {
+
+    public var symbolColorRenderingMode: SymbolColorRenderingMode?
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *)
+@available(watchOS, unavailable)
+extension Shader {
+
+    public func compile(as type: Shader.UsageType) async throws
+
+    public struct UsageType : Hashable, Sendable {
+
+        public static let shapeStyle: Shader.UsageType
+
+        public static let colorEffect: Shader.UsageType
+
+        public static let distortionEffect: Shader.UsageType
+
+        public static let layerEffect: Shader.UsageType
+
+        public static func == (a: Shader.UsageType, b: Shader.UsageType) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
+extension Shader {
+
+    @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+    public typealias Resolved = Never
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func colorEffect(_ shader: Shader, isEnabled: Bool = true) -> some View
+
+
+    nonisolated public func distortionEffect(_ shader: Shader, maxSampleOffset: CGSize, isEnabled: Bool = true) -> some View
+
+
+    nonisolated public func layerEffect(_ shader: Shader, maxSampleOffset: CGSize, isEnabled: Bool = true) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext {
+
+    public func withCGContext(content: (CGContext) throws -> Void) rethrows
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func aspectRatio(_ aspectRatio: CGFloat? = nil, contentMode: ContentMode) -> some View
+
+
+    @inlinable nonisolated public func aspectRatio(_ aspectRatio: CGSize, contentMode: ContentMode) -> some View
+
+
+    @inlinable nonisolated public func scaledToFit() -> some View
+
+
+    @inlinable nonisolated public func scaledToFill() -> some View
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension LocalizedStringKey.StringInterpolation {
+
+    public mutating func appendInterpolation(accessibilityName color: Color)
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Text {
+
+    public init<Subject>(_ subject: Subject, formatter: Formatter) where Subject : ReferenceConvertible
+
+    public init<Subject>(_ subject: Subject, formatter: Formatter) where Subject : NSObject
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text {
+
+    public init<F>(_ input: F.FormatInput, format: F) where F : FormatStyle, F.FormatInput : Equatable, F.FormatOutput == String
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Text {
+
+    public init<F>(_ input: F.FormatInput, format: F) where F : FormatStyle, F.FormatInput : Equatable, F.FormatOutput == AttributedString
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Text {
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public init(_ image: Image)
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension LocalizedStringKey.StringInterpolation {
+
+    public mutating func appendInterpolation(_ image: Image)
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Text {
+
+    public struct DateStyle : Sendable {
+
+        public static let time: Text.DateStyle
+
+        public static let date: Text.DateStyle
+
+        public static let relative: Text.DateStyle
+
+        public static let offset: Text.DateStyle
+
+        public static let timer: Text.DateStyle
+    }
+
+    public init(_ date: Date, style: Text.DateStyle)
+
+    public init(_ dates: ClosedRange<Date>)
+
+    public init(_ interval: DateInterval)
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Text {
+
+    public init(timerInterval: ClosedRange<Date>, pauseTime: Date? = nil, countsDown: Bool = true, showsHours: Bool = true)
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension LocalizedStringKey.StringInterpolation {
+
+    public mutating func appendInterpolation(_ date: Date, style: Text.DateStyle)
+
+    public mutating func appendInterpolation(_ dates: ClosedRange<Date>)
+
+    public mutating func appendInterpolation(_ interval: DateInterval)
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension LocalizedStringKey.StringInterpolation {
+
+    public mutating func appendInterpolation(timerInterval: ClosedRange<Date>, pauseTime: Date? = nil, countsDown: Bool = true, showsHours: Bool = true)
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Text.DateStyle : Equatable {
+
+    public static func == (a: Text.DateStyle, b: Text.DateStyle) -> Bool
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Text.DateStyle : Codable {
+
+    public func encode(to encoder: any Encoder) throws
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color {
+
+    public static let red: Color
+
+    public static let orange: Color
+
+    public static let yellow: Color
+
+    public static let green: Color
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static let mint: Color
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static let teal: Color
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static let cyan: Color
+
+    public static let blue: Color
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static let indigo: Color
+
+    public static let purple: Color
+
+    public static let pink: Color
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static let brown: Color
+
+    public static let white: Color
+
+    public static let gray: Color
+
+    public static let black: Color
+
+    public static let clear: Color
+
+    public static let primary: Color
+
+    public static let secondary: Color
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self == Color {
+
+    public static var red: Color { get }
+
+    public static var orange: Color { get }
+
+    public static var yellow: Color { get }
+
+    public static var green: Color { get }
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static var mint: Color { get }
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static var teal: Color { get }
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static var cyan: Color { get }
+
+    public static var blue: Color { get }
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static var indigo: Color { get }
+
+    public static var purple: Color { get }
+
+    public static var pink: Color { get }
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static var brown: Color { get }
+
+    public static var white: Color { get }
+
+    public static var gray: Color { get }
+
+    public static var black: Color { get }
+
+    public static var clear: Color { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text {
+
+    public init(_ attributedContent: AttributedString)
 }
 
 @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
@@ -33558,9 +35556,554 @@ extension AttributeScopes {
 }
 
 @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes {
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum FontAttribute : AttributedStringKey {
+
+        public typealias Value = Font
+
+        public static let name: String
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum ForegroundColorAttribute : AttributedStringKey {
+
+        public typealias Value = Color
+
+        public static let name: String
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum BackgroundColorAttribute : AttributedStringKey {
+
+        public typealias Value = Color
+
+        public static let name: String
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum StrikethroughStyleAttribute : AttributedStringKey {
+
+        public typealias Value = Text.LineStyle
+
+        public static let name: String
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum UnderlineStyleAttribute : AttributedStringKey {
+
+        public typealias Value = Text.LineStyle
+
+        public static let name: String
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum KerningAttribute : CodableAttributedStringKey {
+
+        public typealias Value = CGFloat
+
+        public static let name: String
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum TrackingAttribute : CodableAttributedStringKey {
+
+        public typealias Value = CGFloat
+
+        public static let name: String
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @frozen public enum BaselineOffsetAttribute : CodableAttributedStringKey {
+
+        public typealias Value = CGFloat
+
+        public static let name: String
+    }
+
+    @available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    @frozen public enum AdaptiveImageGlyphAttribute : AttributedStringKey {
+
+        public typealias Value = AttributedString.AdaptiveImageGlyph
+
+        public static let name: String
+
+        nonisolated(unsafe) public static var inheritedByAddedText: Bool
+
+        public static var runBoundaries: AttributedString.AttributeRunBoundaries? { get }
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributeScopes.SwiftUIAttributes.FontAttribute : CodableAttributedStringKey {
+
+    public static func decode(from decoder: any Decoder) throws -> Font
+
+    public static func encode(_ value: Font, to encoder: any Encoder) throws
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute : CodableAttributedStringKey {
+
+    public static func decode(from decoder: any Decoder) throws -> AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.Value
+
+    public static func encode(_ value: AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.Value, to encoder: any Encoder) throws
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute : CodableAttributedStringKey {
+
+    public static func decode(from decoder: any Decoder) throws -> AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute.Value
+
+    public static func encode(_ value: AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute.Value, to encoder: any Encoder) throws
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributeScopes.SwiftUIAttributes.StrikethroughStyleAttribute : CodableAttributedStringKey {
+
+    public static func decode(from decoder: any Decoder) throws -> AttributeScopes.SwiftUIAttributes.StrikethroughStyleAttribute.Value
+
+    public static func encode(_ value: AttributeScopes.SwiftUIAttributes.StrikethroughStyleAttribute.Value, to encoder: any Encoder) throws
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributeScopes.SwiftUIAttributes.UnderlineStyleAttribute : CodableAttributedStringKey {
+
+    public static func decode(from decoder: any Decoder) throws -> AttributeScopes.SwiftUIAttributes.UnderlineStyleAttribute.Value
+
+    public static func encode(_ value: AttributeScopes.SwiftUIAttributes.UnderlineStyleAttribute.Value, to encoder: any Encoder) throws
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributeScopes.SwiftUIAttributes.AdaptiveImageGlyphAttribute : CodableAttributedStringKey {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
 extension AttributeDynamicLookup {
 
     public subscript<T>(dynamicMember keyPath: KeyPath<AttributeScopes.SwiftUIAttributes, T>) -> T where T : AttributedStringKey { get }
+}
+
+@available(iOS 17.0, macOS 10.15, tvOS 17.0, watchOS 10.0, *)
+extension ShapeStyle where Self == SeparatorShapeStyle {
+
+    public static var separator: SeparatorShapeStyle { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color {
+
+    @frozen public struct ResolvedHDR : Hashable, Sendable {
+
+        public init(_ color: Color.Resolved, headroom: Float? = nil)
+
+        public var linearRed: Float
+
+        public var linearGreen: Float
+
+        public var linearBlue: Float
+
+        public var red: Float
+
+        public var green: Float
+
+        public var blue: Float
+
+        public var opacity: Float
+
+        public var headroom: Float?
+
+        public static func == (lhs: Color.ResolvedHDR, rhs: Color.ResolvedHDR) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public init(_ resolved: Color.ResolvedHDR)
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color.ResolvedHDR {
+
+    @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+    public typealias Resolved = Never
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color.ResolvedHDR : Animatable {
+
+    public typealias AnimatableData
+
+    public var animatableData: Color.ResolvedHDR.AnimatableData
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color.ResolvedHDR : CustomStringConvertible {
+
+    public var description: String { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color.ResolvedHDR : Codable {
+
+    public func encode(to encoder: any Encoder) throws
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension GeometryProxy {
+
+    public func bounds(of coordinateSpace: NamedCoordinateSpace) -> CGRect?
+
+    public func frame(in coordinateSpace: some CoordinateSpaceProtocol) -> CGRect
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension GeometryProxy {
+
+    public var containerCornerInsets: RectangleCornerInsets { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Transaction {
+
+    public var isContinuous: Bool
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    @inlinable nonisolated public func overlayPreferenceValue<K, V>(_ key: K.Type, alignment: Alignment = .center, @ViewBuilder _ transform: @escaping (K.Value) -> V) -> some View where K : PreferenceKey, V : View
+
+
+    @inlinable nonisolated public func backgroundPreferenceValue<K, V>(_ key: K.Type, alignment: Alignment = .center, @ViewBuilder _ transform: @escaping (K.Value) -> V) -> some View where K : PreferenceKey, V : View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func overlayPreferenceValue<Key, T>(_ key: Key.Type = Key.self, @ViewBuilder _ transform: @escaping (Key.Value) -> T) -> some View where Key : PreferenceKey, T : View
+
+
+    @inlinable nonisolated public func backgroundPreferenceValue<Key, T>(_ key: Key.Type = Key.self, @ViewBuilder _ transform: @escaping (Key.Value) -> T) -> some View where Key : PreferenceKey, T : View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Animation {
+
+    public func logicallyComplete(after duration: TimeInterval) -> Animation
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color {
+
+    public func headroom(_ headroom: Double?) -> Color
+
+    public func exposureAdjust(_ stops: Double) -> Color
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func zIndex(_ value: Double) -> some View
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Layout {
+
+    public static var layoutProperties: LayoutProperties { get }
+
+    public func updateCache(_ cache: inout Self.Cache, subviews: Self.Subviews)
+
+    public func explicitAlignment(of guide: HorizontalAlignment, in bounds: CGRect, proposal: ProposedViewSize, subviews: Self.Subviews, cache: inout Self.Cache) -> CGFloat?
+
+    public func explicitAlignment(of guide: VerticalAlignment, in bounds: CGRect, proposal: ProposedViewSize, subviews: Self.Subviews, cache: inout Self.Cache) -> CGFloat?
+
+    public func spacing(subviews: Self.Subviews, cache: inout Self.Cache) -> ViewSpacing
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Layout where Self.Cache == () {
+
+    public func makeCache(subviews: Self.Subviews) -> Self.Cache
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    @inlinable nonisolated public func layoutValue<K>(key: K.Type, value: K.Value) -> some View where K : LayoutValueKey
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Layout {
+
+    public func callAsFunction<V>(@ViewBuilder _ content: () -> V) -> some View where V : View
+
+}
+
+@available(iOS, introduced: 13.0, deprecated: 26.0, message: "Use string interpolation on `Text` instead: `Text(\"Hello \\(name)\")`")
+@available(macOS, introduced: 10.15, deprecated: 26.0, message: "Use string interpolation on `Text` instead: `Text(\"Hello \\(name)\")`")
+@available(tvOS, introduced: 13.0, deprecated: 26.0, message: "Use string interpolation on `Text` instead: `Text(\"Hello \\(name)\")`")
+@available(watchOS, introduced: 6.0, deprecated: 26.0, message: "Use string interpolation on `Text` instead: `Text(\"Hello \\(name)\")`")
+extension Text {
+
+    public static func + (lhs: Text, rhs: Text) -> Text
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public static var slide: AnyTransition { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == SlideTransition {
+
+    @MainActor @preconcurrency public static var slide: SlideTransition { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text {
+
+    public enum TruncationMode : Sendable {
+
+        case head
+
+        case tail
+
+        case middle
+
+        public static func == (a: Text.TruncationMode, b: Text.TruncationMode) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public enum Case : Sendable {
+
+        case uppercase
+
+        case lowercase
+
+        public static func == (a: Text.Case, b: Text.Case) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var multilineTextAlignment: TextAlignment
+
+    public var truncationMode: Text.TruncationMode
+
+    public var lineSpacing: CGFloat
+
+    public var allowsTightening: Bool
+
+    public var minimumScaleFactor: CGFloat
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public var textCase: Text.Case?
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func multilineTextAlignment(_ alignment: TextAlignment) -> some View
+
+
+    @inlinable nonisolated public func truncationMode(_ mode: Text.TruncationMode) -> some View
+
+
+    @inlinable nonisolated public func lineSpacing(_ lineSpacing: CGFloat) -> some View
+
+
+    @inlinable nonisolated public func allowsTightening(_ flag: Bool) -> some View
+
+
+    @inlinable nonisolated public func minimumScaleFactor(_ factor: CGFloat) -> some View
+
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    @inlinable nonisolated public func textCase(_ textCase: Text.Case?) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    public init(_ cgImage: CGImage, scale: CGFloat, orientation: Image.Orientation = .up, label: Text)
+
+    public init(decorative cgImage: CGImage, scale: CGFloat, orientation: Image.Orientation = .up)
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle {
+
+    @inlinable public func shadow(_ style: ShadowStyle) -> some ShapeStyle
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ShapeStyle where Self == AnyShapeStyle {
+
+    public static func shadow(_ style: ShadowStyle) -> some ShapeStyle
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle {
+
+    @inlinable public func `in`(_ rect: CGRect) -> some ShapeStyle
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension StrokeStyle : Animatable {
+
+    public typealias AnimatableData = AnimatablePair<CGFloat, AnimatablePair<CGFloat, CGFloat>>
+
+    public var animatableData: StrokeStyle.AnimatableData
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    public func renderingMode(_ renderingMode: Image.TemplateRenderingMode?) -> Image
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func typesettingLanguage(_ language: Locale.Language, isEnabled: Bool = true) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func typesettingLanguage(_ language: TypesettingLanguage, isEnabled: Bool = true) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func typesettingLanguage(_ language: Locale.Language, isEnabled: Bool = true) -> Text
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func typesettingLanguage(_ language: TypesettingLanguage, isEnabled: Bool = true) -> Text
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transaction {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public var scrollTargetAnchor: UnitPoint?
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Transaction {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public var scrollPositionUpdatePreservesVelocity: Bool
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Transaction {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public var scrollContentOffsetAdjustmentBehavior: ScrollContentOffsetAdjustmentBehavior
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+    @inlinable nonisolated public func lineLimit(_ number: Int?) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func lineLimit(_ limit: PartialRangeFrom<Int>) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func lineLimit(_ limit: PartialRangeThrough<Int>) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func lineLimit(_ limit: ClosedRange<Int>) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func lineLimit(_ limit: Int, reservesSpace: Bool) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+    public var lineLimit: Int?
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension EnvironmentValues {
+
+    public var backgroundProminence: BackgroundProminence
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    public init(_ name: String, bundle: Bundle? = nil)
+
+    public init(_ name: String, bundle: Bundle? = nil, label: Text)
+
+    public init(decorative name: String, bundle: Bundle? = nil)
+
+    @available(macOS 11.0, *)
+    public init(systemName: String)
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Image {
+
+    public init(systemName: String, variableValue: Double?)
+
+    public init(_ name: String, variableValue: Double?, bundle: Bundle? = nil)
+
+    public init(_ name: String, variableValue: Double?, bundle: Bundle? = nil, label: Text)
+
+    public init(decorative name: String, variableValue: Double?, bundle: Bundle? = nil)
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Image {
+
+    public init(_ resource: ImageResource)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension VectorArithmetic {
+
+    public func scaled(by rhs: Double) -> Self
+
+    public mutating func interpolate(towards other: Self, amount: Double)
+
+    public func interpolated(towards other: Self, amount: Double) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -33587,10 +36130,163 @@ extension CGFloat : VectorArithmetic {
     public var magnitudeSquared: Double { get }
 }
 
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ForEach {
+
+    public init<V>(subviews view: V, @ViewBuilder content: @escaping (Subview) -> Content) where Data == ForEachSubviewCollection<Content>, ID == Subview.ID, Content : View, V : View
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @preconcurrency @inlinable nonisolated public func alignmentGuide(_ g: HorizontalAlignment, computeValue: @escaping @Sendable (ViewDimensions) -> CGFloat) -> some View
+
+
+    @preconcurrency @inlinable nonisolated public func alignmentGuide(_ g: VerticalAlignment, computeValue: @escaping @Sendable (ViewDimensions) -> CGFloat) -> some View
+
+}
+
+extension EnvironmentValues {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public var lineHeight: AttributedString.LineHeight?
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func lineHeight(_ lineHeight: AttributedString.LineHeight?) -> some View
+
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Font {
+
+    public struct Resolved : Hashable, Sendable {
+
+        public var ctFont: CTFont { get }
+
+        public var isBold: Bool { get }
+
+        public var isItalic: Bool { get }
+
+        public var pointSize: CGFloat { get }
+
+        public var weight: Font.Weight { get }
+
+        public var width: Font.Width { get }
+
+        public var leading: Font.Leading { get }
+
+        public var isMonospaced: Bool { get }
+
+        public var isLowercaseSmallCaps: Bool { get }
+
+        public var isUppercaseSmallCaps: Bool { get }
+
+        public var isSmallCaps: Bool { get }
+
+        public var hashValue: Int { get }
+    }
+
+    public func resolve(in context: Font.Context) -> Font.Resolved
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Font.Resolved {
+
+    public func hash(into hasher: inout Hasher)
+
+    public static func == (lhs: Font.Resolved, rhs: Font.Resolved) -> Bool
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ShapeStyle where Self == BackgroundStyle {
+
+    public static var background: BackgroundStyle { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @inlinable nonisolated public func backgroundStyle<S>(_ style: S) -> some View where S : ShapeStyle
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension EnvironmentValues {
+
+    public var backgroundStyle: AnyShapeStyle?
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func foregroundStyle<S>(_ style: S) -> some View where S : ShapeStyle
+
+
+    @inlinable nonisolated public func foregroundStyle<S1, S2>(_ primary: S1, _ secondary: S2) -> some View where S1 : ShapeStyle, S2 : ShapeStyle
+
+
+    @inlinable nonisolated public func foregroundStyle<S1, S2, S3>(_ primary: S1, _ secondary: S2, _ tertiary: S3) -> some View where S1 : ShapeStyle, S2 : ShapeStyle, S3 : ShapeStyle
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self == ForegroundStyle {
+
+    public static var foreground: ForegroundStyle { get }
+}
+
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Never : ShapeStyle {
 
     public typealias Resolved = Never
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ShapeStyle where Self.Resolved == Never {
+
+    public func resolve(in environment: EnvironmentValues) -> Never
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func attributedTextFormattingDefinition<D>(_ definition: D) -> some View where D : AttributedTextFormattingDefinition
+
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func attributedTextFormattingDefinition<S>(_ scope: S.Type) -> some View where S : AttributeScope
+
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func attributedTextFormattingDefinition<S>(_ path: KeyPath<AttributeScopes, S.Type>) -> some View where S : AttributeScope
+
+}
+
+extension AttributedTextFormatting {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    @resultBuilder public struct DefinitionBuilder<Scope> {
+
+        public static func buildExpression<D>(_ definition: D) -> D where Scope == D.Scope, D : AttributedTextFormattingDefinition
+
+        public static func buildBlock<D>(_ definition: D) -> D where D : AttributedTextFormattingDefinition
+
+        public static func buildBlock<S>() -> AttributedTextFormatting.EmptyDefinition<S> where S : AttributeScope
+
+        public static func buildBlock<F, each D>(_ first: F, _ definition: repeat each D) -> AttributedTextFormatting.TupleDefinition<F.Scope, F, repeat each D> where F : AttributedTextFormattingDefinition, repeat each D : AttributedTextFormattingDefinition
+
+        public static func buildLimitedAvailability<D>(_ definition: D) -> AttributedTextFormatting.AnyDefinition<Scope> where Scope == D.Scope, D : AttributedTextFormattingDefinition
+
+        public static func buildIf<D>(_ definition: D?) -> D? where Scope == D.Scope, D : AttributedTextFormattingDefinition
+
+        public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
+
+        public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
+    }
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
@@ -33605,10 +36301,1005 @@ extension Optional : AttributedTextFormattingDefinition where Wrapped : Attribut
     public typealias Scope = Wrapped.Scope
 }
 
+extension AttributedTextFormatting {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public struct EmptyDefinition<Scope> : AttributedTextFormattingDefinition where Scope : AttributeScope {
+
+        public init()
+
+        public var body: AttributedTextFormatting.EmptyDefinition<Scope> { get }
+
+        @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+        public typealias Body = AttributedTextFormatting.EmptyDefinition<Scope>
+    }
+}
+
+extension AttributedTextFormatting {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public struct AnyDefinition<Scope> : AttributedTextFormattingDefinition where Scope : AttributeScope {
+
+        public init<D>(_ definition: D) where Scope == D.Scope, D : AttributedTextFormattingDefinition
+
+        public var body: AttributedTextFormatting.AnyDefinition<Scope> { get }
+
+        @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+        public typealias Body = AttributedTextFormatting.AnyDefinition<Scope>
+    }
+}
+
+extension AttributedTextFormatting {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public struct TupleDefinition<Scope, each Definition> : AttributedTextFormattingDefinition where Scope : AttributeScope, repeat each Definition : AttributedTextFormattingDefinition {
+
+        public init(definition: repeat each Definition)
+
+        public var body: AttributedTextFormatting.TupleDefinition<Scope, repeat each Definition> { get }
+
+        @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+        public typealias Body = AttributedTextFormatting.TupleDefinition<Scope, repeat each Definition>
+    }
+}
+
+extension AttributedTextFormatting {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public struct ValueConstraint<Scope, AttributeKey> : AttributedTextValueConstraint where Scope : AttributeScope, AttributeKey : AttributedStringKey, AttributeKey.Value : Sendable {
+
+        public init(for keyPath: KeyPath<Scope, AttributeKey>, values allowedValues: Set<AttributeKey.Value?>, default defaultValue: AttributeKey.Value?)
+
+        public init(for attribute: AttributeKey.Type, values allowedValues: Set<AttributeKey.Value?>, default defaultValue: AttributeKey.Value?)
+
+        public func constrain(_ container: inout AttributedTextFormatting.ValueConstraint<Scope, AttributeKey>.Attributes)
+
+        public static func == (a: AttributedTextFormatting.ValueConstraint<Scope, AttributeKey>, b: AttributedTextFormatting.ValueConstraint<Scope, AttributeKey>) -> Bool
+
+        @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+        public typealias Body = AttributedTextFormatting.ValueConstraint<Scope, AttributeKey>
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributedTextFormattingDefinition {
+
+    public typealias ValueConstraint = AttributedTextFormatting.ValueConstraint
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributedTextValueConstraint {
+
+    public var body: Self { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributedTextValueConstraint {
+
+    public typealias Attributes = AttributedTextFormatting.AttributeContainerProxy<Self.Scope, Self.AttributeKey>
+}
+
+extension AttributedTextFormatting {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    @dynamicMemberLookup public struct AttributeContainerProxy<Scope, Attribute> : Sendable where Scope : AttributeScope, Attribute : AttributedStringKey, Attribute.Value : Sendable {
+
+        public subscript<K>(key: K.Type) -> K.Value? where K : AttributedStringKey, K.Value : Sendable { mutating get }
+
+        public subscript<K>(dynamicMember keyPath: KeyPath<AttributeDynamicLookup, K>) -> K.Value? where K : AttributedStringKey, K.Value : Sendable { mutating get }
+
+        public subscript<K>(dynamicMember keyPath: KeyPath<Scope, K>) -> K.Value? where K : AttributedStringKey, K.Value : Sendable { mutating get }
+
+        public subscript(key: Attribute.Type) -> Attribute.Value?
+
+        public subscript(dynamicMember keyPath: KeyPath<Scope, Attribute>) -> Attribute.Value?
+
+        public subscript(dynamicMember keyPath: KeyPath<AttributeDynamicLookup, Attribute>) -> Attribute.Value?
+
+        public subscript<S>(dynamicMember keyPath: KeyPath<Scope, S>) -> AttributedTextFormatting.AttributeContainerProxy<Scope, Attribute>.Scoped<S> where S : AttributeScope
+
+        public subscript<S>(dynamicMember keyPath: KeyPath<AttributeScopes, S.Type>) -> AttributedTextFormatting.AttributeContainerProxy<Scope, Attribute>.Scoped<S> where S : AttributeScope
+
+        public subscript<S>(scope: S.Type) -> AttributedTextFormatting.AttributeContainerProxy<Scope, Attribute>.Scoped<S> where S : AttributeScope
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributedTextFormatting.AttributeContainerProxy {
+
+    @dynamicMemberLookup public struct Scoped<Subscope> : Sendable where Subscope : AttributeScope {
+
+        public subscript<K>(dynamicMember keyPath: KeyPath<Subscope, K>) -> K.Value? where K : AttributedStringKey, K.Value : Sendable { mutating get }
+
+        public subscript(dynamicMember keyPath: KeyPath<Subscope, Attribute>) -> Attribute.Value?
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension AttributedTextFormattingDefinition {
+
+    public func constrain(_ string: inout AttributedString)
+
+    public func constrain(_ container: inout AttributeContainer)
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Shape {
+
+    nonisolated public func sizeThatFits(_ proposal: ProposedViewSize) -> CGSize
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Shape {
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static var role: ShapeRole { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Shape {
+
+    public var layoutDirectionBehavior: LayoutDirectionBehavior { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape {
+
+    @inlinable nonisolated public func stroke(style: StrokeStyle) -> some Shape
+
+
+    @inlinable nonisolated public func stroke(lineWidth: CGFloat = 1) -> some Shape
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension AnyLocation : Equatable {
+
+    public static func == (lhs: AnyLocation<Value>, rhs: AnyLocation<Value>) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension UnitPoint : Animatable {
+
+    public typealias AnimatableData = AnimatablePair<CGFloat, CGFloat>
+
+    public var animatableData: UnitPoint.AnimatableData
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension UnitPoint : Codable {
+
+    public func encode(to encoder: any Encoder) throws
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func transformPreference<K>(_ key: K.Type = K.self, _ callback: @escaping (inout K.Value) -> Void) -> some View where K : PreferenceKey
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func preference<K>(key: K.Type = K.self, value: K.Value) -> some View where K : PreferenceKey
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func luminanceToAlpha() -> some View
+
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    @available(visionOS, unavailable)
+    @MainActor @preconcurrency public func glassEffectUnion(id: (some Hashable & Sendable)?, namespace: Namespace.ID) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Gesture {
+
+    nonisolated public func map<T>(_ body: @escaping (Self.Value) -> T) -> _MapGesture<Self, T>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Path : Shape {
+
+    nonisolated public func path(in _: CGRect) -> Path
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias AnimatableData = EmptyAnimatableData
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias Body
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Path {
+
+    public mutating func move(to end: CGPoint)
+
+    public mutating func addLine(to end: CGPoint)
+
+    public mutating func addQuadCurve(to end: CGPoint, control: CGPoint)
+
+    public mutating func addCurve(to end: CGPoint, control1: CGPoint, control2: CGPoint)
+
+    public mutating func closeSubpath()
+
+    public mutating func addRect(_ rect: CGRect, transform: CGAffineTransform = .identity)
+
+    public mutating func addRoundedRect(in rect: CGRect, cornerSize: CGSize, style: RoundedCornerStyle = .continuous, transform: CGAffineTransform = .identity)
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    public mutating func addRoundedRect(in rect: CGRect, cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous, transform: CGAffineTransform = .identity)
+
+    public mutating func addEllipse(in rect: CGRect, transform: CGAffineTransform = .identity)
+
+    public mutating func addRects(_ rects: [CGRect], transform: CGAffineTransform = .identity)
+
+    public mutating func addLines(_ lines: [CGPoint])
+
+    public mutating func addRelativeArc(center: CGPoint, radius: CGFloat, startAngle: Angle, delta: Angle, transform: CGAffineTransform = .identity)
+
+    public mutating func addArc(center: CGPoint, radius: CGFloat, startAngle: Angle, endAngle: Angle, clockwise: Bool, transform: CGAffineTransform = .identity)
+
+    public mutating func addArc(tangent1End: CGPoint, tangent2End: CGPoint, radius: CGFloat, transform: CGAffineTransform = .identity)
+
+    public mutating func addPath(_ path: Path, transform: CGAffineTransform = .identity)
+
+    public var currentPoint: CGPoint? { get }
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func normalized(eoFill: Bool = true) -> Path
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func intersection(_ other: Path, eoFill: Bool = false) -> Path
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func union(_ other: Path, eoFill: Bool = false) -> Path
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func subtracting(_ other: Path, eoFill: Bool = false) -> Path
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func symmetricDifference(_ other: Path, eoFill: Bool = false) -> Path
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func lineIntersection(_ other: Path, eoFill: Bool = false) -> Path
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func lineSubtraction(_ other: Path, eoFill: Bool = false) -> Path
+
+    public func applying(_ transform: CGAffineTransform) -> Path
+
+    public func offsetBy(dx: CGFloat, dy: CGFloat) -> Path
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transaction {
+
+    public mutating func addAnimationCompletion(criteria: AnimationCompletionCriteria = .logicallyComplete, _ completion: @escaping () -> Void)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape where Self == Rectangle {
+
+    public static var rect: Rectangle { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape where Self == RoundedRectangle {
+
+    public static func rect(cornerSize: CGSize, style: RoundedCornerStyle = .continuous) -> Self
+
+    public static func rect(cornerRadius: CGFloat, style: RoundedCornerStyle = .continuous) -> Self
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Shape where Self == UnevenRoundedRectangle {
+
+    public static func rect(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) -> Self
+
+    public static func rect(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous) -> Self
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape where Self == Capsule {
+
+    public static var capsule: Capsule { get }
+
+    public static func capsule(style: RoundedCornerStyle) -> Self
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape where Self == Ellipse {
+
+    public static var ellipse: Ellipse { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape where Self == Circle {
+
+    public static var circle: Circle { get }
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Circle {
+
+    nonisolated public func sizeThatFits(_ proposal: ProposedViewSize) -> CGSize
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension InsettableShape {
+
+    @inlinable public func strokeBorder<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> some View where S : ShapeStyle
+
+
+    @inlinable public func strokeBorder(style: StrokeStyle, antialiased: Bool = true) -> some View
+
+
+    @inlinable public func strokeBorder<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> some View where S : ShapeStyle
+
+
+    @inlinable public func strokeBorder(lineWidth: CGFloat = 1, antialiased: Bool = true) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Rectangle : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension RoundedRectangle : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension UnevenRoundedRectangle : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 13.0, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Capsule : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Ellipse : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Circle : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ProjectionTransform : Equatable {
+
+    public static func == (a: ProjectionTransform, b: ProjectionTransform) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ProjectionTransform {
+
+    @inlinable public func concatenating(_ rhs: ProjectionTransform) -> ProjectionTransform
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension CGPoint {
 
     public func applying(_ m: ProjectionTransform) -> CGPoint
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation {
+
+    public static func interpolatingSpring(mass: Double = 1.0, stiffness: Double, damping: Double, initialVelocity: Double = 0.0) -> Animation
+
+    public static func interpolatingSpring(duration: TimeInterval = 0.5, bounce: Double = 0.0, initialVelocity: Double = 0.0) -> Animation
+
+    public static var interpolatingSpring: Animation { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EdgeInsets : Animatable {
+
+    public typealias AnimatableData = AnimatablePair<CGFloat, AnimatablePair<CGFloat, AnimatablePair<CGFloat, CGFloat>>>
+
+    public var animatableData: EdgeInsets.AnimatableData
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func onAppear(perform action: (() -> Void)? = nil) -> some View
+
+
+    @inlinable nonisolated public func onDisappear(perform action: (() -> Void)? = nil) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func transformEnvironment<V>(_ keyPath: WritableKeyPath<EnvironmentValues, V>, transform: @escaping (inout V) -> Void) -> some View
+
+}
+
+@available(iOS 18.0, macOS 10.15, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension EnvironmentValues {
+
+    @available(iOS 18.0, macOS 10.15, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    @backDeployed(before: macOS 15.0)
+    public var appearsActive: Bool
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension HorizontalAlignment {
+
+    public func combineExplicit<S>(_ values: S) -> CGFloat? where S : Sequence, S.Element == CGFloat?
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension VerticalAlignment {
+
+    public func combineExplicit<S>(_ values: S) -> CGFloat? where S : Sequence, S.Element == CGFloat?
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension HorizontalAlignment {
+
+    public static let leading: HorizontalAlignment
+
+    public static let center: HorizontalAlignment
+
+    public static let trailing: HorizontalAlignment
+}
+
+@available(iOS 16.0, macOS 13.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+extension HorizontalAlignment {
+
+    public static let listRowSeparatorLeading: HorizontalAlignment
+
+    public static let listRowSeparatorTrailing: HorizontalAlignment
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension VerticalAlignment {
+
+    public static let top: VerticalAlignment
+
+    public static let center: VerticalAlignment
+
+    public static let bottom: VerticalAlignment
+
+    public static let firstTextBaseline: VerticalAlignment
+
+    public static let lastTextBaseline: VerticalAlignment
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Alignment {
+
+    public static let center: Alignment
+
+    public static let leading: Alignment
+
+    public static let trailing: Alignment
+
+    public static let top: Alignment
+
+    public static let bottom: Alignment
+
+    public static let topLeading: Alignment
+
+    public static let topTrailing: Alignment
+
+    public static let bottomLeading: Alignment
+
+    public static let bottomTrailing: Alignment
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Alignment {
+
+    public static var centerFirstTextBaseline: Alignment { get }
+
+    public static var centerLastTextBaseline: Alignment { get }
+
+    public static var leadingFirstTextBaseline: Alignment { get }
+
+    public static var leadingLastTextBaseline: Alignment { get }
+
+    public static var trailingFirstTextBaseline: Alignment { get }
+
+    public static var trailingLastTextBaseline: Alignment { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Environment : Sendable where Value : Sendable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension AnyTransition {
+
+    public static func push(from edge: Edge) -> AnyTransition
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == PushTransition {
+
+    @MainActor @preconcurrency public static func push(from edge: Edge) -> Self
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Binding : @unchecked Sendable where Value : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Binding : Identifiable where Value : Identifiable {
+
+    public var id: Value.ID { get }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public typealias ID = Value.ID
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Binding : Sequence where Value : MutableCollection {
+
+    public typealias Element = Binding<Value.Element>
+
+    public typealias Iterator = IndexingIterator<Binding<Value>>
+
+    public typealias SubSequence = Slice<Binding<Value>>
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Binding : Collection where Value : MutableCollection {
+
+    public typealias Index = Value.Index
+
+    public typealias Indices = Value.Indices
+
+    public var startIndex: Binding<Value>.Index { get }
+
+    public var endIndex: Binding<Value>.Index { get }
+
+    public var indices: Value.Indices { get }
+
+    public func index(after i: Binding<Value>.Index) -> Binding<Value>.Index
+
+    public func formIndex(after i: inout Binding<Value>.Index)
+
+    public subscript(position: Binding<Value>.Index) -> Binding<Value>.Element { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Binding : BidirectionalCollection where Value : BidirectionalCollection, Value : MutableCollection {
+
+    public func index(before i: Binding<Value>.Index) -> Binding<Value>.Index
+
+    public func formIndex(before i: inout Binding<Value>.Index)
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Binding : RandomAccessCollection where Value : MutableCollection, Value : RandomAccessCollection {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Binding {
+
+    public func transaction(_ transaction: Transaction) -> Binding<Value>
+
+    public func animation(_ animation: Animation? = .default) -> Binding<Value>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Binding : DynamicProperty {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func tag<V>(_ tag: V, includeOptional: Bool = true) -> some View where V : Hashable
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var dynamicTypeSize: DynamicTypeSize
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func dynamicTypeSize(_ size: DynamicTypeSize) -> some View
+
+
+    nonisolated public func dynamicTypeSize<T>(_ range: T) -> some View where T : RangeExpression, T.Bound == DynamicTypeSize
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation {
+
+    public func delay(_ delay: TimeInterval) -> Animation
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Shape {
+
+    nonisolated public func intersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+
+
+    nonisolated public func union<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+
+
+    nonisolated public func subtracting<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+
+
+    nonisolated public func symmetricDifference<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+
+
+    nonisolated public func lineIntersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+
+
+    nonisolated public func lineSubtraction<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ScaledMetric : Sendable where Value : Sendable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ContentSizeCategory {
+
+    public static func < (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+
+    public static func <= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+
+    public static func > (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+
+    public static func >= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, visionOS 1.0, *)
+extension EnvironmentValues {
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, renamed: "dynamicTypeSize")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, renamed: "dynamicTypeSize")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, renamed: "dynamicTypeSize")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, renamed: "dynamicTypeSize")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, renamed: "dynamicTypeSize")
+    public var sizeCategory: ContentSizeCategory
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font {
+
+    public static let largeTitle: Font
+
+    public static let title: Font
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public static let title2: Font
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public static let title3: Font
+
+    public static let headline: Font
+
+    public static let subheadline: Font
+
+    public static let body: Font
+
+    public static let callout: Font
+
+    public static let footnote: Font
+
+    public static let caption: Font
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public static let caption2: Font
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    public static func system(_ style: Font.TextStyle, design: Font.Design? = nil, weight: Font.Weight? = nil) -> Font
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use `system(_:design:weight:)` instead.")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use `system(_:design:weight:)` instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Use `system(_:design:weight:)` instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use `system(_:design:weight:)` instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use `system(_:design:weight:)` instead.")
+    public static func system(_ style: Font.TextStyle, design: Font.Design = .default) -> Font
+
+    public enum TextStyle : CaseIterable, Sendable {
+
+        case largeTitle
+
+        case title
+
+        @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+        case title2
+
+        @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+        case title3
+
+        case headline
+
+        case subheadline
+
+        case body
+
+        case callout
+
+        case footnote
+
+        case caption
+
+        @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+        case caption2
+
+        public static let allCases: [Font.TextStyle]
+
+        public static func == (a: Font.TextStyle, b: Font.TextStyle) -> Bool
+
+        @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+        public typealias AllCases = [Font.TextStyle]
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Font.TextStyle : Codable {
+
+    public func encode(to encoder: any Encoder) throws
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font {
+
+    public func italic() -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func italic(_ isActive: Bool) -> Font
+
+    public func smallCaps() -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func smallCaps(_ isActive: Bool) -> Font
+
+    public func lowercaseSmallCaps() -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func lowercaseSmallCaps(_ isActive: Bool) -> Font
+
+    public func uppercaseSmallCaps() -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func uppercaseSmallCaps(_ isActive: Bool) -> Font
+
+    public func monospacedDigit() -> Font
+
+    public func weight(_ weight: Font.Weight) -> Font
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    public func width(_ width: Font.Width) -> Font
+
+    public func bold() -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func bold(_ isActive: Bool) -> Font
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public func monospaced() -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func monospaced(_ isActive: Bool) -> Font
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public func leading(_ leading: Font.Leading) -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func pointSize(_ size: CGFloat) -> Font
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public func scaled(by factor: CGFloat) -> Font
+
+    @frozen public struct Weight : Hashable {
+
+        public static let ultraLight: Font.Weight
+
+        public static let thin: Font.Weight
+
+        public static let light: Font.Weight
+
+        public static let regular: Font.Weight
+
+        public static let medium: Font.Weight
+
+        public static let semibold: Font.Weight
+
+        public static let bold: Font.Weight
+
+        public static let heavy: Font.Weight
+
+        public static let black: Font.Weight
+
+        public static func == (a: Font.Weight, b: Font.Weight) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    public struct Width : Hashable, Sendable {
+
+        public var value: CGFloat
+
+        public static let compressed: Font.Width
+
+        public static let condensed: Font.Width
+
+        public static let standard: Font.Width
+
+        public static let expanded: Font.Width
+
+        public init(_ value: CGFloat)
+
+        public static func == (a: Font.Width, b: Font.Width) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public enum Leading : Sendable {
+
+        case standard
+
+        case tight
+
+        case loose
+
+        public static func == (a: Font.Leading, b: Font.Leading) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+extension Text {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public struct WritingDirectionStrategy : Hashable, Sendable {
+
+        public static let layoutBased: Text.WritingDirectionStrategy
+
+        public static let contentBased: Text.WritingDirectionStrategy
+
+        public static let `default`: Text.WritingDirectionStrategy
+
+        public static func == (a: Text.WritingDirectionStrategy, b: Text.WritingDirectionStrategy) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func writingDirection(strategy: Text.WritingDirectionStrategy) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Anchor.Source where Value == CGRect {
+
+    public static func rect(_ r: CGRect) -> Anchor<Value>.Source
+
+    public static var bounds: Anchor<CGRect>.Source { get }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension View {
+
+    nonisolated public func containerValue<V>(_ keyPath: WritableKeyPath<ContainerValues, V>, _ value: V) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Bindable where Value : AnyObject {
+
+    public subscript<Subject>(dynamicMember keyPath: ReferenceWritableKeyPath<Value, Subject>) -> Binding<Subject> { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Bindable where Value : AnyObject, Value : Observable {
+
+    public init(wrappedValue: Value)
+
+    public init(_ wrappedValue: Value)
+
+    public init(projectedValue: Bindable<Value>)
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Bindable : Identifiable where Value : Identifiable {
+
+    public var id: Value.ID { get }
+
+    @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+    public typealias ID = Value.ID
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Bindable : Sendable where Value : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func anchorPreference<A, K>(key _: K.Type = K.self, value: Anchor<A>.Source, transform: @escaping (Anchor<A>) -> K.Value) -> some View where K : PreferenceKey
+
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -33621,9 +37312,549 @@ extension Optional : Gesture where Wrapped : Gesture {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func frame(width: CGFloat? = nil, height: CGFloat? = nil, alignment: Alignment = .center) -> some View
+
+
+    @available(*, deprecated, message: "Please pass one or more parameters.")
+    @inlinable nonisolated public func frame() -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension TextRenderer {
+
+    public func sizeThatFits(proposal: ProposedViewSize, text: TextProxy) -> CGSize
+
+    public var displayPadding: EdgeInsets { get }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension View {
+
+    nonisolated public func textRenderer<T>(_ renderer: T) -> some View where T : TextRenderer
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text {
+
+    public func customAttribute<T>(_ value: T) -> Text where T : TextAttribute
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text {
+
+    public struct Layout : RandomAccessCollection, Equatable {
+
+        @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+        public var isTruncated: Bool { get }
+
+        public var startIndex: Int { get }
+
+        public var endIndex: Int { get }
+
+        public subscript(index: Int) -> Text.Layout.Line { get }
+
+        @frozen public struct CharacterIndex : Comparable, Hashable, Strideable, Sendable {
+
+            public static func < (lhs: Text.Layout.CharacterIndex, rhs: Text.Layout.CharacterIndex) -> Bool
+
+            public func advanced(by n: Int) -> Text.Layout.CharacterIndex
+
+            public func distance(to other: Text.Layout.CharacterIndex) -> Int
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Stride = Int
+
+            public func hash(into hasher: inout Hasher)
+
+            public var hashValue: Int { get }
+        }
+
+        @frozen public struct TypographicBounds : Equatable, Sendable {
+
+            public var origin: CGPoint
+
+            public var width: CGFloat
+
+            public var ascent: CGFloat
+
+            public var descent: CGFloat
+
+            public var leading: CGFloat
+
+            public init()
+
+            public var rect: CGRect { get }
+
+            public static func == (a: Text.Layout.TypographicBounds, b: Text.Layout.TypographicBounds) -> Bool
+        }
+
+        public struct Line : RandomAccessCollection, Equatable {
+
+            public var origin: CGPoint
+
+            public var startIndex: Int { get }
+
+            public var endIndex: Int { get }
+
+            public subscript(index: Int) -> Text.Layout.Run { get }
+
+            public var typographicBounds: Text.Layout.TypographicBounds { get }
+
+            public static func == (lhs: Text.Layout.Line, rhs: Text.Layout.Line) -> Bool
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Element = Text.Layout.Run
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Index = Int
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Indices = Range<Int>
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Iterator = IndexingIterator<Text.Layout.Line>
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias SubSequence = Slice<Text.Layout.Line>
+        }
+
+        public struct Run : RandomAccessCollection, Equatable {
+
+            public var startIndex: Int { get }
+
+            public var endIndex: Int { get }
+
+            public subscript(index: Int) -> Text.Layout.RunSlice { get }
+
+            public subscript(bounds: Range<Int>) -> Text.Layout.RunSlice { get }
+
+            public subscript<T>(key: T.Type) -> T? where T : TextAttribute { get }
+
+            public var layoutDirection: LayoutDirection { get }
+
+            public var typographicBounds: Text.Layout.TypographicBounds { get }
+
+            public var characterIndices: [Text.Layout.CharacterIndex] { get }
+
+            public static func == (lhs: Text.Layout.Run, rhs: Text.Layout.Run) -> Bool
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Element = Text.Layout.RunSlice
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Index = Int
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Indices = Range<Int>
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Iterator = IndexingIterator<Text.Layout.Run>
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias SubSequence = Text.Layout.RunSlice
+        }
+
+        public struct RunSlice : RandomAccessCollection, Equatable {
+
+            public var run: Text.Layout.Run
+
+            public var indices: Range<Int>
+
+            public init(run: Text.Layout.Run, indices: Range<Int>)
+
+            public var startIndex: Int { get }
+
+            public var endIndex: Int { get }
+
+            public subscript(index: Int) -> Text.Layout.RunSlice { get }
+
+            public subscript(bounds: Range<Int>) -> Text.Layout.RunSlice { get }
+
+            public subscript<T>(key: T.Type) -> T? where T : TextAttribute { get }
+
+            public var typographicBounds: Text.Layout.TypographicBounds { get }
+
+            public var characterIndices: [Text.Layout.CharacterIndex] { get }
+
+            public static func == (a: Text.Layout.RunSlice, b: Text.Layout.RunSlice) -> Bool
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Element = Text.Layout.RunSlice
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Index = Int
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Indices = Range<Int>
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias Iterator = IndexingIterator<Text.Layout.RunSlice>
+
+            @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+            public typealias SubSequence = Text.Layout.RunSlice
+        }
+
+        public static func == (a: Text.Layout, b: Text.Layout) -> Bool
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias Element = Text.Layout.Line
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias Index = Int
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias Indices = Range<Int>
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias Iterator = IndexingIterator<Text.Layout>
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias SubSequence = Slice<Text.Layout>
+    }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text {
+
+    public struct LayoutKey : PreferenceKey, Sendable {
+
+        public struct AnchoredLayout : Equatable {
+
+            public var origin: Anchor<CGPoint>
+
+            public var layout: Text.Layout
+
+            public static func == (a: Text.LayoutKey.AnchoredLayout, b: Text.LayoutKey.AnchoredLayout) -> Bool
+        }
+
+        public typealias Value = [Text.LayoutKey.AnchoredLayout]
+
+        public static var defaultValue: Text.LayoutKey.Value { get }
+
+        public static func reduce(value: inout Text.LayoutKey.Value, nextValue: () -> Text.LayoutKey.Value)
+    }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text.Layout {
+
+    @frozen public struct DrawingOptions : OptionSet {
+
+        public let rawValue: UInt32
+
+        public init(rawValue: UInt32)
+
+        public static var disablesSubpixelQuantization: Text.Layout.DrawingOptions { get }
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias ArrayLiteralElement = Text.Layout.DrawingOptions
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias Element = Text.Layout.DrawingOptions
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias RawValue = UInt32
+    }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension GraphicsContext {
+
+    public func draw(_ line: Text.Layout.Line, options: Text.Layout.DrawingOptions = .init())
+
+    public func draw(_ run: Text.Layout.Run, options: Text.Layout.DrawingOptions = .init())
+
+    public func draw(_ slice: Text.Layout.RunSlice, options: Text.Layout.DrawingOptions = .init())
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text {
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, renamed: "foregroundStyle(_:)")
+    nonisolated public func foregroundColor(_ color: Color?) -> Text
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func foregroundStyle<S>(_ style: S) -> Text where S : ShapeStyle
+
+    nonisolated public func font(_ font: Font?) -> Text
+
+    nonisolated public func fontWeight(_ weight: Font.Weight?) -> Text
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func fontWidth(_ width: Font.Width?) -> Text
+
+    nonisolated public func bold() -> Text
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func bold(_ isActive: Bool) -> Text
+
+    nonisolated public func italic() -> Text
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func italic(_ isActive: Bool) -> Text
+
+    @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
+    nonisolated public func monospaced(_ isActive: Bool = true) -> Text
+
+    @available(iOS 16.1, macOS 13.0, tvOS 16.1, watchOS 9.1, *)
+    nonisolated public func fontDesign(_ design: Font.Design?) -> Text
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    nonisolated public func monospacedDigit() -> Text
+
+    nonisolated public func strikethrough(_ isActive: Bool = true, color: Color? = nil) -> Text
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func strikethrough(_ isActive: Bool = true, pattern: Text.LineStyle.Pattern, color: Color? = nil) -> Text
+
+    nonisolated public func underline(_ isActive: Bool = true, color: Color? = nil) -> Text
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func underline(_ isActive: Bool = true, pattern: Text.LineStyle.Pattern, color: Color? = nil) -> Text
+
+    nonisolated public func kerning(_ kerning: CGFloat) -> Text
+
+    nonisolated public func tracking(_ tracking: CGFloat) -> Text
+
+    nonisolated public func baselineOffset(_ baselineOffset: CGFloat) -> Text
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public struct Scale : Sendable, Hashable {
+
+        public static let `default`: Text.Scale
+
+        public static let secondary: Text.Scale
+
+        public static func == (a: Text.Scale, b: Text.Scale) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public func textScale(_ scale: Text.Scale, isEnabled: Bool = true) -> Text
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func textScale(_ scale: Text.Scale, isEnabled: Bool = true) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func contentShape<S>(_ shape: S, eoFill: Bool = false) -> some View where S : Shape
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation {
+
+    public static func spring(duration: TimeInterval = 0.5, bounce: Double = 0.0, blendDuration: Double = 0) -> Animation
+
+    public static func spring(response: Double = 0.5, dampingFraction: Double = 0.825, blendDuration: TimeInterval = 0) -> Animation
+
+    public static var spring: Animation { get }
+
+    public static func interactiveSpring(response: Double = 0.15, dampingFraction: Double = 0.86, blendDuration: TimeInterval = 0.25) -> Animation
+
+    public static var interactiveSpring: Animation { get }
+
+    public static func interactiveSpring(duration: TimeInterval = 0.15, extraBounce: Double = 0.0, blendDuration: TimeInterval = 0.25) -> Animation
+
+    public static var smooth: Animation { get }
+
+    public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+
+    public static var snappy: Animation { get }
+
+    public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+
+    public static var bouncy: Animation { get }
+
+    public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func contentShape<S>(_ kind: ContentShapeKinds, _ shape: S, eoFill: Bool = false) -> some View where S : Shape
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func animation<V>(_ animation: Animation?, value: V) -> some View where V : Equatable
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View where Self : Equatable {
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @inlinable nonisolated public func animation(_ animation: Animation?) -> some View
+
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Shape where Self == ConcentricRectangle {
+
+    public static func rect(corners: Edge.Corner.Style, isUniform: Bool = false) -> Self
+
+    public static func rect(topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+
+    public static func rect(uniformTopCorners: Edge.Corner.Style, uniformBottomCorners: Edge.Corner.Style) -> Self
+
+    public static func rect(uniformLeadingCorners: Edge.Corner.Style, uniformTrailingCorners: Edge.Corner.Style) -> Self
+
+    public static func rect(uniformTopCorners: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+
+    public static func rect(uniformBottomCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style) -> Self
+
+    public static func rect(uniformLeadingCorners: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+
+    public static func rect(uniformTrailingCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style) -> Self
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Rectangle : RoundedRectangularShape {
+
+    public func corners(in size: CGSize?) -> Rectangle.Corners?
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension RoundedRectangle : RoundedRectangularShape {
+
+    public func corners(in size: CGSize?) -> RoundedRectangle.Corners?
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension UnevenRoundedRectangle : RoundedRectangularShape {
+
+    public func corners(in size: CGSize?) -> UnevenRoundedRectangle.Corners?
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Circle : RoundedRectangularShape {
+
+    public func corners(in size: CGSize?) -> Circle.Corners?
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Capsule : RoundedRectangularShape {
+
+    public func corners(in size: CGSize?) -> Capsule.Corners?
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension View {
+
+    @inlinable nonisolated public func containerShape(_ shape: some RoundedRectangularShape) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color : View {
+
+    public typealias Body = Never
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    @available(iOS, deprecated: 17.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
+    @available(macOS, deprecated: 14.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
+    @available(tvOS, deprecated: 17.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
+    @available(watchOS, deprecated: 10.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
+    @available(visionOS, deprecated: 1.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
+    @inlinable nonisolated public func onChange<V>(of value: V, perform action: @escaping (_ newValue: V) -> Void) -> some View where V : Equatable
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func onChange<V>(of value: V, initial: Bool = false, _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void) -> some View where V : Equatable
+
+
+    nonisolated public func onChange<V>(of value: V, initial: Bool = false, _ action: @escaping () -> Void) -> some View where V : Equatable
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Transaction {
+
+    public init(animation: Animation?)
+
+    public var animation: Animation?
+
+    public var disablesAnimations: Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnimatablePair : Sendable where First : Sendable, Second : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Never : Gesture {
 
     public typealias Value = Never
+}
+
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use Color(cgColor:) when converting a CGColor, or create a standard Color directly")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Use Color(cgColor:) when converting a CGColor, or create a standard Color directly")
+@available(tvOS, introduced: 14.0, deprecated: 100000.0, message: "Use Color(cgColor:) when converting a CGColor, or create a standard Color directly")
+@available(watchOS, introduced: 7.0, deprecated: 100000.0, message: "Use Color(cgColor:) when converting a CGColor, or create a standard Color directly")
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use Color(cgColor:) when converting a CGColor, or create a standard Color directly")
+extension Color {
+
+    public init(_ cgColor: CGColor)
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Color {
+
+    public init(cgColor: CGColor)
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color.Resolved {
+
+    public var cgColor: CGColor { get }
+}
+
+extension Font {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public static var `default`: Font { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -33638,6 +37869,198 @@ extension MutableCollection {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
     public mutating func move(fromOffsets source: IndexSet, toOffset destination: Int)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color {
+
+    public init(_ name: String, bundle: Bundle? = nil)
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color {
+
+    public init(_ resource: ColorResource)
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension TimeDataSource : Sendable where Value : Sendable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension TimeDataSource {
+
+    public static var currentDate: TimeDataSource<Date> { get }
+
+    public static func durationOffset(to date: Date) -> TimeDataSource<Duration>
+
+    public static func dateRange(startingAt date: Date) -> TimeDataSource<Range<Date>>
+
+    public static func dateRange(endingAt date: Date) -> TimeDataSource<Range<Date>>
+}
+
+extension Text {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init<V, F>(_ source: TimeDataSource<V>, format: F) where V == F.FormatInput, F : DiscreteFormatStyle, F.FormatOutput == AttributedString
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public init<V, F>(_ source: TimeDataSource<V>, format: F) where V == F.FormatInput, F : DiscreteFormatStyle, F.FormatOutput == String
+}
+
+extension LocalizedStringKey.StringInterpolation {
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func appendInterpolation<V, F>(_ source: TimeDataSource<V>, format: F) where V == F.FormatInput, F : DiscreteFormatStyle, F.FormatOutput == AttributedString
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public mutating func appendInterpolation<V, F>(_ source: TimeDataSource<V>, format: F) where V == F.FormatInput, F : DiscreteFormatStyle, F.FormatOutput == String
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Shape where Self == ContainerRelativeShape {
+
+    public static var containerRelative: ContainerRelativeShape { get }
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ContainerRelativeShape : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func containerShape<T>(_ shape: T) -> some View where T : InsettableShape
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func phaseAnimator<Phase>(_ phases: some Sequence, trigger: some Equatable, @ViewBuilder content: @escaping (PlaceholderContentView<Self>, Phase) -> some View, animation: @escaping (Phase) -> Animation? = { _ in .default }) -> some View where Phase : Equatable
+
+
+    nonisolated public func phaseAnimator<Phase>(_ phases: some Sequence, @ViewBuilder content: @escaping (PlaceholderContentView<Self>, Phase) -> some View, animation: @escaping (Phase) -> Animation? = { _ in .default }) -> some View where Phase : Equatable
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 16.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func onTapGesture(count: Int = 1, perform action: @escaping () -> Void) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension KeyframeTrackContentBuilder {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public struct Conditional<ConditionalValue, First, Second> : KeyframeTrackContent where ConditionalValue == First.Value, First : KeyframeTrackContent, Second : KeyframeTrackContent, First.Value == Second.Value {
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias Body = KeyframeTrackContentBuilder<KeyframeTrackContentBuilder<Value>.Conditional<ConditionalValue, First, Second>.Value>.Conditional<ConditionalValue, First, Second>
+
+        @available(iOS 17.0, tvOS 17.0, watchOS 10.0, macOS 14.0, *)
+        public typealias Value = ConditionalValue
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func layoutPriority(_ value: Double) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Environment {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public init<T>(_ objectType: T.Type) where Value == T?, T : AnyObject, T : Observable
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension EnvironmentValues {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    public subscript<T>(objectType: T.Type) -> T? where T : AnyObject, T : Observable
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func environment<T>(_ object: T?) -> some View where T : AnyObject, T : Observable
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func onPreferenceChange<K>(_ key: K.Type = K.self, perform action: @escaping (K.Value) -> Void) -> some View where K : PreferenceKey, K.Value : Equatable
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var headerProminence: Prominence
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func headerProminence(_ prominence: Prominence) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension _ViewDebug.Data : Encodable {
+
+    public func encode(to encoder: any Encoder) throws
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation {
+
+    public static func easeInOut(duration: TimeInterval) -> Animation
+
+    public static var easeInOut: Animation { get }
+
+    public static func easeIn(duration: TimeInterval) -> Animation
+
+    public static var easeIn: Animation { get }
+
+    public static func easeOut(duration: TimeInterval) -> Animation
+
+    public static var easeOut: Animation { get }
+
+    public static func linear(duration: TimeInterval) -> Animation
+
+    public static var linear: Animation { get }
+
+    public static func timingCurve(_ p1x: Double, _ p1y: Double, _ p2x: Double, _ p2y: Double, duration: TimeInterval = 0.35) -> Animation
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animatable where Self : VectorArithmetic {
+
+    public var animatableData: Self
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animatable where Self.AnimatableData == EmptyAnimatableData {
+
+    public var animatableData: EmptyAnimatableData
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -33661,7 +38084,1009 @@ extension Optional : View where Wrapped : View {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape {
+
+    @inlinable nonisolated public func size(_ size: CGSize) -> some Shape
+
+
+    @inlinable nonisolated public func size(width: CGFloat, height: CGFloat) -> some Shape
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Shape {
+
+    nonisolated public func size(_ size: CGSize, anchor: UnitPoint) -> some Shape
+
+
+    nonisolated public func size(width: CGFloat, height: CGFloat, anchor: UnitPoint) -> some Shape
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ViewModifier where Self.Body == Never {
+
+    @MainActor @preconcurrency public func body(content: Self.Content) -> Self.Body
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func modifier<T>(_ modifier: T) -> ModifiedContent<Self, T>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent : Equatable where Content : Equatable, Modifier : Equatable {
+
+    public static func == (a: ModifiedContent<Content, Modifier>, b: ModifiedContent<Content, Modifier>) -> Bool
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension ModifiedContent : Sendable where Content : Sendable, Modifier : Sendable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension ModifiedContent : Animatable where Content : Animatable, Modifier : Animatable {
+
+    public var animatableData: AnimatablePair<Content.AnimatableData, Modifier.AnimatableData>
+
+    @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+    public typealias AnimatableData = AnimatablePair<Content.AnimatableData, Modifier.AnimatableData>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent : View where Content : View, Modifier : ViewModifier {
+
+    @MainActor @preconcurrency public var body: ModifiedContent<Content, Modifier>.Body { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent : ViewModifier where Content : ViewModifier, Modifier : ViewModifier {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ViewModifier {
+
+    @inlinable nonisolated public func concat<T>(_ modifier: T) -> ModifiedContent<Self, T>
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
+extension Image {
+
+    public struct DynamicRange : Hashable, Sendable {
+
+        public static let standard: Image.DynamicRange
+
+        public static let constrainedHigh: Image.DynamicRange
+
+        public static let high: Image.DynamicRange
+
+        public static func == (a: Image.DynamicRange, b: Image.DynamicRange) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public func allowedDynamicRange(_ range: Image.DynamicRange?) -> Image
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
+extension EnvironmentValues {
+
+    public var allowedDynamicRange: Image.DynamicRange?
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func allowedDynamicRange(_ range: Image.DynamicRange?) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func symbolVariant(_ variant: SymbolVariants) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var symbolVariants: SymbolVariants
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Image {
+
+    public init(size: CGSize, label: Text? = nil, opaque: Bool = false, colorMode: ColorRenderingMode = .nonLinear, renderer: @escaping (inout GraphicsContext) -> Void)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use `background(alignment:content:)` instead.")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use `background(alignment:content:)` instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Use `background(alignment:content:)` instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use `background(alignment:content:)` instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use `background(alignment:content:)` instead.")
+    @inlinable nonisolated public func background<Background>(_ background: Background, alignment: Alignment = .center) -> some View where Background : View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func background<V>(alignment: Alignment = .center, @ViewBuilder content: () -> V) -> some View where V : View
+
+
+    @inlinable nonisolated public func background(ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View
+
+
+    @inlinable nonisolated public func background<S>(_ style: S, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View where S : ShapeStyle
+
+
+    @inlinable nonisolated public func background<S>(in shape: S, fillStyle: FillStyle = FillStyle()) -> some View where S : Shape
+
+
+    @inlinable nonisolated public func background<S, T>(_ style: S, in shape: T, fillStyle: FillStyle = FillStyle()) -> some View where S : ShapeStyle, T : Shape
+
+
+    @inlinable nonisolated public func background<S>(in shape: S, fillStyle: FillStyle = FillStyle()) -> some View where S : InsettableShape
+
+
+    @inlinable nonisolated public func background<S, T>(_ style: S, in shape: T, fillStyle: FillStyle = FillStyle()) -> some View where S : ShapeStyle, T : InsettableShape
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension CustomAnimation {
+
+    public func velocity<V>(value: V, time: TimeInterval, context: AnimationContext<V>) -> V? where V : VectorArithmetic
+
+    public func shouldMerge<V>(previous: Animation, value: V, time: TimeInterval, context: inout AnimationContext<V>) -> Bool where V : VectorArithmetic
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Never : View {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForEach : DynamicViewContent where Content : View {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent : DynamicViewContent where Content : DynamicViewContent, Modifier : ViewModifier {
+
+    public var data: Content.Data { get }
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias Data = Content.Data
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension GeometryEffect {
+
+    @inlinable public func ignoredByLayout() -> _IgnoredByLayoutEffect<Self>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension State : Sendable where Value : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension State where Value : ExpressibleByNilLiteral {
+
+    @inlinable public init()
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public func animation(_ animation: Animation?) -> AnyTransition
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition {
+
+    @MainActor @preconcurrency public func animation(_ animation: Animation?) -> some Transition
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public func combined(with other: AnyTransition) -> AnyTransition
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition {
+
+    @MainActor @preconcurrency public func combined<T>(with other: T) -> some Transition where T : Transition
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    nonisolated public func contentTransition(_ transition: ContentTransition) -> some View
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension EnvironmentValues {
+
+    public var contentTransition: ContentTransition
+
+    public var contentTransitionAddsDrawingGroup: Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation {
+
+    public func repeatCount(_ repeatCount: Int, autoreverses: Bool = true) -> Animation
+
+    public func repeatForever(autoreverses: Bool = true) -> Animation
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition {
+
+    @MainActor @preconcurrency public static var properties: TransitionProperties { get }
+
+    @MainActor @preconcurrency public func apply<V>(content: V, phase: TransitionPhase) -> some View where V : View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension TransitionPhase {
+
+    public var value: Double { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public static var identity: AnyTransition { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == IdentityTransition {
+
+    @MainActor @preconcurrency public static var identity: IdentityTransition { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func visualEffect(_ effect: @escaping @Sendable (EmptyVisualEffect, GeometryProxy) -> some VisualEffect) -> some View
+
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension ModifiedContent : VisualEffect where Content : VisualEffect, Modifier : VisualEffect {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension CoordinateSpace {
+
+    public var isGlobal: Bool { get }
+
+    public var isLocal: Bool { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension CoordinateSpace : Equatable, Hashable {
+
+    public func hash(into hasher: inout Hasher)
+
+    public static func == (lhs: CoordinateSpace, rhs: CoordinateSpace) -> Bool
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension CoordinateSpaceProtocol where Self == NamedCoordinateSpace {
+
+    public static func named(_ name: some Hashable) -> NamedCoordinateSpace
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension CoordinateSpaceProtocol where Self == LocalCoordinateSpace {
+
+    public static var local: LocalCoordinateSpace { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension CoordinateSpaceProtocol where Self == GlobalCoordinateSpace {
+
+    public static var global: GlobalCoordinateSpace { get }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Group {
+
+    public init<Base, Result>(subviews view: Base, @ViewBuilder transform: @escaping (SubviewsCollection) -> Result) where Content == GroupElementsOfContent<Base, Result>, Base : View, Result : View
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SubviewsCollection : View {
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias Body = Never
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SubviewsCollectionSlice : View {
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias Body = Never
+}
+
+@available(iOS 17.1, macOS 14.1, tvOS 17.1, watchOS 10.1, *)
+extension ImageRenderer : Observable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func saturation(_ amount: Double) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func saturation(_ amount: Double) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color {
+
+    public func opacity(_ opacity: Double) -> Color
+
+    @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+    public func mix(with rhs: Color, by fraction: Double, in colorSpace: Gradient.ColorSpace = .perceptual) -> Color
+}
+
+extension Text {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public struct AlignmentStrategy : Hashable, Sendable {
+
+        public static let layoutBased: Text.AlignmentStrategy
+
+        public static let writingDirectionBased: Text.AlignmentStrategy
+
+        public static let `default`: Text.AlignmentStrategy
+
+        public static func == (a: Text.AlignmentStrategy, b: Text.AlignmentStrategy) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func multilineTextAlignment(strategy: Text.AlignmentStrategy) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Angle : Hashable, Comparable {
+
+    @inlinable public static func < (lhs: Angle, rhs: Angle) -> Bool
+
+    public static func == (a: Angle, b: Angle) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Angle : Codable {
+
+    public func encode(to encoder: any Encoder) throws
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Angle : Animatable {
+
+    public var animatableData: Double
+
+    @inlinable public static var zero: Angle { get }
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias AnimatableData = Double
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use ignoresSafeArea(_:edges:) instead.")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use ignoresSafeArea(_:edges:) instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Use ignoresSafeArea(_:edges:) instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use ignoresSafeArea(_:edges:) instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use ignoresSafeArea(_:edges:) instead.")
+    @inlinable nonisolated public func edgesIgnoringSafeArea(_ edges: Edge.Set) -> some View
+
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    @inlinable nonisolated public func ignoresSafeArea(_ regions: SafeAreaRegions = .all, edges: Edge.Set = .all) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func allowsHitTesting(_ enabled: Bool) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image {
+
+    public enum TemplateRenderingMode : Sendable {
+
+        case template
+
+        case original
+
+        public static func == (a: Image.TemplateRenderingMode, b: Image.TemplateRenderingMode) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    @available(macOS 11.0, *)
+    public enum Scale : Hashable, Sendable {
+
+        case small
+
+        case medium
+
+        case large
+
+        public static func == (a: Image.Scale, b: Image.Scale) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @available(macOS 11.0, *)
+    @inlinable nonisolated public func imageScale(_ scale: Image.Scale) -> some View
+
+
+    @inlinable nonisolated public func font(_ font: Font?) -> some View
+
+
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    nonisolated public func monospacedDigit() -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func monospaced(_ isActive: Bool = true) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func fontWeight(_ weight: Font.Weight?) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func fontWidth(_ width: Font.Width?) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func bold(_ isActive: Bool = true) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func italic(_ isActive: Bool = true) -> some View
+
+
+    @available(iOS 16.1, macOS 13.0, tvOS 16.1, watchOS 9.1, *)
+    nonisolated public func fontDesign(_ design: Font.Design?) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func kerning(_ kerning: CGFloat) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func tracking(_ tracking: CGFloat) -> some View
+
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    nonisolated public func baselineOffset(_ baselineOffset: CGFloat) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var font: Font?
+
+    @available(macOS 11.0, *)
+    public var imageScale: Image.Scale
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var displayScale: CGFloat
+
+    public var pixelLength: CGFloat { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var legibilityWeight: LegibilityWeight?
+
+    public var locale: Locale
+
+    public var calendar: Calendar
+
+    public var timeZone: TimeZone
+
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+    @backDeployed(before: macOS 14.0, tvOS 17.0, watchOS 10.0)
+    public var horizontalSizeClass: UserInterfaceSizeClass?
+
+    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+    @backDeployed(before: macOS 14.0, tvOS 17.0, watchOS 10.0)
+    public var verticalSizeClass: UserInterfaceSizeClass?
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension Gradient {
+
+    public struct ColorSpace : Hashable, Sendable {
+
+        public static let device: Gradient.ColorSpace
+
+        public static let perceptual: Gradient.ColorSpace
+
+        public static func == (a: Gradient.ColorSpace, b: Gradient.ColorSpace) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public func colorSpace(_ space: Gradient.ColorSpace) -> AnyGradient
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension AnyGradient {
+
+    public func colorSpace(_ space: Gradient.ColorSpace) -> AnyGradient
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForEach : View where Content : View {
+
+    public typealias Body = Never
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForEach where ID == Data.Element.ID, Content : View, Data.Element : Identifiable {
+
+    public init(_ data: Data, @ViewBuilder content: @escaping (Data.Element) -> Content)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForEach where Content : View {
+
+    public init(_ data: Data, id: KeyPath<Data.Element, ID>, @ViewBuilder content: @escaping (Data.Element) -> Content)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForEach where Content : View {
+
+    public init<C>(_ data: Binding<C>, @ViewBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, ID == C.Element.ID, C : MutableCollection, C : RandomAccessCollection, C.Element : Identifiable, C.Index : Hashable
+
+    public init<C>(_ data: Binding<C>, id: KeyPath<C.Element, ID>, @ViewBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, C : MutableCollection, C : RandomAccessCollection, C.Index : Hashable
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForEach where Data == Range<Int>, ID == Int, Content : View {
+
+    public init(_ data: Range<Int>, @ViewBuilder content: @escaping (Int) -> Content)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension OffsetShape : InsettableShape where Content : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> OffsetShape<Content.InsetShape>
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias InsetShape = OffsetShape<Content.InsetShape>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension RotatedShape : InsettableShape where Content : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> RotatedShape<Content.InsetShape>
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias InsetShape = RotatedShape<Content.InsetShape>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape {
+
+    @inlinable public func offset(_ offset: CGSize) -> OffsetShape<Self>
+
+    @inlinable public func offset(_ offset: CGPoint) -> OffsetShape<Self>
+
+    @inlinable public func offset(x: CGFloat = 0, y: CGFloat = 0) -> OffsetShape<Self>
+
+    @inlinable public func scale(x: CGFloat = 1, y: CGFloat = 1, anchor: UnitPoint = .center) -> ScaledShape<Self>
+
+    @inlinable public func scale(_ scale: CGFloat, anchor: UnitPoint = .center) -> ScaledShape<Self>
+
+    @inlinable public func rotation(_ angle: Angle, anchor: UnitPoint = .center) -> RotatedShape<Self>
+
+    @inlinable public func transform(_ transform: CGAffineTransform) -> TransformedShape<Self>
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    nonisolated public func containerCornerOffset(_ edges: Edge.Set, sizeToFit: Bool = false) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func colorMultiply(_ color: Color) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Canvas where Symbols == EmptyView {
+
+    public init(opaque: Bool = false, colorMode: ColorRenderingMode = .nonLinear, rendersAsynchronously: Bool = false, renderer: @escaping (inout GraphicsContext, CGSize) -> Void)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func transformAnchorPreference<A, K>(key _: K.Type = K.self, value: Anchor<A>.Source, transform: @escaping (inout K.Value, Anchor<A>) -> Void) -> some View where K : PreferenceKey
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func clipShape<S>(_ shape: S, style: FillStyle = FillStyle()) -> some View where S : Shape
+
+
+    @inlinable nonisolated public func clipped(antialiased: Bool = false) -> some View
+
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use `clipShape` or `fill` instead.")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use `clipShape` or `fill` instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Use `clipShape` or `fill` instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use `clipShape` or `fill` instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use `clipShape` or `fill` instead.")
+    @inlinable nonisolated public func cornerRadius(_ radius: CGFloat, antialiased: Bool = true) -> some View
+
+}
+
+extension View {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    @available(visionOS, unavailable)
+    nonisolated public func glassEffectID(_ id: (some Hashable & Sendable)?, in namespace: Namespace.ID) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func transaction(_ transform: @escaping (inout Transaction) -> Void) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func transaction(value: some Equatable, _ transform: @escaping (inout Transaction) -> Void) -> some View
+
+
+    @available(iOS, introduced: 13.0, deprecated: 15.0, message: "Use withAnimation or animation(_:value:) instead.")
+    @available(macOS, introduced: 10.15, deprecated: 12.0, message: "Use withAnimation or animation(_:value:) instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 15.0, message: "Use withAnimation or animation(_:value:) instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 8.0, message: "Use withAnimation or animation(_:value:) instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 1.0, message: "Use withAnimation or animation(_:value:) instead.")
+    @inlinable nonisolated public func animation(_ animation: Animation?) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ViewModifier {
+
+    @inlinable nonisolated public func transaction(_ transform: @escaping (inout Transaction) -> Void) -> some ViewModifier
+
+
+    @MainActor @inlinable @preconcurrency public func animation(_ animation: Animation?) -> some ViewModifier
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func transaction<V>(_ transform: @escaping (inout Transaction) -> Void, @ViewBuilder body: (PlaceholderContentView<Self>) -> V) -> some View where V : View
+
+
+    nonisolated public func animation<V>(_ animation: Animation?, @ViewBuilder body: (PlaceholderContentView<Self>) -> V) -> some View where V : View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font {
+
+    public static func custom(_ name: String, size: CGFloat) -> Font
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public static func custom(_ name: String, size: CGFloat, relativeTo textStyle: Font.TextStyle) -> Font
+
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    public static func custom(_ name: String, fixedSize: CGFloat) -> Font
+
+    public init(_ font: CTFont)
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font {
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    public static func system(size: CGFloat, weight: Font.Weight? = nil, design: Font.Design? = nil) -> Font
+
+    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use `system(size:weight:design:)` instead.")
+    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use `system(size:weight:design:)` instead.")
+    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Use `system(size:weight:design:)` instead.")
+    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use `system(size:weight:design:)` instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use `system(size:weight:design:)` instead.")
+    public static func system(size: CGFloat, weight: Font.Weight = .regular, design: Font.Design = .default) -> Font
+
+    public enum Design : Hashable, Sendable {
+
+        case `default`
+
+        @available(watchOS 7.0, *)
+        case serif
+
+        case rounded
+
+        @available(watchOS 7.0, *)
+        case monospaced
+
+        public static func == (a: Font.Design, b: Font.Design) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension PreferenceKey where Self.Value : ExpressibleByNilLiteral {
+
+    public static var defaultValue: Self.Value { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape {
+
+    @inlinable nonisolated public func fill<S>(_ content: S, style: FillStyle = FillStyle()) -> some View where S : ShapeStyle
+
+
+    @inlinable nonisolated public func fill(style: FillStyle = FillStyle()) -> some View
+
+
+    @inlinable nonisolated public func stroke<S>(_ content: S, style: StrokeStyle) -> some View where S : ShapeStyle
+
+
+    @inlinable nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1) -> some View where S : ShapeStyle
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Shape {
+
+    public var body: _ShapeView<Self, ForegroundStyle> { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ShapeStyle where Self : View, Self.Body == _ShapeView<Rectangle, Self> {
+
+    public var body: _ShapeView<Rectangle, Self> { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Shape {
+
+    nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> _ShapeView<Self, S> where S : ShapeStyle
+
+    nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
+
+    nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension InsettableShape {
+
+    nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
+
+    nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ShapeView {
+
+    nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> FillShapeView<Self.Content, S, Self> where S : ShapeStyle
+
+    nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
+
+    nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ShapeView where Self.Content : InsettableShape {
+
+    nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
+
+    nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Binding {
+
+    public init<V>(_ base: Binding<V>) where Value == V?
+
+    public init?(_ base: Binding<Value?>)
+
+    public init<V>(_ base: Binding<V>) where Value == AnyHashable, V : Hashable
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension ModifiedContent : CustomHoverEffect where Content : CustomHoverEffect, Modifier : CustomHoverEffect {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityEnabled: Bool
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityDifferentiateWithoutColor: Bool { get }
+
+    public var accessibilityReduceTransparency: Bool { get }
+
+    public var accessibilityReduceMotion: Bool { get }
+
+    public var accessibilityInvertColors: Bool { get }
+}
+
+@available(iOS, introduced: 14.0, deprecated: 1000, renamed: "accessibilityShowBorders")
+@available(macOS, introduced: 11.0, deprecated: 1000, renamed: "accessibilityShowBorders")
+@available(tvOS, introduced: 14.0, deprecated: 1000, renamed: "accessibilityShowBorders")
+@available(watchOS, introduced: 7.0, deprecated: 1000, renamed: "accessibilityShowBorders")
+@available(visionOS, introduced: 1.0, deprecated: 1000, renamed: "accessibilityShowBorders")
+extension EnvironmentValues {
+
+    public var accessibilityShowButtonShapes: Bool { get }
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension EnvironmentValues {
+
+    @backDeployed(before: iOS 26.1, macOS 26.1, tvOS 26.1, watchOS 26.1, visionOS 26.1)
+    public var accessibilityShowBorders: Bool { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityDimFlashingLights: Bool { get }
+
+    public var accessibilityPlayAnimatedImages: Bool { get }
+}
+
+@available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
+extension EnvironmentValues {
+
+    public var accessibilityReduceHighlightingEffects: Bool { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == BlurReplaceTransition {
+
+    @MainActor @preconcurrency public static func blurReplace(_ config: BlurReplaceTransition.Configuration = .downUp) -> Self
+
+    @MainActor @preconcurrency public static var blurReplace: BlurReplaceTransition { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text.Storage : @unchecked Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text.Modifier : @unchecked Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTextStorage : @unchecked Sendable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension AnyTextStorage : CustomDebugStringConvertible {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func id<ID>(_ id: ID) -> some View where ID : Hashable
+
+}
+
+@available(iOS, introduced: 13.0, deprecated: 100000.0, renamed: "preferredColorScheme(_:)")
+@available(macOS, introduced: 10.15, deprecated: 100000.0, renamed: "preferredColorScheme(_:)")
+@available(tvOS, introduced: 13.0, deprecated: 100000.0, renamed: "preferredColorScheme(_:)")
+@available(watchOS, introduced: 6.0, deprecated: 100000.0, renamed: "preferredColorScheme(_:)")
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, renamed: "preferredColorScheme(_:)")
+extension View {
+
+    @inlinable nonisolated public func colorScheme(_ colorScheme: ColorScheme) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentValues {
+
+    public var colorScheme: ColorScheme
+
+    public var colorSchemeContrast: ColorSchemeContrast { get }
+}
+
+@available(iOS 13.0, macOS 11.0, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func preferredColorScheme(_ colorScheme: ColorScheme?) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image : View {
+
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    public typealias Body = Never
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -33670,6 +39095,311 @@ extension CGRect : Animatable {
     public typealias AnimatableData = AnimatablePair<CGPoint.AnimatableData, CGSize.AnimatableData>
 
     public var animatableData: CGRect.AnimatableData
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func gesture<T>(_ gesture: T, including mask: GestureMask = .all) -> some View where T : Gesture
+
+
+    nonisolated public func highPriorityGesture<T>(_ gesture: T, including mask: GestureMask = .all) -> some View where T : Gesture
+
+
+    nonisolated public func simultaneousGesture<T>(_ gesture: T, including mask: GestureMask = .all) -> some View where T : Gesture
+
+
+    nonisolated public func gesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+
+
+    nonisolated public func highPriorityGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+
+
+    nonisolated public func simultaneousGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension View {
+
+    nonisolated public func gesture<T>(_ gesture: T, name: String, isEnabled: Bool = true) -> some View where T : Gesture
+
+
+    nonisolated public func highPriorityGesture<T>(_ gesture: T, name: String, isEnabled: Bool = true) -> some View where T : Gesture
+
+
+    nonisolated public func simultaneousGesture<T>(_ gesture: T, name: String, isEnabled: Bool = true) -> some View where T : Gesture
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func scaleEffect(_ scale: CGSize, anchor: UnitPoint = .center) -> some View
+
+
+    @inlinable nonisolated public func scaleEffect(_ s: CGFloat, anchor: UnitPoint = .center) -> some View
+
+
+    @inlinable nonisolated public func scaleEffect(x: CGFloat = 1.0, y: CGFloat = 1.0, anchor: UnitPoint = .center) -> some View
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AnyTransition {
+
+    public static var scale: AnyTransition { get }
+
+    public static func scale(scale: CGFloat, anchor: UnitPoint = .center) -> AnyTransition
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transition where Self == ScaleTransition {
+
+    @MainActor @preconcurrency public static var scale: ScaleTransition { get }
+
+    @MainActor @preconcurrency public static func scale(_ scale: Double, anchor: UnitPoint = .center) -> Self
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func scaleEffect(_ scale: CGSize, anchor: UnitPoint = .center) -> some VisualEffect
+
+
+    public func scaleEffect(_ scale: CGFloat, anchor: UnitPoint = .center) -> some VisualEffect
+
+
+    public func scaleEffect(x: CGFloat = 1.0, y: CGFloat = 1.0, anchor: UnitPoint = .center) -> some VisualEffect
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func safeAreaInset<V>(edge: VerticalEdge, alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil, @ViewBuilder content: () -> V) -> some View where V : View
+
+
+    @inlinable nonisolated public func safeAreaInset<V>(edge: HorizontalEdge, alignment: VerticalAlignment = .center, spacing: CGFloat? = nil, @ViewBuilder content: () -> V) -> some View where V : View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func safeAreaPadding(_ insets: EdgeInsets) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func safeAreaPadding(_ edges: Edge.Set = .all, _ length: CGFloat? = nil) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func safeAreaPadding(_ length: CGFloat) -> some View
+
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension Group {
+
+    public init<Base, Result>(sections view: Base, @ViewBuilder transform: @escaping (SectionCollection) -> Result) where Content == GroupSectionsOfContent<Base, Result>, Base : View, Result : View
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension CoordinateSpaceProtocol where Self == NamedCoordinateSpace {
+
+    public static func scrollView(axis: Axis) -> Self
+
+    public static var scrollView: NamedCoordinateSpace { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Animation : Hashable {
+
+    public func animate<V>(value: V, time: TimeInterval, context: inout AnimationContext<V>) -> V? where V : VectorArithmetic
+
+    public func velocity<V>(value: V, time: TimeInterval, context: AnimationContext<V>) -> V? where V : VectorArithmetic
+
+    public func shouldMerge<V>(previous: Animation, value: V, time: TimeInterval, context: inout AnimationContext<V>) -> Bool where V : VectorArithmetic
+
+    public var base: any CustomAnimation { get }
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Animation : CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+
+    public var description: String { get }
+
+    public var debugDescription: String { get }
+
+    public var customMirror: Mirror { get }
+}
+
+extension Edge {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public enum Corner : Int8, Hashable, CaseIterable, Sendable {
+
+        case topLeading
+
+        case topTrailing
+
+        case bottomLeading
+
+        case bottomTrailing
+
+        public struct Set : OptionSet, Hashable, Sendable {
+
+            public typealias Element = Edge.Corner.Set
+
+            public let rawValue: Int8
+
+            public init(rawValue: Int8)
+
+            public static let none: Edge.Corner.Set
+
+            public static let topLeading: Edge.Corner.Set
+
+            public static let topTrailing: Edge.Corner.Set
+
+            public static let bottomLeading: Edge.Corner.Set
+
+            public static let bottomTrailing: Edge.Corner.Set
+
+            public static let all: Edge.Corner.Set
+
+            public static let leading: Edge.Corner.Set
+
+            public static let trailing: Edge.Corner.Set
+
+            public static let bottom: Edge.Corner.Set
+
+            public static let top: Edge.Corner.Set
+
+            public init(_ corner: Edge.Corner)
+
+            public func contains(_ corner: Edge.Corner) -> Bool
+
+            @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+            public typealias ArrayLiteralElement = Edge.Corner.Set.Element
+
+            @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+            public typealias RawValue = Int8
+        }
+
+        public init?(rawValue: Int8)
+
+        @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+        public typealias AllCases = [Edge.Corner]
+
+        @available(iOS 26.0, tvOS 26.0, watchOS 26.0, macOS 26.0, *)
+        public typealias RawValue = Int8
+
+        nonisolated public static var allCases: [Edge.Corner] { get }
+
+        public var rawValue: Int8 { get }
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Edge.Corner : CustomDebugStringConvertible {
+
+    public var debugDescription: String { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Edge.Corner.Set : CustomDebugStringConvertible {
+
+    public var debugDescription: String { get }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension RectangleCornerRadii {
+
+    public subscript(corner: Edge.Corner) -> CGFloat { get }
+}
+
+extension Edge.Corner {
+
+    @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+    public struct Style : Sendable, Hashable, Equatable, Animatable {
+
+        public static func fixed(_ radius: CGFloat) -> Edge.Corner.Style
+
+        public static var concentric: Edge.Corner.Style { get }
+
+        public static func concentric(minimum: Edge.Corner.Style? = nil) -> Edge.Corner.Style
+
+        public var animatableData: Edge.Corner.Style.AnimatableData
+
+        public struct AnimatableData : VectorArithmetic, Sendable {
+
+            public static func - (lhs: Edge.Corner.Style.AnimatableData, rhs: Edge.Corner.Style.AnimatableData) -> Edge.Corner.Style.AnimatableData
+
+            public static func + (lhs: Edge.Corner.Style.AnimatableData, rhs: Edge.Corner.Style.AnimatableData) -> Edge.Corner.Style.AnimatableData
+
+            public mutating func scale(by rhs: Double)
+
+            public var magnitudeSquared: Double { get }
+
+            public static var zero: Edge.Corner.Style.AnimatableData { get }
+
+            public static func == (a: Edge.Corner.Style.AnimatableData, b: Edge.Corner.Style.AnimatableData) -> Bool
+        }
+
+        public static func == (a: Edge.Corner.Style, b: Edge.Corner.Style) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Edge.Corner.Style : ExpressibleByFloatLiteral {
+
+    public typealias FloatLiteralType = Float
+
+    public init(floatLiteral value: Edge.Corner.Style.FloatLiteralType)
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Edge.Corner.Style : ExpressibleByIntegerLiteral {
+
+    public typealias IntegerLiteralType = Int
+
+    public init(integerLiteral value: Edge.Corner.Style.IntegerLiteralType)
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    @inlinable nonisolated public func tint<S>(_ tint: S?) -> some View where S : ShapeStyle
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func tint(_ tint: Color?) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ShapeStyle where Self == TintShapeStyle {
+
+    public static var tint: TintShapeStyle { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Transaction {
+
+    public var tracksVelocity: Bool
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -33681,8 +39411,973 @@ extension FormatStyle where Self == SystemFormatStyle.Timer {
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle {
+
+    public struct Timer : Sendable {
+
+        public typealias FormatInput = Date
+
+        public init(countingDownIn interval: Range<Date>, showsHours: Bool = true, maxFieldCount: Int = 3, maxPrecision: Duration = .seconds(1))
+
+        public init(countingUpIn interval: Range<Date>, showsHours: Bool = true, maxFieldCount: Int = 3, maxPrecision: Duration = .seconds(1))
+    }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.Timer : FormatStyle {
+
+    public func format(_ input: Date) -> AttributedString
+
+    public func locale(_ locale: Locale) -> SystemFormatStyle.Timer
+
+    public static func == (a: SystemFormatStyle.Timer, b: SystemFormatStyle.Timer) -> Bool
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias FormatOutput = AttributedString
+
+    public func encode(to encoder: any Encoder) throws
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+
+    public init(from decoder: any Decoder) throws
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.Timer : DiscreteFormatStyle {
+
+    public func discreteInput(before input: Date) -> Date?
+
+    public func discreteInput(after input: Date) -> Date?
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension FormatStyle where Self == SystemFormatStyle.Stopwatch {
 
     public static func stopwatch(startingAt startDate: Date, showsHours: Bool = true, maxFieldCount: Int = 4, maxPrecision: Duration = .milliseconds(10)) -> SystemFormatStyle.Stopwatch
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle {
+
+    public struct Stopwatch : Sendable {
+
+        public typealias FormatInput = Date
+
+        public init(startingAt startDate: Date, showsHours: Bool = true, maxFieldCount: Int = 4, maxPrecision: Duration = .milliseconds(10))
+    }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.Stopwatch : FormatStyle {
+
+    public func format(_ input: Date) -> AttributedString
+
+    public func locale(_ locale: Locale) -> SystemFormatStyle.Stopwatch
+
+    public static func == (a: SystemFormatStyle.Stopwatch, b: SystemFormatStyle.Stopwatch) -> Bool
+
+    @available(iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, macOS 15.0, *)
+    public typealias FormatOutput = AttributedString
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.Stopwatch : DiscreteFormatStyle {
+
+    public func discreteInput(before input: Date) -> Date?
+
+    public func discreteInput(after input: Date) -> Date?
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension SystemFormatStyle.Stopwatch {
+
+    public init(from decoder: any Decoder) throws
+
+    public func encode(to encoder: any Encoder) throws
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func hueRotation(_ angle: Angle) -> some View
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension VisualEffect {
+
+    public func hueRotation(_ angle: Angle) -> some VisualEffect
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func transition(_ t: AnyTransition) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func transition<T>(_ transition: T) -> some View where T : Transition
+
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EventModifiers : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EventModifiers : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.ResizingMode : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.ResizingMode : Hashable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ZStackLayout : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Alignment : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Alignment : BitwiseCopyable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPhase : Hashable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPhase : Sendable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension ScrollPhase : BitwiseCopyable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension TransitionPhase : Equatable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension TransitionPhase : Hashable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension TransitionPhase : Sendable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension TransitionPhase : BitwiseCopyable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension HorizontalDirection : Equatable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension HorizontalDirection : Hashable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension HorizontalDirection : RawRepresentable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension HorizontalDirection : Sendable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension HorizontalDirection : BitwiseCopyable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension HorizontalDirection.Set : Sendable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension HorizontalDirection.Set : BitwiseCopyable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VerticalDirection : Equatable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VerticalDirection : Hashable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VerticalDirection : RawRepresentable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VerticalDirection : Sendable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VerticalDirection : BitwiseCopyable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VerticalDirection.Set : Sendable {
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension VerticalDirection.Set : BitwiseCopyable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension VStackLayout : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Edge : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Edge : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Edge : RawRepresentable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Edge : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Edge : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Edge.Set : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Edge.Set : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HorizontalEdge : Equatable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HorizontalEdge : Hashable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HorizontalEdge : RawRepresentable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HorizontalEdge : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HorizontalEdge : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HorizontalEdge.Set : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HorizontalEdge.Set : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension VerticalEdge : Equatable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension VerticalEdge : Hashable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension VerticalEdge : RawRepresentable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension VerticalEdge : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension VerticalEdge : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension VerticalEdge.Set : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension VerticalEdge.Set : BitwiseCopyable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Color.Resolved : BitwiseCopyable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color.ResolvedHDR : BitwiseCopyable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Color.ResolvedHDR : ShapeStyle {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Namespace : BitwiseCopyable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Namespace.ID : Sendable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Namespace.ID : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension TimelineScheduleMode : Equatable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension TimelineScheduleMode : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Gradient.Stop : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis : RawRepresentable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis.Set : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Axis.Set : BitwiseCopyable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension RectangleCornerInsets : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EdgeInsets : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EdgeInsets : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.BlendMode : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.BlendMode : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.Orientation : RawRepresentable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.Orientation : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.Orientation : BitwiseCopyable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension MatchedGeometryProperties : Sendable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension MatchedGeometryProperties : BitwiseCopyable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension OpenURLAction : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font.Weight : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font.Weight : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Spacer : View {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Spacer : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Spacer : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color.RGBColorSpace : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Color.RGBColorSpace : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ProjectionTransform : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ProjectionTransform : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ColorRenderingMode : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ColorRenderingMode : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension UnitPoint : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension UnitPoint : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentObject : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentObject.Wrapper : Sendable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension HStackLayout : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AccessibilityHeadingLevel : Equatable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AccessibilityHeadingLevel : Hashable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AccessibilityHeadingLevel : RawRepresentable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AccessibilityHeadingLevel : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension AccessibilityHeadingLevel : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 10.15, tvOS 15.0, visionOS 1.0, watchOS 9.0, *)
+extension ControlSize : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension FillStyle : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension FillStyle : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension BlendMode : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension BlendMode : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.Interpolation : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.Interpolation : Hashable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension HierarchicalShapeStyle : BitwiseCopyable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
+@available(watchOS, unavailable)
+extension Shader : ShapeStyle {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.ClipOptions : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.ClipOptions : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.ShadowOptions : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.ShadowOptions : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.BlurOptions : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.BlurOptions : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.FilterOptions : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.FilterOptions : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.GradientOptions : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension GraphicsContext.GradientOptions : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ContentMode : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ContentMode : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension RoundedCornerStyle : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension RoundedCornerStyle : Hashable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.FontAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.FontAttribute : BitwiseCopyable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute : BitwiseCopyable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.BackgroundColorAttribute : BitwiseCopyable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.StrikethroughStyleAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.StrikethroughStyleAttribute : BitwiseCopyable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.UnderlineStyleAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.UnderlineStyleAttribute : BitwiseCopyable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.KerningAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.KerningAttribute : BitwiseCopyable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.TrackingAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.TrackingAttribute : BitwiseCopyable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.BaselineOffsetAttribute : Sendable {
+}
+
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+extension AttributeScopes.SwiftUIAttributes.BaselineOffsetAttribute : BitwiseCopyable {
+}
+
+@available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension AttributeScopes.SwiftUIAttributes.AdaptiveImageGlyphAttribute : Sendable {
+}
+
+@available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension AttributeScopes.SwiftUIAttributes.AdaptiveImageGlyphAttribute : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ObservedObject : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ObservedObject.Wrapper : Sendable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ProposedViewSize : Sendable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension ProposedViewSize : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text.TruncationMode : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Text.TruncationMode : Hashable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Text.Case : Equatable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Text.Case : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension StrokeStyle : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension UserInterfaceSizeClass : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension UserInterfaceSizeClass : Hashable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+@available(visionOS, unavailable)
+extension GlassEffectContainer : Sendable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension BackgroundStyle : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForegroundStyle : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ShapeRole : Equatable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ShapeRole : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Path.Element : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Path.Element : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Rectangle : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Ellipse : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Circle : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension HorizontalAlignment : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension HorizontalAlignment : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension VerticalAlignment : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension VerticalAlignment : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AlignmentKey : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AlignmentKey : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font.TextStyle : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Font.TextStyle : Hashable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Font.Leading : Equatable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension Font.Leading : Hashable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension SemanticRequirement : Equatable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension SemanticRequirement : Hashable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension SemanticRequirement : BitwiseCopyable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text.Layout.CharacterIndex : BitwiseCopyable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text.Layout.TypographicBounds : BitwiseCopyable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text.Layout.DrawingOptions : Sendable {
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension Text.Layout.DrawingOptions : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EmptyView : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EmptyView : BitwiseCopyable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ContainerRelativeShape : BitwiseCopyable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension StateObject : Sendable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension StateObject.Storage : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Prominence : Equatable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Prominence : Hashable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ColorMatrix : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ColorMatrix : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension _ViewDebug.Property : RawRepresentable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EmptyAnimatableData : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EmptyAnimatableData : BitwiseCopyable {
+}
+
+@available(iOS 18.0, macOS 15.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
+extension MeshGradient : View {
+}
+
+@available(iOS 18.0, macOS 15.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
+extension MeshGradient.BezierPoint : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EmptyModifier : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension EmptyModifier : BitwiseCopyable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Visibility : Sendable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Visibility : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension TextAlignment : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension TextAlignment : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Angle : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Angle : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.TemplateRenderingMode : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension Image.TemplateRenderingMode : Hashable {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Canvas : View {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension SafeAreaRegions : Sendable {
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension SafeAreaRegions : BitwiseCopyable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ColorScheme : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ColorScheme : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ColorSchemeContrast : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ColorSchemeContrast : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension GestureMask : Sendable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension GestureMask : BitwiseCopyable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension RectangleCornerRadii : Sendable {
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension RectangleCornerRadii : BitwiseCopyable {
+}
+
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+extension Edge.Corner : RawRepresentable {
 }
 
