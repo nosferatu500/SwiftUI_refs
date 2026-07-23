@@ -49,7 +49,7 @@ public struct AccessibilityActionCategory : Equatable, Sendable {
 
     public init(_ nameKey: LocalizedStringKey)
 
-    public init(_ nameResource: LocalizedStringResource)
+    @export(implementation) public init(_ nameResource: LocalizedStringResource)
 
     public init(_ name: some StringProtocol)
 
@@ -129,7 +129,7 @@ public struct AccessibilityCustomContentKey : ~Sendable {
     public init(_ labelKey: LocalizedStringKey, id: String)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    public init(_ label: LocalizedStringResource, id: String)
+    @export(implementation) public init(_ label: LocalizedStringResource, id: String)
 
     public init(_ labelKey: LocalizedStringKey)
 
@@ -272,15 +272,15 @@ extension AccessibilityLabeledPairRole : BitwiseCopyable {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 @resultBuilder public struct AccessibilityRotorContentBuilder : ~Sendable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : AccessibilityRotorContent
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : AccessibilityRotorContent
 
-    public static func buildBlock<Content>(_ content: Content) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
-
-
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some AccessibilityRotorContent where repeat each Content : AccessibilityRotorContent
+    @export(implementation) public static func buildBlock<Content>(_ content: Content) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
 
 
-    public static func buildIf<Content>(_ content: Content?) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some AccessibilityRotorContent where repeat each Content : AccessibilityRotorContent
+
+
+    @export(implementation) public static func buildIf<Content>(_ content: Content?) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
 
 }
 
@@ -296,21 +296,21 @@ public struct AccessibilityRotorEntry<ID> : ~Sendable where ID : Hashable {
     public init(_ labelKey: LocalizedStringKey, id: ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {})
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    public init(_ label: LocalizedStringResource, id: ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {})
+    @export(implementation) public init(_ label: LocalizedStringResource, id: ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {})
 
     public init<L>(_ label: L, id: ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {}) where L : StringProtocol
 
     public init(_ labelKey: LocalizedStringKey, id: ID, in namespace: Namespace.ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {})
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    public init(_ label: LocalizedStringResource, id: ID, in namespace: Namespace.ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {})
+    @export(implementation) public init(_ label: LocalizedStringResource, id: ID, in namespace: Namespace.ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {})
 
     public init<L>(_ label: L, _ id: ID, in namespace: Namespace.ID, textRange: Range<String.Index>? = nil, prepare: @escaping () -> Void = {}) where L : StringProtocol
 
     public init(_ labelKey: LocalizedStringKey, textRange: Range<String.Index>, prepare: @escaping () -> Void = {})
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    public init(_ label: LocalizedStringResource, textRange: Range<String.Index>, prepare: @escaping () -> Void = {}) where ID == Never
+    @export(implementation) public init(_ label: LocalizedStringResource, textRange: Range<String.Index>, prepare: @escaping () -> Void = {}) where ID == Never
 
     public init<L>(_ label: L, textRange: Range<String.Index>, prepare: @escaping () -> Void = {}) where ID == Never, L : StringProtocol
 }
@@ -668,17 +668,17 @@ extension Alignment {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Alignment {
 
-    public static var centerFirstTextBaseline: Alignment { get }
+    @export(implementation) public static var centerFirstTextBaseline: Alignment { get }
 
-    public static var centerLastTextBaseline: Alignment { get }
+    @export(implementation) public static var centerLastTextBaseline: Alignment { get }
 
-    public static var leadingFirstTextBaseline: Alignment { get }
+    @export(implementation) public static var leadingFirstTextBaseline: Alignment { get }
 
-    public static var leadingLastTextBaseline: Alignment { get }
+    @export(implementation) public static var leadingLastTextBaseline: Alignment { get }
 
-    public static var trailingFirstTextBaseline: Alignment { get }
+    @export(implementation) public static var trailingFirstTextBaseline: Alignment { get }
 
-    public static var trailingLastTextBaseline: Alignment { get }
+    @export(implementation) public static var trailingLastTextBaseline: Alignment { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -852,15 +852,15 @@ extension Angle : BitwiseCopyable {
 
     nonisolated public init(gradient: Gradient, center: UnitPoint, startAngle: Angle = .zero, endAngle: Angle = .zero)
 
-    nonisolated public init(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle)
+    @export(implementation) nonisolated public init(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle)
 
-    nonisolated public init(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle)
+    @export(implementation) nonisolated public init(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle)
 
     nonisolated public init(gradient: Gradient, center: UnitPoint, angle: Angle = .zero)
 
-    nonisolated public init(colors: [Color], center: UnitPoint, angle: Angle = .zero)
+    @export(implementation) nonisolated public init(colors: [Color], center: UnitPoint, angle: Angle = .zero)
 
-    nonisolated public init(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero)
+    @export(implementation) nonisolated public init(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero)
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public typealias Body
@@ -1007,9 +1007,9 @@ extension Animation {
 
     public static func interpolatingSpring(mass: Double = 1.0, stiffness: Double, damping: Double, initialVelocity: Double = 0.0) -> Animation
 
-    public static func interpolatingSpring(duration: TimeInterval = 0.5, bounce: Double = 0.0, initialVelocity: Double = 0.0) -> Animation
+    @export(implementation) public static func interpolatingSpring(duration: TimeInterval = 0.5, bounce: Double = 0.0, initialVelocity: Double = 0.0) -> Animation
 
-    public static var interpolatingSpring: Animation { get }
+    @export(implementation) public static var interpolatingSpring: Animation { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -1021,29 +1021,29 @@ extension Animation {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Animation {
 
-    public static func spring(duration: TimeInterval = 0.5, bounce: Double = 0.0, blendDuration: Double = 0) -> Animation
+    @export(implementation) public static func spring(duration: TimeInterval = 0.5, bounce: Double = 0.0, blendDuration: Double = 0) -> Animation
 
     public static func spring(response: Double = 0.5, dampingFraction: Double = 0.825, blendDuration: TimeInterval = 0) -> Animation
 
-    public static var spring: Animation { get }
+    @export(implementation) public static var spring: Animation { get }
 
     public static func interactiveSpring(response: Double = 0.15, dampingFraction: Double = 0.86, blendDuration: TimeInterval = 0.25) -> Animation
 
-    public static var interactiveSpring: Animation { get }
+    @export(implementation) public static var interactiveSpring: Animation { get }
 
-    public static func interactiveSpring(duration: TimeInterval = 0.15, extraBounce: Double = 0.0, blendDuration: TimeInterval = 0.25) -> Animation
+    @export(implementation) public static func interactiveSpring(duration: TimeInterval = 0.15, extraBounce: Double = 0.0, blendDuration: TimeInterval = 0.25) -> Animation
 
-    public static var smooth: Animation { get }
+    @export(implementation) public static var smooth: Animation { get }
 
-    public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+    @export(implementation) public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
 
-    public static var snappy: Animation { get }
+    @export(implementation) public static var snappy: Animation { get }
 
-    public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+    @export(implementation) public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
 
-    public static var bouncy: Animation { get }
+    @export(implementation) public static var bouncy: Animation { get }
 
-    public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+    @export(implementation) public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -1383,7 +1383,7 @@ extension AnyTransition {
 
     nonisolated public init<V>(_ view: V) where V : View
 
-    nonisolated public init<V>(erasing view: V) where V : View
+    @export(implementation) nonisolated public init<V>(erasing view: V) where V : View
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public typealias Body = Never
@@ -1523,7 +1523,7 @@ nonisolated public struct AsyncImage<Content> : View, ~Sendable where Content : 
 
     nonisolated public init(url: URL?, scale: CGFloat = 1) where Content == Image
 
-    nonisolated public init<I, P>(url: URL?, scale: CGFloat = 1, @ContentBuilder content: @escaping (Image) -> I, @ContentBuilder placeholder: @escaping () -> P) where Content == _ConditionalContent<I, P>, I : View, P : View
+    @export(implementation) nonisolated public init<I, P>(url: URL?, scale: CGFloat = 1, @ContentBuilder content: @escaping (Image) -> I, @ContentBuilder placeholder: @escaping () -> P) where Content == _ConditionalContent<I, P>, I : View, P : View
 
     nonisolated public init(url: URL?, scale: CGFloat = 1, transaction: Transaction = Transaction(), @ContentBuilder content: @escaping (AsyncImagePhase) -> Content)
 
@@ -1579,21 +1579,21 @@ extension AttributedTextFormatting {
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
     @resultBuilder public struct DefinitionBuilder<Scope> : ~Sendable {
 
-        public static func buildExpression<D>(_ definition: D) -> D where Scope == D.Scope, D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildExpression<D>(_ definition: D) -> D where Scope == D.Scope, D : AttributedTextFormattingDefinition
 
-        public static func buildBlock<D>(_ definition: D) -> D where D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildBlock<D>(_ definition: D) -> D where D : AttributedTextFormattingDefinition
 
-        public static func buildBlock<S>() -> AttributedTextFormatting.EmptyDefinition<S> where S : AttributeScope
+        @export(implementation) public static func buildBlock<S>() -> AttributedTextFormatting.EmptyDefinition<S> where S : AttributeScope
 
-        public static func buildBlock<F, each D>(_ first: F, _ definition: repeat each D) -> AttributedTextFormatting.TupleDefinition<F.Scope, F, repeat each D> where F : AttributedTextFormattingDefinition, repeat each D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildBlock<F, each D>(_ first: F, _ definition: repeat each D) -> AttributedTextFormatting.TupleDefinition<F.Scope, F, repeat each D> where F : AttributedTextFormattingDefinition, repeat each D : AttributedTextFormattingDefinition
 
-        public static func buildLimitedAvailability<D>(_ definition: D) -> AttributedTextFormatting.AnyDefinition<Scope> where Scope == D.Scope, D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildLimitedAvailability<D>(_ definition: D) -> AttributedTextFormatting.AnyDefinition<Scope> where Scope == D.Scope, D : AttributedTextFormattingDefinition
 
-        public static func buildIf<D>(_ definition: D?) -> D? where Scope == D.Scope, D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildIf<D>(_ definition: D?) -> D? where Scope == D.Scope, D : AttributedTextFormattingDefinition
 
-        public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
+        @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
 
-        public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
+        @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
     }
 }
 
@@ -2132,7 +2132,7 @@ extension Bindable : Sendable where Value : Sendable {
 
     public var projectedValue: Binding<Value> { get }
 
-    public init(projectedValue: Binding<Value>)
+    @export(implementation) public init(projectedValue: Binding<Value>)
 
     public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Value, Subject>) -> Binding<Subject> { get }
 }
@@ -2321,6 +2321,12 @@ nonisolated public struct BorderedProminentButtonStyle : PrimitiveButtonStyle, ~
     public typealias Body = some View
 }
 
+@available(anyAppleOS 27.0, *)
+public struct BorderedTextFieldStyle : TextFieldStyle, ~Sendable {
+
+    public init()
+}
+
 @available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use .menuStyle(.button) and .buttonStyle(.borderless).")
 @available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Use .menuStyle(.button) and .buttonStyle(.borderless).")
 @available(tvOS, introduced: 17.0, deprecated: 100000.0, message: "Use .menuStyle(.button) and .buttonStyle(.borderless).")
@@ -2370,7 +2376,7 @@ extension Button where Label == Text {
     @preconcurrency nonisolated public init(_ titleKey: LocalizedStringKey, action: @escaping @MainActor () -> Void)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @preconcurrency nonisolated public init(_ titleResource: LocalizedStringResource, action: @escaping @MainActor () -> Void)
+    @preconcurrency @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, action: @escaping @MainActor () -> Void)
 
     @preconcurrency nonisolated public init<S>(_ title: S, action: @escaping @MainActor () -> Void) where S : StringProtocol
 }
@@ -2378,12 +2384,12 @@ extension Button where Label == Text {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Button where Label == Label<Text, Image> {
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, action: @escaping @MainActor () -> Void)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, action: @escaping @MainActor () -> Void)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, action: @escaping @MainActor () -> Void)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, action: @escaping @MainActor () -> Void)
 
-    nonisolated public init<S>(_ title: S, systemImage: String, action: @escaping @MainActor () -> Void) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, systemImage: String, action: @escaping @MainActor () -> Void) where S : StringProtocol
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -2391,7 +2397,7 @@ extension Button where Label == Label<Text, Image> {
 
     @preconcurrency nonisolated public init(_ titleKey: LocalizedStringKey, image: ImageResource, action: @escaping @MainActor () -> Void)
 
-    @preconcurrency nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, action: @escaping @MainActor () -> Void)
+    @preconcurrency @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, action: @escaping @MainActor () -> Void)
 
     @preconcurrency nonisolated public init<S>(_ title: S, image: ImageResource, action: @escaping @MainActor () -> Void) where S : StringProtocol
 }
@@ -2415,7 +2421,7 @@ extension Button where Label == Text {
     @preconcurrency nonisolated public init(_ titleKey: LocalizedStringKey, role: ButtonRole?, action: @escaping @MainActor () -> Void)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @preconcurrency nonisolated public init(_ titleResource: LocalizedStringResource, role: ButtonRole?, action: @escaping @MainActor () -> Void)
+    @preconcurrency @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, role: ButtonRole?, action: @escaping @MainActor () -> Void)
 
     @preconcurrency nonisolated public init<S>(_ title: S, role: ButtonRole?, action: @escaping @MainActor () -> Void) where S : StringProtocol
 }
@@ -2423,12 +2429,12 @@ extension Button where Label == Text {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Button where Label == Label<Text, Image> {
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, role: ButtonRole?, action: @escaping @MainActor () -> Void)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, role: ButtonRole?, action: @escaping @MainActor () -> Void)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, role: ButtonRole?, action: @escaping @MainActor () -> Void)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, role: ButtonRole?, action: @escaping @MainActor () -> Void)
 
-    nonisolated public init<S>(_ title: S, systemImage: String, role: ButtonRole?, action: @escaping @MainActor () -> Void) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, systemImage: String, role: ButtonRole?, action: @escaping @MainActor () -> Void) where S : StringProtocol
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -2436,7 +2442,7 @@ extension Button where Label == Label<Text, Image> {
 
     @preconcurrency nonisolated public init(_ titleKey: LocalizedStringKey, image: ImageResource, role: ButtonRole?, action: @escaping @MainActor () -> Void)
 
-    @preconcurrency nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, role: ButtonRole?, action: @escaping @MainActor () -> Void)
+    @preconcurrency @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, role: ButtonRole?, action: @escaping @MainActor () -> Void)
 
     @preconcurrency nonisolated public init<S>(_ title: S, image: ImageResource, role: ButtonRole?, action: @escaping @MainActor () -> Void) where S : StringProtocol
 }
@@ -2889,23 +2895,23 @@ extension Color {
 
     @frozen public struct ResolvedHDR : Hashable, Sendable {
 
-        public init(_ color: Color.Resolved, headroom: Float? = nil)
+        @export(implementation) public init(_ color: Color.Resolved, headroom: Float? = nil)
 
-        public var linearRed: Float
+        @export(implementation) public var linearRed: Float
 
-        public var linearGreen: Float
+        @export(implementation) public var linearGreen: Float
 
-        public var linearBlue: Float
+        @export(implementation) public var linearBlue: Float
 
-        public var red: Float
+        @export(implementation) public var red: Float
 
-        public var green: Float
+        @export(implementation) public var green: Float
 
-        public var blue: Float
+        @export(implementation) public var blue: Float
 
-        public var opacity: Float
+        @export(implementation) public var opacity: Float
 
-        public var headroom: Float?
+        @export(implementation) public var headroom: Float?
 
         public static func == (lhs: Color.ResolvedHDR, rhs: Color.ResolvedHDR) -> Bool
 
@@ -2922,7 +2928,7 @@ extension Color {
 
     public func headroom(_ headroom: Double?) -> Color
 
-    public func exposureAdjust(_ stops: Double) -> Color
+    @export(implementation) public func exposureAdjust(_ stops: Double) -> Color
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -3145,14 +3151,14 @@ extension ColorPicker where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Color>, supportsOpacity: Bool = true)
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Color>, supportsOpacity: Bool = true)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Color>, supportsOpacity: Bool = true)
 
     nonisolated public init<S>(_ title: S, selection: Binding<Color>, supportsOpacity: Bool = true) where S : StringProtocol
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<CGColor>, supportsOpacity: Bool = true)
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<CGColor>, supportsOpacity: Bool = true)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<CGColor>, supportsOpacity: Bool = true)
 
     nonisolated public init<S>(_ title: S, selection: Binding<CGColor>, supportsOpacity: Bool = true) where S : StringProtocol
 }
@@ -3340,7 +3346,7 @@ nonisolated public struct CommandMenu<Content> : Commands, ~Sendable where Conte
     nonisolated public init(_ nameKey: LocalizedStringKey, @ContentBuilder content: () -> Content)
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ name: LocalizedStringResource, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ name: LocalizedStringResource, @ContentBuilder content: () -> Content)
 
     nonisolated public init(_ name: Text, @ContentBuilder content: () -> Content)
 
@@ -3369,11 +3375,11 @@ nonisolated public struct CommandMenu<Content> : Commands, ~Sendable where Conte
 @available(watchOS, unavailable)
 @resultBuilder public struct CommandsBuilder : ~Sendable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : Commands
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : Commands
 
-    public static func buildBlock() -> EmptyCommands
+    @export(implementation) public static func buildBlock() -> EmptyCommands
 
-    public static func buildBlock<C>(_ content: C) -> C where C : Commands
+    @export(implementation) public static func buildBlock<C>(_ content: C) -> C where C : Commands
 }
 
 @available(iOS 16.0, macOS 13.0, *)
@@ -3381,19 +3387,14 @@ nonisolated public struct CommandMenu<Content> : Commands, ~Sendable where Conte
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildIf<C>(_ content: C?) -> C? where C : Commands
+    @export(implementation) public static func buildIf<C>(_ content: C?) -> C? where C : Commands
 
-    public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where T : Commands, F : Commands
+    @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where T : Commands, F : Commands
 
-    public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where T : Commands, F : Commands
+    @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where T : Commands, F : Commands
 
     @available(iOS 17.5, macOS 14.5, *)
-    public static func buildLimitedAvailability(_ content: any Commands) -> some Commands
-
-
-    @available(iOS, deprecated: 16.0, obsoleted: 17.5, message: "this code may crash on earlier versions of the OS; specify '#available(iOS 17.5, *)' or newer instead")
-    @available(macOS, deprecated: 13.0, obsoleted: 14.5, message: "this code may crash on earlier versions of the OS; specify '#available(macOS 14.5, *)' or newer instead")
-    public static func buildLimitedAvailability<C>(_ content: C) -> some Commands where C : Commands
+    @export(implementation) public static func buildLimitedAvailability(_ content: any Commands) -> some Commands
 
 }
 
@@ -3402,7 +3403,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some Commands where C0 : Commands, C1 : Commands
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some Commands where C0 : Commands, C1 : Commands
 
 }
 
@@ -3411,7 +3412,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands
 
 }
 
@@ -3420,7 +3421,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands
 
 }
 
@@ -3429,7 +3430,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands
 
 }
 
@@ -3438,7 +3439,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands
 
 }
 
@@ -3447,7 +3448,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands
 
 }
 
@@ -3456,7 +3457,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands, C7 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands, C7 : Commands
 
 }
 
@@ -3465,7 +3466,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands, C7 : Commands, C8 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands, C7 : Commands, C8 : Commands
 
 }
 
@@ -3474,7 +3475,7 @@ extension CommandsBuilder {
 @available(watchOS, unavailable)
 extension CommandsBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands, C7 : Commands, C8 : Commands, C9 : Commands
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some Commands where C0 : Commands, C1 : Commands, C2 : Commands, C3 : Commands, C4 : Commands, C5 : Commands, C6 : Commands, C7 : Commands, C8 : Commands, C9 : Commands
 
 }
 
@@ -3760,13 +3761,13 @@ extension ContentSizeCategory {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ContentSizeCategory {
 
-    public static func < (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func < (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 
-    public static func <= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func <= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 
-    public static func > (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func > (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 
-    public static func >= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func >= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 }
 
 @available(iOS 18.4, macOS 15.4, tvOS 18.4, watchOS 11.4, visionOS 2.4, *)
@@ -3807,7 +3808,7 @@ extension ContentTransition {
 
     public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> ContentTransition where T : ContentTransitionSymbolEffect, T : SymbolEffect
 
-    public static var symbolEffect: ContentTransition { get }
+    @export(implementation) public static var symbolEffect: ContentTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -3826,11 +3827,11 @@ extension ContentUnavailableView where Label == Label<Text, Image>, Description 
 
     nonisolated public init(_ title: LocalizedStringKey, image name: String, description: Text? = nil)
 
-    nonisolated public init(_ title: LocalizedStringResource, image name: String, description: Text? = nil)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, image name: String, description: Text? = nil)
 
     nonisolated public init(_ title: LocalizedStringKey, systemImage name: String, description: Text? = nil)
 
-    nonisolated public init(_ title: LocalizedStringResource, systemImage name: String, description: Text? = nil)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, systemImage name: String, description: Text? = nil)
 
     nonisolated public init<S>(_ title: S, image name: String, description: Text? = nil) where S : StringProtocol
 
@@ -3886,22 +3887,22 @@ extension ControlGroup {
 @available(watchOS, unavailable)
 extension ControlGroup {
 
-    nonisolated public init<C>(_ titleKey: LocalizedStringKey, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Text>, C : View
+    @export(implementation) nonisolated public init<C>(_ titleKey: LocalizedStringKey, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Text>, C : View
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Text>, C : View
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Text>, C : View
 
-    nonisolated public init<C, S>(_ title: S, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Text>, C : View, S : StringProtocol
+    @export(implementation) nonisolated public init<C, S>(_ title: S, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Text>, C : View, S : StringProtocol
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 17.0, *)
 @available(watchOS, unavailable)
 extension ControlGroup {
 
-    nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View
+    @export(implementation) nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View
 
-    nonisolated public init<C, S>(_ title: S, systemImage: String, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View, S : StringProtocol
+    @export(implementation) nonisolated public init<C, S>(_ title: S, systemImage: String, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View, S : StringProtocol
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
@@ -3910,7 +3911,7 @@ extension ControlGroup {
 
     nonisolated public init<C>(_ titleKey: LocalizedStringKey, image: ImageResource, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View
 
     nonisolated public init<C, S>(_ title: S, image: ImageResource, @ContentBuilder content: () -> C) where Content == LabeledControlGroupContent<C, Label<Text, Image>>, C : View, S : StringProtocol
 }
@@ -3931,14 +3932,14 @@ extension ControlGroup {
 @available(watchOS, unavailable)
 extension ControlGroupStyle where Self == PaletteControlGroupStyle {
 
-    @MainActor @preconcurrency public static var palette: PaletteControlGroupStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var palette: PaletteControlGroupStyle { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 17.0, *)
 @available(watchOS, unavailable)
 extension ControlGroupStyle where Self == AutomaticControlGroupStyle {
 
-    @MainActor @preconcurrency public static var automatic: AutomaticControlGroupStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: AutomaticControlGroupStyle { get }
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -3946,14 +3947,14 @@ extension ControlGroupStyle where Self == AutomaticControlGroupStyle {
 @available(watchOS, unavailable)
 extension ControlGroupStyle where Self == NavigationControlGroupStyle {
 
-    @MainActor @preconcurrency public static var navigation: NavigationControlGroupStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var navigation: NavigationControlGroupStyle { get }
 }
 
 @available(iOS 16.4, macOS 13.3, tvOS 17.0, *)
 @available(watchOS, unavailable)
 extension ControlGroupStyle where Self == MenuControlGroupStyle {
 
-    nonisolated public static var menu: MenuControlGroupStyle { get }
+    @export(implementation) nonisolated public static var menu: MenuControlGroupStyle { get }
 }
 
 @available(iOS 16.4, macOS 13.3, *)
@@ -3961,7 +3962,7 @@ extension ControlGroupStyle where Self == MenuControlGroupStyle {
 @available(watchOS, unavailable)
 extension ControlGroupStyle where Self == CompactMenuControlGroupStyle {
 
-    nonisolated public static var compactMenu: CompactMenuControlGroupStyle { get }
+    @export(implementation) nonisolated public static var compactMenu: CompactMenuControlGroupStyle { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 17.0, *)
@@ -4053,9 +4054,9 @@ extension ControlSize : Hashable {
 @available(visionOS, unavailable)
 @resultBuilder public struct ControlWidgetConfigurationBuilder : ~Sendable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : ControlWidgetConfiguration
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : ControlWidgetConfiguration
 
-    public static func buildBlock<Content>(_ content: Content) -> some ControlWidgetConfiguration where Content : ControlWidgetConfiguration
+    @export(implementation) public static func buildBlock<Content>(_ content: Content) -> some ControlWidgetConfiguration where Content : ControlWidgetConfiguration
 
 }
 
@@ -4074,9 +4075,9 @@ extension ControlSize : Hashable {
 @available(visionOS, unavailable)
 @resultBuilder public struct ControlWidgetTemplateBuilder : ~Sendable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : ControlWidgetTemplate
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : ControlWidgetTemplate
 
-    public static func buildBlock<Content>(_ content: Content) -> some ControlWidgetTemplate where Content : ControlWidgetTemplate
+    @export(implementation) public static func buildBlock<Content>(_ content: Content) -> some ControlWidgetTemplate where Content : ControlWidgetTemplate
 
 }
 
@@ -4330,22 +4331,22 @@ extension DatePicker where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Date>, in range: ClosedRange<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, in range: ClosedRange<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, in range: ClosedRange<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Date>, in range: PartialRangeFrom<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, in range: PartialRangeFrom<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, in range: PartialRangeFrom<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Date>, in range: PartialRangeThrough<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, in range: PartialRangeThrough<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Date>, in range: PartialRangeThrough<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date])
 
     nonisolated public init<S>(_ title: S, selection: Binding<Date>, displayedComponents: DatePicker<Label>.Components = [.hourAndMinute, .date]) where S : StringProtocol
 
@@ -4399,14 +4400,14 @@ public struct DatePickerComponents : OptionSet, Sendable {
 @available(tvOS, unavailable)
 extension DatePickerStyle where Self == WheelDatePickerStyle {
 
-    @MainActor @preconcurrency public static var wheel: WheelDatePickerStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var wheel: WheelDatePickerStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, watchOS 10.0, *)
 @available(tvOS, unavailable)
 extension DatePickerStyle where Self == DefaultDatePickerStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultDatePickerStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultDatePickerStyle { get }
 }
 
 @available(iOS 14.0, macOS 10.15, *)
@@ -4414,7 +4415,7 @@ extension DatePickerStyle where Self == DefaultDatePickerStyle {
 @available(watchOS, unavailable)
 extension DatePickerStyle where Self == GraphicalDatePickerStyle {
 
-    @MainActor @preconcurrency public static var graphical: GraphicalDatePickerStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var graphical: GraphicalDatePickerStyle { get }
 }
 
 @available(iOS 14.0, macCatalyst 13.4, macOS 10.15.4, *)
@@ -4422,7 +4423,7 @@ extension DatePickerStyle where Self == GraphicalDatePickerStyle {
 @available(watchOS, unavailable)
 extension DatePickerStyle where Self == CompactDatePickerStyle {
 
-    @MainActor @preconcurrency public static var compact: CompactDatePickerStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var compact: CompactDatePickerStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 10.0, *)
@@ -4452,7 +4453,7 @@ public struct DatePickerStyleConfiguration : ~Sendable {
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 nonisolated public struct DebugReplaceableView : View, ~Sendable {
 
-    nonisolated public init<V>(erasing view: V) where V : View
+    @export(implementation) nonisolated public init<V>(erasing view: V) where V : View
 
     @available(macOS 26.0, iOS 26.0, tvOS 26.0, watchOS 26.0, *)
     public typealias Body = Never
@@ -4626,8 +4627,6 @@ public struct DefaultNavigationViewStyle : NavigationViewStyle, ~Sendable {
 @available(watchOS, unavailable)
 @MainActor @preconcurrency public struct DefaultNewDocumentButtonLabel : View {
 
-    @MainActor @preconcurrency public init()
-
     @MainActor @preconcurrency public var body: some View { get }
 
     @available(macOS 27.0, iOS 27.0, *)
@@ -4755,12 +4754,12 @@ extension DisclosureGroup where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder content: @escaping () -> Content)
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: @escaping () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: @escaping () -> Content)
 
     nonisolated public init(_ titleKey: LocalizedStringKey, isExpanded: Binding<Bool>, @ContentBuilder content: @escaping () -> Content)
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, isExpanded: Binding<Bool>, @ContentBuilder content: @escaping () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, isExpanded: Binding<Bool>, @ContentBuilder content: @escaping () -> Content)
 
     nonisolated public init<S>(_ label: S, @ContentBuilder content: @escaping () -> Content) where S : StringProtocol
 
@@ -4893,6 +4892,12 @@ nonisolated public struct Divider : View, ~Sendable {
     public typealias Body = Never
 }
 
+@available(iOS 27.0, macOS 27.0, *)
+@available(watchOS, unavailable)
+@available(tvOS, unavailable)
+public protocol Document : ReadableDocument, WritableDocument {
+}
+
 @available(iOS 17.0, macOS 14.0, *)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
@@ -4952,8 +4957,6 @@ extension DocumentCreationContext : Hashable, Equatable {
 @available(watchOS, unavailable)
 public struct DocumentCreationSource : Sendable, Hashable {
 
-    public let id: String
-
     @available(macOS, unavailable)
     public init(id: String)
 
@@ -4982,18 +4985,19 @@ nonisolated public struct DocumentGroup<Document, Content> : Scene, ~Sendable wh
 @available(tvOS, unavailable)
 extension DocumentGroup where Document : Observable, Document : ReadableDocument, Document.Reader.Source == URL {
 
-    nonisolated public init(@ContentBuilder viewer: @escaping (_ document: Document) -> Content, makeReadableDocument: @escaping (_ configuration: URLDocumentConfiguration, _ context: DocumentCreationContext) async throws -> Document)
+    nonisolated public init(@ContentBuilder viewer: @escaping (_ document: Document) -> Content, makeReadableDocument: @escaping @MainActor (_ configuration: URLDocumentConfiguration, _ context: DocumentCreationContext) async throws -> Document)
 }
 
 @available(iOS 27.0, macOS 27.0, *)
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
-extension DocumentGroup where Document : Observable, Document : ReadableDocument, Document : WritableDocument, Document.Reader.Source == URL, Document.Writer.Destination == URL {
+extension DocumentGroup where Document : Observable, Document : Document, Document.Reader.Source == URL, Document.Writer.Destination == URL {
 
-    nonisolated public init(allowCreating: Bool = true, @ContentBuilder editor: @escaping (_ document: Document) -> Content, makeDocument: @escaping (_ configuration: URLDocumentConfiguration, _ context: DocumentCreationContext) async throws -> Document)
+    nonisolated public init(allowCreating: Bool = true, @ContentBuilder editor: @escaping (_ document: Document) -> Content, makeDocument: @escaping @MainActor (_ configuration: URLDocumentConfiguration, _ context: DocumentCreationContext) async throws -> Document)
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Create a DocumentGroup with an object conforming to Document protocol instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Create a DocumentGroup with an object conforming to Document protocol instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 extension DocumentGroup where Document : ReferenceFileDocument {
@@ -5003,13 +5007,21 @@ extension DocumentGroup where Document : ReferenceFileDocument {
     nonisolated public init(viewing documentType: Document.Type, @ContentBuilder viewer: @escaping (ReferenceFileDocumentConfiguration<Document>) -> Content)
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
 extension DocumentGroup where Document : FileDocument {
 
+    @available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
+    @available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
     @preconcurrency nonisolated public init(newDocument: @autoclosure @escaping @Sendable () -> Document, @ContentBuilder editor: @escaping (FileDocumentConfiguration<Document>) -> Content)
 
+    @available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to ReadableDocument instead.")
+    @available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your type to ReadableDocument instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to ReadableDocument instead.")
     nonisolated public init(viewing documentType: Document.Type, @ContentBuilder viewer: @escaping (FileDocumentConfiguration<Document>) -> Content)
 }
 
@@ -5036,19 +5048,19 @@ extension DocumentGroupLaunchScene {
 
     nonisolated public init(_ title: LocalizedStringKey, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View)
 
     nonisolated public init(_ title: some StringProtocol, @ContentBuilder _ actions: () -> Actions, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
@@ -5075,19 +5087,19 @@ extension DocumentGroupLaunchScene {
 
     nonisolated public init<B>(_ title: LocalizedStringKey, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: LocalizedStringKey, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: LocalizedStringKey, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: LocalizedStringKey, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: some StringProtocol, backgroundStyle: B = BackgroundStyle(), @ContentBuilder _ actions: () -> Actions = { DefaultDocumentGroupLaunchActions() }, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
@@ -5129,19 +5141,19 @@ nonisolated public struct DocumentLaunchView<Actions, DocumentView> : View, ~Sen
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View)
 
     nonisolated public init(_ title: some StringProtocol, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder background: () -> some View, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
@@ -5161,19 +5173,19 @@ nonisolated public struct DocumentLaunchView<Actions, DocumentView> : View, ~Sen
 
     nonisolated public init<B>(_ title: LocalizedStringKey, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: LocalizedStringKey, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: LocalizedStringKey, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: LocalizedStringKey, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView) where B : ShapeStyle
 
-    nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView) where B : ShapeStyle
+    @export(implementation) nonisolated public init<B>(_ title: LocalizedStringResource, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView) where B : ShapeStyle
 
     nonisolated public init<B>(_ title: some StringProtocol, for contentTypes: [UTType], backgroundStyle: B, @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View) where B : ShapeStyle
 
@@ -5193,19 +5205,19 @@ nonisolated public struct DocumentLaunchView<Actions, DocumentView> : View, ~Sen
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
     nonisolated public init(_ title: LocalizedStringKey, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView)
 
-    nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView)
 
     nonisolated public init(_ title: some StringProtocol, for contentTypes: [UTType], @ContentBuilder _ actions: () -> Actions, @ContentBuilder onDocumentOpen: @escaping (URL) -> DocumentView, @ContentBuilder backgroundAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View, @ContentBuilder overlayAccessoryView: @escaping (DocumentLaunchGeometryProxy) -> some View)
 
@@ -5273,9 +5285,9 @@ public protocol DocumentReader<Snapshot> {
 
     associatedtype Snapshot
 
-    associatedtype Source
+    associatedtype Source = URL
 
-    nonisolated func read(from source: sending Self.Source, progress: consuming Subprogress) async throws -> sending Self.Snapshot
+    @concurrent func read(from source: sending Self.Source, progress: consuming Subprogress) async throws -> sending Self.Snapshot
 }
 
 @available(iOS 27.0, macOS 27.0, *)
@@ -5301,9 +5313,9 @@ public protocol DocumentWriter<Snapshot> {
 
     associatedtype Snapshot
 
-    associatedtype Destination
+    associatedtype Destination = URL
 
-    nonisolated func write(content: sending Self.Snapshot, to destination: sending Self.Destination, previous: sending Self.Snapshot?, progress: consuming Subprogress) async throws
+    @concurrent func write(snapshot: sending Self.Snapshot, to destination: sending Self.Destination, previous: sending Self.Snapshot?, progress: consuming Subprogress) async throws
 }
 
 @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "replace styled NavigationView with NavigationStack or NavigationSplitView instead")
@@ -5364,7 +5376,7 @@ extension DragConfiguration : CustomDebugStringConvertible {
 
         public var translation: CGSize { get }
 
-        public var velocity: CGSize { get }
+        @export(implementation) public var velocity: CGSize { get }
 
         public var predictedEndLocation: CGPoint { get }
 
@@ -6664,7 +6676,7 @@ extension EnvironmentValues {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension EnvironmentValues {
 
-    public var navigationLinkIndicatorVisibility: Visibility { get }
+    @export(implementation) public var navigationLinkIndicatorVisibility: Visibility { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -6676,6 +6688,12 @@ extension EnvironmentValues {
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Use isPresented or dismiss")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use isPresented or dismiss")
     public var presentationMode: Binding<PresentationMode> { get }
+}
+
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.0, *)
+    public var systemPrefersReducedResourceUsage: Bool
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -6842,7 +6860,7 @@ extension EnvironmentValues {
 extension EnvironmentValues {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
-    public var autocorrectionDisabled: Bool
+    @export(implementation) public var autocorrectionDisabled: Bool
 }
 
 extension EnvironmentValues {
@@ -6957,7 +6975,7 @@ extension EnvironmentValues {
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension EnvironmentValues {
 
-    public var buttonSizing: ButtonSizing
+    public var buttonSizing: ButtonSizing { get }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 8.0, *)
@@ -7482,9 +7500,11 @@ public struct FileDialogBrowserOptions : OptionSet, ~Sendable {
     public typealias RawValue = Int
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
 @preconcurrency public protocol FileDocument : Sendable {
 
     static var readableContentTypes: [UTType] { get }
@@ -7500,17 +7520,21 @@ public struct FileDialogBrowserOptions : OptionSet, ~Sendable {
     typealias WriteConfiguration = FileDocumentWriteConfiguration
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to Document instead.")
 extension FileDocument {
 
     public static var writableContentTypes: [UTType] { get }
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to Document and use URLDocumentConfiguration instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your type to Document and use URLDocumentConfiguration instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to Document and use URLDocumentConfiguration instead.")
 public struct FileDocumentConfiguration<Document> : ~Sendable where Document : FileDocument {
 
     @Binding public var document: Document { get nonmutating set }
@@ -7522,16 +7546,18 @@ public struct FileDocumentConfiguration<Document> : ~Sendable where Document : F
     public var isEditable: Bool
 }
 
-@available(iOS 27.0, *)
+@available(iOS, introduced: 27.0, deprecated: 100000.0, message: "Use the Document protocol and URLDocumentConfiguration.")
 @available(macOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+@available(visionOS, introduced: 27.0, deprecated: 100000.0, message: "Use the Document protocol and URLDocumentConfiguration.")
 extension FileDocumentConfiguration {
 
     public var creationSource: DocumentCreationSource? { get }
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use the Document protocol and URLDocumentConfiguration.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Use the Document protocol and URLDocumentConfiguration.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct FileDocumentReadConfiguration : ~Sendable {
@@ -7541,7 +7567,8 @@ public struct FileDocumentReadConfiguration : ~Sendable {
     public let file: FileWrapper
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use the Document protocol and URLDocumentConfiguration.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Use the Document protocol and URLDocumentConfiguration.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct FileDocumentWriteConfiguration : ~Sendable {
@@ -7558,11 +7585,14 @@ public struct FileWrapperDocumentReader<Snapshot> : DocumentReader {
 
     public typealias ReadConfiguration = DocumentReadConfiguration
 
-    public typealias Source = URL
-
     public init(_ configuration: sending FileWrapperDocumentReader<Snapshot>.ReadConfiguration, makeSnapshot: @escaping (FileWrapper) async throws -> sending Snapshot)
 
-    nonisolated public func read(from source: sending URL, progress: consuming Subprogress) async throws -> sending Snapshot
+    @concurrent public func read(from source: sending URL, progress: consuming Subprogress) async throws -> sending Snapshot
+
+    @available(macOS 27.0, iOS 27.0, *)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    public typealias Source = URL
 }
 
 @available(iOS 27.0, macOS 27.0, *)
@@ -7572,17 +7602,20 @@ public struct FileWrapperDocumentWriter<Snapshot> : DocumentWriter {
 
     public typealias WriteConfiguration = DocumentWriteConfiguration
 
+    public init(_ configuration: sending FileWrapperDocumentWriter<Snapshot>.WriteConfiguration, makeFileWrapper: @escaping (_ snapshot: Snapshot, _ previous: FileWrapper?) async throws -> FileWrapper)
+
+    @concurrent public func write(snapshot: sending Snapshot, to destination: sending URL, previous: sending Snapshot?, progress: consuming Subprogress) async throws
+
+    @available(macOS 27.0, iOS 27.0, *)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
     public typealias Destination = URL
-
-    public init(_ configuration: sending FileWrapperDocumentWriter<Snapshot>.WriteConfiguration, makeFileWrapper: @escaping (Snapshot) async throws -> FileWrapper)
-
-    nonisolated public func write(content: sending Snapshot, to destination: sending URL, previous: sending Snapshot?, progress: consuming Subprogress) async throws
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @frozen public struct FillShapeStyle : ShapeStyle {
 
-    public init()
+    @export(implementation) public init()
 
     @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
     public typealias Resolved = Never
@@ -7595,15 +7628,15 @@ extension FillShapeStyle : BitwiseCopyable {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @frozen nonisolated public struct FillShapeView<Content, Style, Background> : ShapeView, ~Sendable where Content : Shape, Style : ShapeStyle, Background : View {
 
-    nonisolated public var shape: Content
+    @export(implementation) nonisolated public var shape: Content
 
-    nonisolated public var style: Style
+    @export(implementation) nonisolated public var style: Style
 
-    nonisolated public var fillStyle: FillStyle
+    @export(implementation) nonisolated public var fillStyle: FillStyle
 
-    nonisolated public var background: Background
+    @export(implementation) nonisolated public var background: Background
 
-    nonisolated public init(shape: Content, style: Style, fillStyle: FillStyle, background: Background)
+    @export(implementation) nonisolated public init(shape: Content, style: Style, fillStyle: FillStyle, background: Background)
 
     @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
     public typealias Body = Never
@@ -8117,6 +8150,23 @@ extension ForEach : ToolbarContent where Content : ToolbarContent {
 extension ForEach : CustomizableToolbarContent where Content : CustomizableToolbarContent {
 }
 
+@available(iOS 27.0, *)
+@available(macCatalyst, unavailable)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension ForEach : SceneAccessoryContent where Content : SceneAccessoryContent {
+
+    @available(iOS 27.0, *)
+    @available(macOS, unavailable, introduced: 10.15)
+    @available(tvOS, unavailable, introduced: 13.0)
+    @available(watchOS, unavailable, introduced: 6.0)
+    @available(macCatalyst, unavailable)
+    @available(visionOS, unavailable)
+    public typealias Body = Never
+}
+
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ForEach {
 
@@ -8173,11 +8223,11 @@ extension ForEach : TableRowContent where Content : TableRowContent {
 
     public typealias TableRowBody = Never
 
-    nonisolated public init<V>(_ data: Data, @TableRowBuilder<V> content: @escaping (Data.Element) -> Content) where ID == Data.Element.ID, V == Content.TableRowValue, Data.Element : Identifiable
+    @export(implementation) nonisolated public init<V>(_ data: Data, @TableRowBuilder<V> content: @escaping (Data.Element) -> Content) where ID == Data.Element.ID, V == Content.TableRowValue, Data.Element : Identifiable
 
     nonisolated public init<V>(_ data: Data, id: KeyPath<Data.Element, ID>, @TableRowBuilder<V> content: @escaping (Data.Element) -> Content) where V == Content.TableRowValue
 
-    nonisolated public init(_ data: Data) where ID == Data.Element.ID, Content == TableRow<Data.Element>, Data.Element : Identifiable
+    @export(implementation) nonisolated public init(_ data: Data) where ID == Data.Element.ID, Content == TableRow<Data.Element>, Data.Element : Identifiable
 
     nonisolated public init<V>(_ data: Range<Int>, @TableRowBuilder<V> content: @escaping (Int) -> Content) where Data == Range<Int>, ID == Int, V == Content.TableRowValue
 }
@@ -8213,27 +8263,27 @@ extension ForEach : View where Content : View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach where ID == Data.Element.ID, Data.Element : Identifiable {
 
-    public init(_ data: Data, @ContentBuilder content: @escaping (Data.Element) -> Content)
+    @export(implementation) public init(_ data: Data, @ContentBuilder content: @escaping (Data.Element) -> Content)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach {
 
-    public init(_ data: Data, id: KeyPath<Data.Element, ID>, @ContentBuilder content: @escaping (Data.Element) -> Content)
+    @export(implementation) public init(_ data: Data, id: KeyPath<Data.Element, ID>, @ContentBuilder content: @escaping (Data.Element) -> Content)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach {
 
-    public init<C>(_ data: Binding<C>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, ID == C.Element.ID, C : MutableCollection, C : RandomAccessCollection, C.Element : Identifiable, C.Index : Hashable
+    @export(implementation) public init<C>(_ data: Binding<C>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, ID == C.Element.ID, C : MutableCollection, C : RandomAccessCollection, C.Element : Identifiable, C.Index : Hashable
 
-    public init<C>(_ data: Binding<C>, id: KeyPath<C.Element, ID>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, C : MutableCollection, C : RandomAccessCollection, C.Index : Hashable
+    @export(implementation) public init<C>(_ data: Binding<C>, id: KeyPath<C.Element, ID>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, C : MutableCollection, C : RandomAccessCollection, C.Index : Hashable
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach where Data == Range<Int>, ID == Int {
 
-    public init(_ data: Range<Int>, @ContentBuilder content: @escaping (Int) -> Content)
+    @export(implementation) public init(_ data: Range<Int>, @ContentBuilder content: @escaping (Int) -> Content)
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -8347,7 +8397,7 @@ extension FormStyle where Self == GroupedFormStyle {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension FormStyle where Self == AutomaticFormStyle {
 
-    @MainActor @preconcurrency public static var automatic: AutomaticFormStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: AutomaticFormStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -8398,42 +8448,42 @@ nonisolated public struct Gauge<Label, CurrentValueLabel, BoundsLabel, MarkedVal
 @available(tvOS, unavailable)
 extension GaugeStyle where Self == AccessoryCircularCapacityGaugeStyle {
 
-    @MainActor @preconcurrency public static var accessoryCircularCapacity: AccessoryCircularCapacityGaugeStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var accessoryCircularCapacity: AccessoryCircularCapacityGaugeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 @available(tvOS, unavailable)
 extension GaugeStyle where Self == LinearCapacityGaugeStyle {
 
-    @MainActor @preconcurrency public static var linearCapacity: LinearCapacityGaugeStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var linearCapacity: LinearCapacityGaugeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 @available(tvOS, unavailable)
 extension GaugeStyle where Self == AccessoryLinearGaugeStyle {
 
-    @MainActor @preconcurrency public static var accessoryLinear: AccessoryLinearGaugeStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var accessoryLinear: AccessoryLinearGaugeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 @available(tvOS, unavailable)
 extension GaugeStyle where Self == AccessoryLinearCapacityGaugeStyle {
 
-    @MainActor @preconcurrency public static var accessoryLinearCapacity: AccessoryLinearCapacityGaugeStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var accessoryLinearCapacity: AccessoryLinearCapacityGaugeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 7.0, *)
 @available(tvOS, unavailable)
 extension GaugeStyle where Self == DefaultGaugeStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultGaugeStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultGaugeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 @available(tvOS, unavailable)
 extension GaugeStyle where Self == AccessoryCircularGaugeStyle {
 
-    @MainActor @preconcurrency public static var accessoryCircular: AccessoryCircularGaugeStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var accessoryCircular: AccessoryCircularGaugeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 7.0, *)
@@ -8527,6 +8577,14 @@ extension GeometryProxy {
 extension GeometryProxy {
 
     public var containerCornerInsets: RectangleCornerInsets { get }
+}
+
+@available(anyAppleOS 27.0, *)
+extension GeometryProxy {
+
+    public var concentricCornerRadii: RectangleCornerRadii? { get }
+
+    public func concentricCornerRadii(in frame: CGRect) -> RectangleCornerRadii?
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -8657,15 +8715,15 @@ extension GestureMask : BitwiseCopyable {
 
     public init(wrappedValue: Value)
 
-    public init(initialValue: Value)
+    @export(implementation) public init(initialValue: Value)
 
     public init(wrappedValue: Value, resetTransaction: Transaction)
 
-    public init(initialValue: Value, resetTransaction: Transaction)
+    @export(implementation) public init(initialValue: Value, resetTransaction: Transaction)
 
     public init(wrappedValue: Value, reset: @escaping (Value, inout Transaction) -> Void)
 
-    public init(initialValue: Value, reset: @escaping (Value, inout Transaction) -> Void)
+    @export(implementation) public init(initialValue: Value, reset: @escaping (Value, inout Transaction) -> Void)
 
     public var wrappedValue: Value { get }
 
@@ -9478,7 +9536,7 @@ extension Group : SceneAccessoryContent where Content : SceneAccessoryContent {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Group {
 
-    nonisolated public init(@ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(@ContentBuilder content: () -> Content)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -9505,7 +9563,7 @@ nonisolated public struct GroupBox<Label, Content> : View, ~Sendable where Label
     @available(iOS 14.0, macOS 10.15, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public init(@ContentBuilder content: () -> Content, @ContentBuilder label: () -> Label)
+    @export(implementation) nonisolated public init(@ContentBuilder content: () -> Content, @ContentBuilder label: () -> Label)
 
     nonisolated public var body: some View { get }
 
@@ -9539,7 +9597,7 @@ extension GroupBox where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder content: () -> Content)
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content)
 
     nonisolated public init<S>(_ title: S, @ContentBuilder content: () -> Content) where S : StringProtocol
 }
@@ -9572,7 +9630,7 @@ extension GroupBox {
 @available(watchOS, unavailable)
 extension GroupBoxStyle where Self == DefaultGroupBoxStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultGroupBoxStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultGroupBoxStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, *)
@@ -9921,12 +9979,12 @@ public struct HoverEffect : ~Sendable {
     @available(watchOS, unavailable)
     public init<E>(_ effect: E) where E : CustomHoverEffect
 
-    public static let automatic: HoverEffect
+    public static var automatic: HoverEffect { get }
 
     @available(tvOS 17.0, *)
-    public static let highlight: HoverEffect
+    public static var highlight: HoverEffect { get }
 
-    public static let lift: HoverEffect
+    public static var lift: HoverEffect { get }
 }
 
 @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
@@ -10299,7 +10357,7 @@ final public class ImageRenderer<Content> : ObservableObject, ~Sendable where Co
     @MainActor final public func render(rasterizationScale: CGFloat = 1, renderer: (CGSize, (CGContext) -> Void) -> Void)
 
     @available(iOS 17.2, macOS 14.2, tvOS 17.2, watchOS 10.2, *)
-    final public var isObservationEnabled: Bool
+    @export(implementation) final public var isObservationEnabled: Bool
 
     @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
     public typealias ObjectWillChangePublisher = PassthroughSubject<Void, Never>
@@ -10326,9 +10384,9 @@ public protocol IndexViewStyle {
 @available(macOS, unavailable)
 extension IndexViewStyle where Self == PageIndexViewStyle {
 
-    public static var page: PageIndexViewStyle { get }
+    @export(implementation) public static var page: PageIndexViewStyle { get }
 
-    public static func page(backgroundDisplayMode: PageIndexViewStyle.BackgroundDisplayMode) -> PageIndexViewStyle
+    @export(implementation) public static func page(backgroundDisplayMode: PageIndexViewStyle.BackgroundDisplayMode) -> PageIndexViewStyle
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -10437,9 +10495,9 @@ extension InsettableShape {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension InsettableShape {
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
 }
 
 @available(iOS 17.0, macOS 14.0, *)
@@ -10822,12 +10880,12 @@ extension Label where Title == Text, Icon == Image {
     nonisolated public init(_ titleKey: LocalizedStringKey, image name: String)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, image name: String)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image name: String)
 
     nonisolated public init(_ titleKey: LocalizedStringKey, systemImage name: String)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage name: String)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage name: String)
 
     nonisolated public init<S>(_ title: S, image name: String) where S : StringProtocol
 
@@ -10839,7 +10897,7 @@ extension Label where Title == Text, Icon == Image {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, image resource: ImageResource)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, image resource: ImageResource)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image resource: ImageResource)
 
     nonisolated public init<S>(_ title: S, image resource: ImageResource) where S : StringProtocol
 }
@@ -10863,25 +10921,25 @@ extension Label where Title == LabelStyleConfiguration.Title, Icon == LabelStyle
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension LabelStyle where Self == DefaultLabelStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultLabelStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultLabelStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension LabelStyle where Self == IconOnlyLabelStyle {
 
-    nonisolated public static var iconOnly: IconOnlyLabelStyle { get }
+    @export(implementation) nonisolated public static var iconOnly: IconOnlyLabelStyle { get }
 }
 
 @available(iOS 14.5, macOS 11.3, tvOS 14.5, watchOS 7.4, *)
 extension LabelStyle where Self == TitleAndIconLabelStyle {
 
-    nonisolated public static var titleAndIcon: TitleAndIconLabelStyle { get }
+    @export(implementation) nonisolated public static var titleAndIcon: TitleAndIconLabelStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension LabelStyle where Self == TitleOnlyLabelStyle {
 
-    nonisolated public static var titleOnly: TitleOnlyLabelStyle { get }
+    @export(implementation) nonisolated public static var titleOnly: TitleOnlyLabelStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -11070,7 +11128,7 @@ extension Layout where Self.Cache == () {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension Layout {
 
-    public func callAsFunction<V>(@ContentBuilder _ content: () -> V) -> some View where V : View
+    @export(implementation) public func callAsFunction<V>(@ContentBuilder _ content: () -> V) -> some View where V : View
 
 }
 
@@ -11321,9 +11379,9 @@ public struct LiftHoverEffect : CustomHoverEffect, ~Sendable {
 
     nonisolated public init(gradient: Gradient, startPoint: UnitPoint, endPoint: UnitPoint)
 
-    nonisolated public init(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint)
+    @export(implementation) nonisolated public init(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint)
 
-    nonisolated public init(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint)
+    @export(implementation) nonisolated public init(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint)
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public typealias Body
@@ -11377,7 +11435,7 @@ extension Link where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, destination: URL)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, destination: URL)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, destination: URL)
 
     nonisolated public init<S>(_ title: S, destination: URL) where S : StringProtocol
 }
@@ -11414,7 +11472,7 @@ nonisolated public struct List<SelectionValue, Content> : View, ~Sendable where 
 extension List {
 
     @available(watchOS, unavailable)
-    nonisolated public init<Data, RowContent>(_ data: Data, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, Data.Element.ID, RowContent>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
+    @export(implementation) nonisolated public init<Data, RowContent>(_ data: Data, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, Data.Element.ID, RowContent>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
@@ -11422,7 +11480,7 @@ extension List {
     nonisolated public init<Data, RowContent>(_ data: Data, children: KeyPath<Data.Element, Data?>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == OutlineGroup<Data, Data.Element.ID, RowContent, RowContent, DisclosureGroup<RowContent, OutlineSubgroupChildren>>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
 
     @available(watchOS, unavailable)
-    nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, ID, RowContent>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
+    @export(implementation) nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, ID, RowContent>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
@@ -11433,7 +11491,7 @@ extension List {
     nonisolated public init<RowContent>(_ data: Range<Int>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Int) -> RowContent) where Content == ForEach<Range<Int>, Int, HStack<RowContent>>, RowContent : View
 
     @available(watchOS 10.0, *)
-    nonisolated public init<Data, RowContent>(_ data: Data, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, Data.Element.ID, RowContent>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
+    @export(implementation) nonisolated public init<Data, RowContent>(_ data: Data, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, Data.Element.ID, RowContent>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
@@ -11441,7 +11499,7 @@ extension List {
     nonisolated public init<Data, RowContent>(_ data: Data, children: KeyPath<Data.Element, Data?>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == OutlineGroup<Data, Data.Element.ID, RowContent, RowContent, DisclosureGroup<RowContent, OutlineSubgroupChildren>>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
 
     @available(watchOS 10.0, *)
-    nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, ID, RowContent>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
+    @export(implementation) nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, ID, RowContent>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
@@ -11449,7 +11507,7 @@ extension List {
     nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, children: KeyPath<Data.Element, Data?>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == OutlineGroup<Data, ID, RowContent, RowContent, DisclosureGroup<RowContent, OutlineSubgroupChildren>>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
 
     @available(watchOS, unavailable)
-    nonisolated public init<RowContent>(_ data: Range<Int>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Int) -> RowContent) where Content == ForEach<Range<Int>, Int, RowContent>, RowContent : View
+    @export(implementation) nonisolated public init<RowContent>(_ data: Range<Int>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Int) -> RowContent) where Content == ForEach<Range<Int>, Int, RowContent>, RowContent : View
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -11457,45 +11515,45 @@ extension List where SelectionValue == Never {
 
     nonisolated public init(@ContentBuilder content: () -> Content)
 
-    nonisolated public init<Data, RowContent>(_ data: Data, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, Data.Element.ID, RowContent>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
+    @export(implementation) nonisolated public init<Data, RowContent>(_ data: Data, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, Data.Element.ID, RowContent>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     nonisolated public init<Data, RowContent>(_ data: Data, children: KeyPath<Data.Element, Data?>, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == OutlineGroup<Data, Data.Element.ID, RowContent, RowContent, DisclosureGroup<RowContent, OutlineSubgroupChildren>>, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable
 
-    nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, ID, RowContent>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
+    @export(implementation) nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == ForEach<Data, ID, RowContent>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     nonisolated public init<Data, ID, RowContent>(_ data: Data, id: KeyPath<Data.Element, ID>, children: KeyPath<Data.Element, Data?>, @ContentBuilder rowContent: @escaping (Data.Element) -> RowContent) where Content == OutlineGroup<Data, ID, RowContent, RowContent, DisclosureGroup<RowContent, OutlineSubgroupChildren>>, Data : RandomAccessCollection, ID : Hashable, RowContent : View
 
-    nonisolated public init<RowContent>(_ data: Range<Int>, @ContentBuilder rowContent: @escaping (Int) -> RowContent) where Content == ForEach<Range<Int>, Int, RowContent>, RowContent : View
+    @export(implementation) nonisolated public init<RowContent>(_ data: Range<Int>, @ContentBuilder rowContent: @escaping (Int) -> RowContent) where Content == ForEach<Range<Int>, Int, RowContent>, RowContent : View
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension List {
 
     @available(watchOS, unavailable)
-    nonisolated public init<Data, RowContent>(_ data: Binding<Data>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, Data.Element.ID)>, Data.Element.ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable, Data.Index : Hashable
+    @export(implementation) nonisolated public init<Data, RowContent>(_ data: Binding<Data>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, Data.Element.ID)>, Data.Element.ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable, Data.Index : Hashable
 
     @available(watchOS, unavailable)
-    nonisolated public init<Data, ID, RowContent>(_ data: Binding<Data>, id: KeyPath<Data.Element, ID>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, ID)>, ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, ID : Hashable, RowContent : View, Data.Index : Hashable
+    @export(implementation) nonisolated public init<Data, ID, RowContent>(_ data: Binding<Data>, id: KeyPath<Data.Element, ID>, selection: Binding<Set<SelectionValue>>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, ID)>, ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, ID : Hashable, RowContent : View, Data.Index : Hashable
 
     @available(watchOS, unavailable)
-    nonisolated public init<Data, RowContent>(_ data: Binding<Data>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, Data.Element.ID)>, Data.Element.ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable, Data.Index : Hashable
+    @export(implementation) nonisolated public init<Data, RowContent>(_ data: Binding<Data>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, Data.Element.ID)>, Data.Element.ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable, Data.Index : Hashable
 
     @available(watchOS, unavailable)
-    nonisolated public init<Data, ID, RowContent>(_ data: Binding<Data>, id: KeyPath<Data.Element, ID>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, ID)>, ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, ID : Hashable, RowContent : View, Data.Index : Hashable
+    @export(implementation) nonisolated public init<Data, ID, RowContent>(_ data: Binding<Data>, id: KeyPath<Data.Element, ID>, selection: Binding<SelectionValue?>?, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, ID)>, ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, ID : Hashable, RowContent : View, Data.Index : Hashable
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension List where SelectionValue == Never {
 
-    nonisolated public init<Data, RowContent>(_ data: Binding<Data>, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, Data.Element.ID)>, Data.Element.ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable, Data.Index : Hashable
+    @export(implementation) nonisolated public init<Data, RowContent>(_ data: Binding<Data>, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, Data.Element.ID)>, Data.Element.ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, RowContent : View, Data.Element : Identifiable, Data.Index : Hashable
 
-    nonisolated public init<Data, ID, RowContent>(_ data: Binding<Data>, id: KeyPath<Data.Element, ID>, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, ID)>, ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, ID : Hashable, RowContent : View, Data.Index : Hashable
+    @export(implementation) nonisolated public init<Data, ID, RowContent>(_ data: Binding<Data>, id: KeyPath<Data.Element, ID>, @ContentBuilder rowContent: @escaping (Binding<Data.Element>) -> RowContent) where Content == ForEach<LazyMapSequence<Data.Indices, (Data.Index, ID)>, ID, RowContent>, Data : MutableCollection, Data : RandomAccessCollection, ID : Hashable, RowContent : View, Data.Index : Hashable
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -11579,7 +11637,7 @@ public protocol ListStyle {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ListStyle where Self == DefaultListStyle {
 
-    public static var automatic: DefaultListStyle { get }
+    @export(implementation) public static var automatic: DefaultListStyle { get }
 }
 
 @available(iOS 14.0, macOS 10.15, *)
@@ -11587,7 +11645,7 @@ extension ListStyle where Self == DefaultListStyle {
 @available(watchOS, unavailable)
 extension ListStyle where Self == SidebarListStyle {
 
-    public static var sidebar: SidebarListStyle { get }
+    @export(implementation) public static var sidebar: SidebarListStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, *)
@@ -11595,7 +11653,7 @@ extension ListStyle where Self == SidebarListStyle {
 @available(watchOS, unavailable)
 extension ListStyle where Self == InsetListStyle {
 
-    public static var inset: InsetListStyle { get }
+    @export(implementation) public static var inset: InsetListStyle { get }
 }
 
 @available(iOS 13.0, tvOS 13.0, *)
@@ -11603,7 +11661,7 @@ extension ListStyle where Self == InsetListStyle {
 @available(watchOS, unavailable)
 extension ListStyle where Self == GroupedListStyle {
 
-    public static var grouped: GroupedListStyle { get }
+    @export(implementation) public static var grouped: GroupedListStyle { get }
 }
 
 @available(iOS 14.0, *)
@@ -11612,13 +11670,13 @@ extension ListStyle where Self == GroupedListStyle {
 @available(watchOS, unavailable)
 extension ListStyle where Self == InsetGroupedListStyle {
 
-    public static var insetGrouped: InsetGroupedListStyle { get }
+    @export(implementation) public static var insetGrouped: InsetGroupedListStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ListStyle where Self == PlainListStyle {
 
-    public static var plain: PlainListStyle { get }
+    @export(implementation) public static var plain: PlainListStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -11646,7 +11704,7 @@ public struct LocalCoordinateSpace : CoordinateSpaceProtocol, ~Sendable {
 
         public mutating func appendInterpolation(_ string: String)
 
-        public mutating func appendInterpolation(_ substring: Substring)
+        @export(implementation) public mutating func appendInterpolation(_ substring: Substring)
 
         public mutating func appendInterpolation<Subject>(_ subject: Subject, formatter: Formatter? = nil) where Subject : ReferenceConvertible
 
@@ -11669,10 +11727,10 @@ public struct LocalCoordinateSpace : CoordinateSpaceProtocol, ~Sendable {
         public mutating func appendInterpolation(_ attributedString: AttributedString)
 
         @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-        public mutating func appendInterpolation(_ attributedSubstring: AttributedSubstring)
+        @export(implementation) public mutating func appendInterpolation(_ attributedSubstring: AttributedSubstring)
 
         @available(*, deprecated, message: "Localized string interpolation produces an unlocalized, debug description for this type of value. Use a type supported by LocalizedStringKey.StringInterpolation or initialize a LocalizedStringResource instead with an interpolated value that conforms to CustomLocalizedStringResourceConvertible.")
-        public mutating func appendInterpolation<T>(_ object: T)
+        @export(implementation) public mutating func appendInterpolation<T>(_ object: T)
 
         @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
         public typealias StringLiteralType = String
@@ -11936,7 +11994,7 @@ extension Menu {
     nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder content: () -> Content) where Label == Text
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content) where Label == Text
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content) where Label == Text
 
     nonisolated public init<S>(_ title: S, @ContentBuilder content: () -> Content) where Label == Text, S : StringProtocol
 }
@@ -11950,7 +12008,7 @@ extension Menu {
     nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void) where Label == Text
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void) where Label == Text
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void) where Label == Text
 
     nonisolated public init<S>(_ title: S, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void) where Label == Text, S : StringProtocol
 }
@@ -11959,20 +12017,20 @@ extension Menu {
 @available(watchOS, unavailable)
 extension Menu where Label == Label<Text, Image> {
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, @ContentBuilder content: () -> Content)
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, @ContentBuilder content: () -> Content)
 
-    nonisolated public init<S>(_ title: S, systemImage: String, @ContentBuilder content: () -> Content) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, systemImage: String, @ContentBuilder content: () -> Content) where S : StringProtocol
 
     @available(iOS 15.0, macOS 12.0, tvOS 17.0, *)
     @available(watchOS, unavailable)
-    nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void)
 
     @available(iOS 16.0, macOS 13.0, *)
     @available(watchOS, unavailable)
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void)
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
@@ -11981,13 +12039,13 @@ extension Menu where Label == Label<Text, Image> {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, image: ImageResource, @ContentBuilder content: () -> Content)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, @ContentBuilder content: () -> Content)
 
     nonisolated public init<S>(_ title: S, image: ImageResource, @ContentBuilder content: () -> Content) where S : StringProtocol
 
     nonisolated public init(_ titleKey: LocalizedStringKey, image: ImageResource, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, @ContentBuilder content: () -> Content, primaryAction: @escaping () -> Void)
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
@@ -12067,14 +12125,14 @@ public struct MenuPickerStyle : PickerStyle, ~Sendable {
 @available(watchOS, unavailable)
 extension MenuStyle where Self == ButtonMenuStyle {
 
-    nonisolated public static var button: ButtonMenuStyle { get }
+    @export(implementation) nonisolated public static var button: ButtonMenuStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
 @available(watchOS, unavailable)
 extension MenuStyle where Self == DefaultMenuStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultMenuStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultMenuStyle { get }
 }
 
 @available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use .menuStyle(.button) and .buttonStyle(.borderless).")
@@ -12084,7 +12142,7 @@ extension MenuStyle where Self == DefaultMenuStyle {
 @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Use .menuStyle(.button) and .buttonStyle(.borderless).")
 extension MenuStyle where Self == BorderlessButtonMenuStyle {
 
-    nonisolated public static var borderlessButton: BorderlessButtonMenuStyle { get }
+    @export(implementation) nonisolated public static var borderlessButton: BorderlessButtonMenuStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
@@ -12139,7 +12197,7 @@ nonisolated public struct MeshGradient : ShapeStyle, Equatable, Sendable {
 
         public var bottomControlPoint: SIMD2<Float>
 
-        public init(position: SIMD2<Float>, leadingControlPoint: SIMD2<Float>, topControlPoint: SIMD2<Float>, trailingControlPoint: SIMD2<Float>, bottomControlPoint: SIMD2<Float>)
+        @export(implementation) public init(position: SIMD2<Float>, leadingControlPoint: SIMD2<Float>, topControlPoint: SIMD2<Float>, trailingControlPoint: SIMD2<Float>, bottomControlPoint: SIMD2<Float>)
 
         public static func == (a: MeshGradient.BezierPoint, b: MeshGradient.BezierPoint) -> Bool
     }
@@ -12160,13 +12218,13 @@ nonisolated public struct MeshGradient : ShapeStyle, Equatable, Sendable {
 
     nonisolated public init(width: Int, height: Int, locations: MeshGradient.Locations, colors: MeshGradient.Colors, background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
 
-    nonisolated public init(width: Int, height: Int, points: [SIMD2<Float>], colors: [Color], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
+    @export(implementation) nonisolated public init(width: Int, height: Int, points: [SIMD2<Float>], colors: [Color], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
 
-    nonisolated public init(width: Int, height: Int, points: [SIMD2<Float>], resolvedColors: [Color.Resolved], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
+    @export(implementation) nonisolated public init(width: Int, height: Int, points: [SIMD2<Float>], resolvedColors: [Color.Resolved], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
 
-    nonisolated public init(width: Int, height: Int, bezierPoints: [MeshGradient.BezierPoint], colors: [Color], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
+    @export(implementation) nonisolated public init(width: Int, height: Int, bezierPoints: [MeshGradient.BezierPoint], colors: [Color], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
 
-    nonisolated public init(width: Int, height: Int, bezierPoints: [MeshGradient.BezierPoint], resolvedColors: [Color.Resolved], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
+    @export(implementation) nonisolated public init(width: Int, height: Int, bezierPoints: [MeshGradient.BezierPoint], resolvedColors: [Color.Resolved], background: Color = .clear, smoothsColors: Bool = true, colorSpace: Gradient.ColorSpace = .device)
 
     public static func == (a: MeshGradient, b: MeshGradient) -> Bool
 
@@ -12204,7 +12262,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12221,7 +12279,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12243,7 +12301,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12256,7 +12314,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12282,7 +12340,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12295,7 +12353,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12448,7 +12506,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityScrollStatus(_ status: some StringProtocol, isEnabled: Bool = true) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Content, Modifier>
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -12491,7 +12549,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ key: AccessibilityCustomContentKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier> where V : StringProtocol
 
@@ -12500,12 +12558,12 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ labelKey: LocalizedStringKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier> where V : StringProtocol
 }
@@ -12558,7 +12616,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 
@@ -12566,7 +12624,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12588,7 +12646,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 
@@ -12596,7 +12654,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12615,7 +12673,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -12729,19 +12787,19 @@ extension MultiDatePicker where Label == Text {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Set<DateComponents>>)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>)
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Set<DateComponents>>, in bounds: Range<Date>)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>, in bounds: Range<Date>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>, in bounds: Range<Date>)
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Set<DateComponents>>, in bounds: PartialRangeFrom<Date>)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>, in bounds: PartialRangeFrom<Date>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>, in bounds: PartialRangeFrom<Date>)
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<Set<DateComponents>>, in bounds: PartialRangeUpTo<Date>)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>, in bounds: PartialRangeUpTo<Date>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<Set<DateComponents>>, in bounds: PartialRangeUpTo<Date>)
 }
 
 @available(iOS 16.0, *)
@@ -12847,7 +12905,7 @@ nonisolated public struct NavigationControlGroupStyle : ControlGroupStyle, ~Send
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 nonisolated public struct NavigationLink<Label, Destination> : View, ~Sendable where Label : View, Destination : View {
 
-    nonisolated public init(@ContentBuilder destination: () -> Destination, @ContentBuilder label: () -> Label)
+    @export(implementation) nonisolated public init(@ContentBuilder destination: () -> Destination, @ContentBuilder label: () -> Label)
 
     nonisolated public var body: some View { get }
 
@@ -12862,7 +12920,7 @@ extension NavigationLink where Destination == Never {
 
     nonisolated public init<P>(_ titleKey: LocalizedStringKey, value: P?) where Label == Text, P : Hashable
 
-    nonisolated public init<P>(_ titleResource: LocalizedStringResource, value: P?) where Label == Text, P : Hashable
+    @export(implementation) nonisolated public init<P>(_ titleResource: LocalizedStringResource, value: P?) where Label == Text, P : Hashable
 
     nonisolated public init<S, P>(_ title: S, value: P?) where Label == Text, S : StringProtocol, P : Hashable
 
@@ -12870,7 +12928,7 @@ extension NavigationLink where Destination == Never {
 
     nonisolated public init<P>(_ titleKey: LocalizedStringKey, value: P?) where Label == Text, P : Decodable, P : Encodable, P : Hashable
 
-    nonisolated public init<P>(_ titleResource: LocalizedStringResource, value: P?) where Label == Text, P : Decodable, P : Encodable, P : Hashable
+    @export(implementation) nonisolated public init<P>(_ titleResource: LocalizedStringResource, value: P?) where Label == Text, P : Decodable, P : Encodable, P : Hashable
 
     nonisolated public init<S, P>(_ title: S, value: P?) where Label == Text, S : StringProtocol, P : Decodable, P : Encodable, P : Hashable
 }
@@ -12878,12 +12936,12 @@ extension NavigationLink where Destination == Never {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension NavigationLink where Label == Text {
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder destination: () -> Destination)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder destination: () -> Destination)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder destination: () -> Destination)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder destination: () -> Destination)
 
-    nonisolated public init<S>(_ title: S, @ContentBuilder destination: () -> Destination) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, @ContentBuilder destination: () -> Destination) where S : StringProtocol
 }
 
 @available(iOS 13.0, *)
@@ -12907,14 +12965,14 @@ extension NavigationLink {
     @available(tvOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(watchOS, introduced: 6.0, deprecated: 9.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(visionOS, introduced: 1.0, deprecated: 1.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
-    nonisolated public init(isActive: Binding<Bool>, @ContentBuilder destination: () -> Destination, @ContentBuilder label: () -> Label)
+    @export(implementation) nonisolated public init(isActive: Binding<Bool>, @ContentBuilder destination: () -> Destination, @ContentBuilder label: () -> Label)
 
     @available(iOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(macOS, introduced: 10.15, deprecated: 13.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(tvOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(watchOS, introduced: 6.0, deprecated: 9.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(visionOS, introduced: 1.0, deprecated: 1.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
-    nonisolated public init<V>(tag: V, selection: Binding<V?>, @ContentBuilder destination: () -> Destination, @ContentBuilder label: () -> Label) where V : Hashable
+    @export(implementation) nonisolated public init<V>(tag: V, selection: Binding<V?>, @ContentBuilder destination: () -> Destination, @ContentBuilder label: () -> Label) where V : Hashable
 
     @available(iOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(macOS, introduced: 10.15, deprecated: 13.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
@@ -12946,28 +13004,28 @@ extension NavigationLink where Label == Text {
     @available(tvOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(watchOS, introduced: 6.0, deprecated: 9.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(visionOS, introduced: 1.0, deprecated: 1.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
-    nonisolated public init(_ titleKey: LocalizedStringKey, isActive: Binding<Bool>, @ContentBuilder destination: () -> Destination)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, isActive: Binding<Bool>, @ContentBuilder destination: () -> Destination)
 
     @available(iOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(macOS, introduced: 10.15, deprecated: 13.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(tvOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(watchOS, introduced: 6.0, deprecated: 9.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(visionOS, introduced: 1.0, deprecated: 1.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
-    nonisolated public init<S>(_ title: S, isActive: Binding<Bool>, @ContentBuilder destination: () -> Destination) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, isActive: Binding<Bool>, @ContentBuilder destination: () -> Destination) where S : StringProtocol
 
     @available(iOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(macOS, introduced: 10.15, deprecated: 13.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(tvOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(watchOS, introduced: 6.0, deprecated: 9.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(visionOS, introduced: 1.0, deprecated: 1.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
-    nonisolated public init<V>(_ titleKey: LocalizedStringKey, tag: V, selection: Binding<V?>, @ContentBuilder destination: () -> Destination) where V : Hashable
+    @export(implementation) nonisolated public init<V>(_ titleKey: LocalizedStringKey, tag: V, selection: Binding<V?>, @ContentBuilder destination: () -> Destination) where V : Hashable
 
     @available(iOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(macOS, introduced: 10.15, deprecated: 13.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(tvOS, introduced: 13.0, deprecated: 16.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(watchOS, introduced: 6.0, deprecated: 9.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
     @available(visionOS, introduced: 1.0, deprecated: 1.0, message: "use NavigationLink(value:label:), or navigationDestination(isPresented:destination:), inside a NavigationStack or NavigationSplitView")
-    nonisolated public init<S, V>(_ title: S, tag: V, selection: Binding<V?>, @ContentBuilder destination: () -> Destination) where S : StringProtocol, V : Hashable
+    @export(implementation) nonisolated public init<S, V>(_ title: S, tag: V, selection: Binding<V?>, @ContentBuilder destination: () -> Destination) where S : StringProtocol, V : Hashable
 
     @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Pass a closure as the destination")
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Pass a closure as the destination")
@@ -13228,7 +13286,7 @@ public protocol NavigationViewStyle {
 @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "replace styled NavigationView with NavigationSplitView")
 extension NavigationViewStyle where Self == ColumnNavigationViewStyle {
 
-    public static var columns: ColumnNavigationViewStyle { get }
+    @export(implementation) public static var columns: ColumnNavigationViewStyle { get }
 }
 
 @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "replace styled NavigationView with NavigationStack or NavigationSplitView instead")
@@ -13238,7 +13296,7 @@ extension NavigationViewStyle where Self == ColumnNavigationViewStyle {
 @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "replace styled NavigationView with NavigationStack or NavigationSplitView instead")
 extension NavigationViewStyle where Self == DefaultNavigationViewStyle {
 
-    public static var automatic: DefaultNavigationViewStyle { get }
+    @export(implementation) public static var automatic: DefaultNavigationViewStyle { get }
 }
 
 @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "replace stack-styled NavigationView with NavigationStack")
@@ -13248,7 +13306,7 @@ extension NavigationViewStyle where Self == DefaultNavigationViewStyle {
 @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "replace stack-styled NavigationView with NavigationStack")
 extension NavigationViewStyle where Self == StackNavigationViewStyle {
 
-    public static var stack: StackNavigationViewStyle { get }
+    @export(implementation) public static var stack: StackNavigationViewStyle { get }
 }
 
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
@@ -13273,45 +13331,53 @@ extension NewDocumentButton where Label == Text {
 
     nonisolated public init(_ title: LocalizedStringKey, contentType: UTType? = nil)
 
-    nonisolated public init(_ title: LocalizedStringResource, contentType: UTType? = nil)
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, contentType: UTType? = nil)
 
     nonisolated public init(_ title: some StringProtocol, contentType: UTType? = nil)
 
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(visionOS, introduced: 2.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
     nonisolated public init<D>(_ label: Text? = nil, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
 
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(visionOS, introduced: 2.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
     nonisolated public init<D>(_ title: LocalizedStringKey, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
 
-    nonisolated public init<D>(_ title: LocalizedStringResource, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(visionOS, introduced: 2.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @export(implementation) nonisolated public init<D>(_ title: LocalizedStringResource, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
 
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
+    @available(visionOS, introduced: 2.0, deprecated: 100000.0, message: "Conform your document type to ReadableDocument instead.")
     nonisolated public init<D>(_ title: some StringProtocol, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
 
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
     nonisolated public init<D>(_ label: Text? = nil, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : ReferenceFileDocument
 
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
     nonisolated public init<D>(_ title: LocalizedStringKey, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : ReferenceFileDocument
 
-    nonisolated public init<D>(_ title: LocalizedStringResource, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : ReferenceFileDocument
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
+    @export(implementation) nonisolated public init<D>(_ title: LocalizedStringResource, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : ReferenceFileDocument
 
+    @available(iOS, introduced: 18.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
+    @available(macOS, introduced: 15.0, deprecated: 100000.0, message: "Conform your document type to Document protocol instead.")
     nonisolated public init<D>(_ title: some StringProtocol, for documentType: D.Type = D.self, contentType: UTType? = nil, prepareDocument: @escaping () async throws -> D? = { nil }) where D : ReferenceFileDocument
 
     nonisolated public init(_ label: Text? = nil, contentType: UTType, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
 
     nonisolated public init(_ title: LocalizedStringKey, contentType: UTType, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
 
-    nonisolated public init(_ title: LocalizedStringResource, contentType: UTType, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
+    @export(implementation) nonisolated public init(_ title: LocalizedStringResource, contentType: UTType, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
 
     nonisolated public init(_ title: some StringProtocol, contentType: UTType, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
-}
-
-@available(iOS 27.0, macOS 27.0, *)
-@available(tvOS, unavailable)
-@available(watchOS, unavailable)
-extension NewDocumentButton where Label == DefaultNewDocumentButtonLabel {
-
-    nonisolated public init(source: NewDocumentButtonDataSource)
-
-    nonisolated public init<D>(for type: D.Type, source: NewDocumentButtonDataSource) where D : FileDocument
-
-    nonisolated public init<D>(for type: D.Type, source: NewDocumentButtonDataSource) where D : ReferenceFileDocument
 }
 
 @available(iOS 27.0, *)
@@ -13328,14 +13394,6 @@ extension NewDocumentButton where Label == Text {
 
     nonisolated public init(_ title: LocalizedStringResource, contentType: UTType? = nil, source: DocumentCreationSource)
 
-    nonisolated public init<D>(_ label: Text? = nil, for documentType: D.Type = D.self, contentType: UTType? = nil, source: DocumentCreationSource, _ prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
-
-    nonisolated public init<D>(_ title: LocalizedStringKey, for documentType: D.Type = D.self, contentType: UTType? = nil, source: DocumentCreationSource, _ prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
-
-    nonisolated public init<D>(_ title: some StringProtocol, for documentType: D.Type = D.self, contentType: UTType? = nil, source: DocumentCreationSource, _ prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
-
-    nonisolated public init<D>(_ title: LocalizedStringResource, for documentType: D.Type = D.self, contentType: UTType? = nil, source: DocumentCreationSource, _ prepareDocument: @escaping () async throws -> D? = { nil }) where D : FileDocument
-
     nonisolated public init(_ label: Text? = nil, contentType: UTType, source: DocumentCreationSource, _ prepareDocumentURL: @escaping () async throws -> URL? = { nil })
 
     nonisolated public init(_ title: LocalizedStringKey, contentType: UTType, source: DocumentCreationSource, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
@@ -13343,18 +13401,6 @@ extension NewDocumentButton where Label == Text {
     nonisolated public init(_ title: some StringProtocol, contentType: UTType, source: DocumentCreationSource, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
 
     nonisolated public init(_ title: LocalizedStringResource, contentType: UTType, source: DocumentCreationSource, prepareDocumentURL: @escaping () async throws -> URL? = { nil })
-}
-
-@available(iOS 27.0, macOS 27.0, *)
-@available(tvOS, unavailable)
-@available(watchOS, unavailable)
-public struct NewDocumentButtonDataSource : Sendable, Hashable {
-
-    public static func == (lhs: NewDocumentButtonDataSource, rhs: NewDocumentButtonDataSource) -> Bool
-
-    public func hash(into hasher: inout Hasher)
-
-    public var hashValue: Int { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -13365,7 +13411,7 @@ public struct NewDocumentButtonDataSource : Sendable, Hashable {
         @MainActor @preconcurrency public subscript<Subject>(dynamicMember keyPath: ReferenceWritableKeyPath<ObjectType, Subject>) -> Binding<Subject> { get }
     }
 
-    @MainActor @preconcurrency public init(initialValue: ObjectType)
+    @MainActor @export(implementation) @preconcurrency public init(initialValue: ObjectType)
 
     @MainActor @preconcurrency public init(wrappedValue: ObjectType)
 
@@ -14006,7 +14052,7 @@ extension Picker {
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     nonisolated public init<C>(sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder label: () -> Label) where C : RandomAccessCollection
 
-    nonisolated public init(selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder label: () -> Label)
+    @export(implementation) nonisolated public init(selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder label: () -> Label)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -14015,13 +14061,13 @@ extension Picker where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     nonisolated public init<C>(_ titleKey: LocalizedStringKey, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection
 
     nonisolated public init<S>(_ title: S, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content) where S : StringProtocol
 
@@ -14032,21 +14078,21 @@ extension Picker where Label == Text {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Picker where Label == Label<Text, Image> {
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
-    nonisolated public init<S>(_ title: S, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content) where S : StringProtocol
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<C, S>(_ title: S, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, S : StringProtocol, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C, S>(_ title: S, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, S : StringProtocol, C.Element == Binding<SelectionValue>
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -14054,11 +14100,11 @@ extension Picker where Label == Label<Text, Image> {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content)
 
     nonisolated public init<C>(_ titleKey: LocalizedStringKey, image: ImageResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
     nonisolated public init<S>(_ title: S, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content) where S : StringProtocol
 
@@ -14078,11 +14124,11 @@ extension Picker where Label == Text {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
 
     nonisolated public init<C>(_ titleKey: LocalizedStringKey, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection
 
     nonisolated public init<S>(_ title: S, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where S : StringProtocol
 
@@ -14092,17 +14138,17 @@ extension Picker where Label == Text {
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension Picker where Label == Label<Text, Image> {
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
 
-    nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
-    nonisolated public init<S>(_ title: S, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, systemImage: String, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where S : StringProtocol
 
-    nonisolated public init<C, S>(_ title: S, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, S : StringProtocol, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C, S>(_ title: S, systemImage: String, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, S : StringProtocol, C.Element == Binding<SelectionValue>
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -14110,11 +14156,11 @@ extension Picker where Label == Label<Text, Image> {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View)
 
     nonisolated public init<C>(_ titleKey: LocalizedStringKey, image: ImageResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where C : RandomAccessCollection, C.Element == Binding<SelectionValue>
 
     nonisolated public init<S>(_ title: S, image: ImageResource, selection: Binding<SelectionValue>, @ContentBuilder content: () -> Content, @ContentBuilder currentValueLabel: () -> some View) where S : StringProtocol
 
@@ -14141,33 +14187,33 @@ public protocol PickerStyle {
 @available(tvOS, unavailable)
 extension PickerStyle where Self == WheelPickerStyle {
 
-    public static var wheel: WheelPickerStyle { get }
+    @export(implementation) public static var wheel: WheelPickerStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension PickerStyle where Self == InlinePickerStyle {
 
-    public static var inline: InlinePickerStyle { get }
+    @export(implementation) public static var inline: InlinePickerStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension PickerStyle where Self == DefaultPickerStyle {
 
-    public static var automatic: DefaultPickerStyle { get }
+    @export(implementation) public static var automatic: DefaultPickerStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
 @available(watchOS, unavailable)
 extension PickerStyle where Self == SegmentedPickerStyle {
 
-    public static var segmented: SegmentedPickerStyle { get }
+    @export(implementation) public static var segmented: SegmentedPickerStyle { get }
 }
 
 @available(iOS 27.0, macOS 27.0, tvOS 27.0, *)
 @available(watchOS, unavailable)
 extension PickerStyle where Self == TabsPickerStyle {
 
-    public static var tabs: TabsPickerStyle { get }
+    @export(implementation) public static var tabs: TabsPickerStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, *)
@@ -14175,21 +14221,21 @@ extension PickerStyle where Self == TabsPickerStyle {
 @available(watchOS, unavailable)
 extension PickerStyle where Self == PalettePickerStyle {
 
-    public static var palette: PalettePickerStyle { get }
+    @export(implementation) public static var palette: PalettePickerStyle { get }
 }
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 extension PickerStyle where Self == NavigationLinkPickerStyle {
 
-    public static var navigationLink: NavigationLinkPickerStyle { get }
+    @export(implementation) public static var navigationLink: NavigationLinkPickerStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 17.0, *)
 @available(watchOS, unavailable)
 extension PickerStyle where Self == MenuPickerStyle {
 
-    public static var menu: MenuPickerStyle { get }
+    @export(implementation) public static var menu: MenuPickerStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -14223,7 +14269,7 @@ nonisolated public struct PlaceholderContentView<Value> : View, ~Sendable {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @frozen public struct PlaceholderTextShapeStyle : ShapeStyle {
 
-    public init()
+    @export(implementation) public init()
 
     @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
     public typealias Resolved = Never
@@ -14457,12 +14503,14 @@ nonisolated public struct PresentedWindowContent<Data, Content> : View, ~Sendabl
 @freestanding(declaration) public macro Preview(_ name: String? = nil, @ContentBuilder body: @escaping @MainActor () -> any View) = #externalMacro(module: "PreviewsMacros", type: "SwiftUIView")
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use #Preview with a Widget timeline provider or entries instead.")
 public protocol PreviewContext {
 
     subscript<Key>(key: Key.Type) -> Key.Value where Key : PreviewContextKey { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use #Preview with a Widget timeline provider or entries instead.")
 public protocol PreviewContextKey {
 
     associatedtype Value
@@ -14471,6 +14519,7 @@ public protocol PreviewContextKey {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use the device picker in Xcode's canvas.")
 public struct PreviewDevice : RawRepresentable, ExpressibleByStringLiteral, Sendable {
 
     public let rawValue: String
@@ -14480,15 +14529,19 @@ public struct PreviewDevice : RawRepresentable, ExpressibleByStringLiteral, Send
     public init(stringLiteral: String)
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use the device picker in Xcode's canvas.")
     public typealias ExtendedGraphemeClusterLiteralType = String
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use the device picker in Xcode's canvas.")
     public typealias RawValue = String
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use the device picker in Xcode's canvas.")
     public typealias StringLiteralType = String
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use the device picker in Xcode's canvas.")
     public typealias UnicodeScalarLiteralType = String
 }
 
@@ -14520,6 +14573,7 @@ nonisolated public struct PreviewModifierContent : View, ~Sendable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use #Preview instead.")
 public enum PreviewPlatform : Sendable {
 
     case iOS
@@ -14538,14 +14592,17 @@ public enum PreviewPlatform : Sendable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use #Preview instead.")
 extension PreviewPlatform : Equatable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use #Preview instead.")
 extension PreviewPlatform : Hashable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use #Preview instead.")
 @MainActor @preconcurrency public protocol PreviewProvider : _PreviewProvider {
 
     associatedtype Previews : View
@@ -14556,6 +14613,7 @@ extension PreviewPlatform : Hashable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(anyAppleOS, deprecated: 27.0, message: "Use #Preview instead.")
 extension PreviewProvider {
 
     @MainActor @preconcurrency public static var platform: PreviewPlatform? { get }
@@ -14577,14 +14635,14 @@ extension PreviewProvider {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension PrimitiveButtonStyle where Self == DefaultButtonStyle {
 
-    nonisolated public static var automatic: DefaultButtonStyle { get }
+    @export(implementation) nonisolated public static var automatic: DefaultButtonStyle { get }
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 @available(visionOS, unavailable)
 extension PrimitiveButtonStyle where Self == GlassButtonStyle {
 
-    nonisolated public static var glass: GlassButtonStyle { get }
+    @export(implementation) nonisolated public static var glass: GlassButtonStyle { get }
 
     nonisolated public static func glass(_ glass: Glass) -> Self
 }
@@ -14592,32 +14650,32 @@ extension PrimitiveButtonStyle where Self == GlassButtonStyle {
 @available(iOS 13.0, macOS 10.15, tvOS 17.0, watchOS 8.0, *)
 extension PrimitiveButtonStyle where Self == BorderlessButtonStyle {
 
-    nonisolated public static var borderless: BorderlessButtonStyle { get }
+    @export(implementation) nonisolated public static var borderless: BorderlessButtonStyle { get }
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 @available(visionOS, unavailable)
 extension PrimitiveButtonStyle where Self == GlassProminentButtonStyle {
 
-    @MainActor @preconcurrency public static var glassProminent: GlassProminentButtonStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var glassProminent: GlassProminentButtonStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension PrimitiveButtonStyle where Self == PlainButtonStyle {
 
-    @MainActor @preconcurrency public static var plain: PlainButtonStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var plain: PlainButtonStyle { get }
 }
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, watchOS 7.0, *)
 extension PrimitiveButtonStyle where Self == BorderedButtonStyle {
 
-    nonisolated public static var bordered: BorderedButtonStyle { get }
+    @export(implementation) nonisolated public static var bordered: BorderedButtonStyle { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension PrimitiveButtonStyle where Self == BorderedProminentButtonStyle {
 
-    nonisolated public static var borderedProminent: BorderedProminentButtonStyle { get }
+    @export(implementation) nonisolated public static var borderedProminent: BorderedProminentButtonStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -14674,7 +14732,7 @@ extension ProgressView where CurrentValueLabel == EmptyView {
     nonisolated public init(_ titleKey: LocalizedStringKey) where Label == Text
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource) where Label == Text
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource) where Label == Text
 
     nonisolated public init<S>(_ title: S) where Label == Text, S : StringProtocol
 }
@@ -14691,7 +14749,7 @@ extension ProgressView {
     nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: V?, total: V = 1.0) where Label == Text, CurrentValueLabel == EmptyView, V : BinaryFloatingPoint
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: V?, total: V = 1.0) where Label == Text, CurrentValueLabel == EmptyView, V : BinaryFloatingPoint
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: V?, total: V = 1.0) where Label == Text, CurrentValueLabel == EmptyView, V : BinaryFloatingPoint
 
     nonisolated public init<S, V>(_ title: S, value: V?, total: V = 1.0) where Label == Text, CurrentValueLabel == EmptyView, S : StringProtocol, V : BinaryFloatingPoint
 }
@@ -14721,19 +14779,19 @@ extension ProgressView {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ProgressViewStyle where Self == LinearProgressViewStyle {
 
-    nonisolated public static var linear: LinearProgressViewStyle { get }
+    @export(implementation) nonisolated public static var linear: LinearProgressViewStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ProgressViewStyle where Self == CircularProgressViewStyle {
 
-    nonisolated public static var circular: CircularProgressViewStyle { get }
+    @export(implementation) nonisolated public static var circular: CircularProgressViewStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ProgressViewStyle where Self == DefaultProgressViewStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultProgressViewStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultProgressViewStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -14897,9 +14955,9 @@ nonisolated public struct PushTransition : Transition, ~Sendable {
 
     nonisolated public init(gradient: Gradient, center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat)
 
-    nonisolated public init(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat)
+    @export(implementation) nonisolated public init(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat)
 
-    nonisolated public init(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat)
+    @export(implementation) nonisolated public init(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat)
 
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     public typealias Body
@@ -14998,15 +15056,15 @@ extension RectangleCornerInsets : BitwiseCopyable {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 @frozen public struct RectangleCornerRadii : Equatable, Animatable {
 
-    public var topLeading: CGFloat
+    @export(implementation) public var topLeading: CGFloat
 
-    public var bottomLeading: CGFloat
+    @export(implementation) public var bottomLeading: CGFloat
 
-    public var bottomTrailing: CGFloat
+    @export(implementation) public var bottomTrailing: CGFloat
 
-    public var topTrailing: CGFloat
+    @export(implementation) public var topTrailing: CGFloat
 
-    public init(topLeading: CGFloat = 0, bottomLeading: CGFloat = 0, bottomTrailing: CGFloat = 0, topTrailing: CGFloat = 0)
+    @export(implementation) public init(topLeading: CGFloat = 0, bottomLeading: CGFloat = 0, bottomTrailing: CGFloat = 0, topTrailing: CGFloat = 0)
 
     public typealias AnimatableData = AnimatablePair<AnimatablePair<CGFloat, CGFloat>, AnimatablePair<CGFloat, CGFloat>>
 
@@ -15054,7 +15112,8 @@ public struct RedactionReasons : OptionSet, Sendable {
     public typealias RawValue = Int
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use Document protocol instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Use Document protocol instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 @preconcurrency public protocol ReferenceFileDocument : ObservableObject, Sendable {
@@ -15084,7 +15143,8 @@ extension ReferenceFileDocument {
     public static var writableContentTypes: [UTType] { get }
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use Document protocol and URLDocumentConfiguration instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Use Document protocol and URLDocumentConfiguration instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 @MainActor @preconcurrency public struct ReferenceFileDocumentConfiguration<Document> : ~Sendable where Document : ReferenceFileDocument {
@@ -15306,7 +15366,8 @@ nonisolated public struct RotationGesture : Gesture, ~Sendable {
     public typealias Body = Never
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use BorderedTextFieldStyle with `textInputBorderShape(.roundedRectangle)`")
+@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use BorderedTextFieldStyle with `textInputBorderShape(.roundedRectangle)`")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct RoundedBorderTextFieldStyle : TextFieldStyle, ~Sendable {
@@ -15566,7 +15627,7 @@ extension Scene {
 extension Scene {
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    nonisolated public func environment<V>(_ keyPath: WritableKeyPath<EnvironmentValues, V>, _ value: V) -> some Scene
+    @export(implementation) nonisolated public func environment<V>(_ keyPath: WritableKeyPath<EnvironmentValues, V>, _ value: V) -> some Scene
 
 }
 
@@ -15633,6 +15694,38 @@ extension Scene {
     @available(watchOS, deprecated: 10.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
     @available(visionOS, deprecated: 1.0, message: "Use `onChange` with a two or zero parameter action closure instead.")
     @inlinable nonisolated public func onChange<V>(of value: V, perform action: @escaping (_ newValue: V) -> Void) -> some Scene where V : Equatable
+
+}
+
+@available(iOS 27.0, *)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension Scene {
+
+    nonisolated public func documentLaunchTitle(_ title: Text) -> some Scene
+
+
+    nonisolated public func documentLaunchTitle(_ titleKey: LocalizedStringKey) -> some Scene
+
+
+    nonisolated public func documentLaunchTitle(_ titleResource: LocalizedStringResource) -> some Scene
+
+
+    nonisolated public func documentLaunchTitle<S>(_ title: S) -> some Scene where S : StringProtocol
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitle: Text) -> some Scene
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitleKey: LocalizedStringKey) -> some Scene
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitleResource: LocalizedStringResource) -> some Scene
+
+
+    nonisolated public func documentLaunchSubtitle<S>(_ subtitle: S) -> some Scene where S : StringProtocol
 
 }
 
@@ -15712,22 +15805,22 @@ extension SceneAccessoryContent {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
 @resultBuilder public struct SceneBuilder : ~Sendable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : Scene
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : Scene
 
     public static func buildBlock<Content>(_ content: Content) -> Content where Content : Scene
 
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some Scene where repeat each Content : Scene
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some Scene where repeat each Content : Scene
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
 extension SceneBuilder {
 
-    public static func buildOptional(_ scene: (any Scene & _LimitedAvailabilitySceneMarker)?) -> some Scene
+    @export(implementation) public static func buildOptional(_ scene: (any Scene & _LimitedAvailabilitySceneMarker)?) -> some Scene
 
 
     @available(iOS 16.1, macOS 13.0, watchOS 9.1, tvOS 16.1, visionOS 1.0, *)
-    public static func buildLimitedAvailability(_ scene: some Scene) -> any Scene & _LimitedAvailabilitySceneMarker
+    @export(implementation) public static func buildLimitedAvailability(_ scene: some Scene) -> any Scene & _LimitedAvailabilitySceneMarker
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -16162,22 +16255,22 @@ extension ScrollTargetBehavior {
 extension ScrollTargetBehavior where Self == PagingScrollTargetBehavior {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    public static var paging: PagingScrollTargetBehavior { get }
+    @export(implementation) public static var paging: PagingScrollTargetBehavior { get }
 }
 
 extension ScrollTargetBehavior where Self == ViewAlignedScrollTargetBehavior {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    public static var viewAligned: ViewAlignedScrollTargetBehavior { get }
+    @export(implementation) public static var viewAligned: ViewAlignedScrollTargetBehavior { get }
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    public static func viewAligned(limitBehavior: ViewAlignedScrollTargetBehavior.LimitBehavior) -> Self
+    @export(implementation) public static func viewAligned(limitBehavior: ViewAlignedScrollTargetBehavior.LimitBehavior) -> Self
 
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
-    public static func viewAligned(anchor: UnitPoint?) -> Self
+    @export(implementation) public static func viewAligned(anchor: UnitPoint?) -> Self
 
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
-    public static func viewAligned(limitBehavior: ViewAlignedScrollTargetBehavior.LimitBehavior, anchor: UnitPoint?) -> Self
+    @export(implementation) public static func viewAligned(limitBehavior: ViewAlignedScrollTargetBehavior.LimitBehavior, anchor: UnitPoint?) -> Self
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -16308,7 +16401,7 @@ nonisolated public struct ScrollView<Content> : View, ~Sendable where Content : 
 extension ScrollView {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    nonisolated public init(_ axes: Axis.Set = .vertical, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(_ axes: Axis.Set = .vertical, @ContentBuilder content: () -> Content)
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -16488,7 +16581,7 @@ extension Section : TableRowContent where Parent : TableRowContent, Content : Ta
 
     nonisolated public init<V>(_ titleKey: LocalizedStringKey, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue
 
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue
 
     nonisolated public init<V, S>(_ title: S, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue, S : StringProtocol
 
@@ -16504,7 +16597,7 @@ extension Section where Parent : TableRowContent, Content : TableRowContent {
 
     nonisolated public init<V>(_ titleKey: LocalizedStringKey, isExpanded: Binding<Bool>, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue
 
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, isExpanded: Binding<Bool>, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, isExpanded: Binding<Bool>, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue
 
     nonisolated public init<V, S>(_ title: S, isExpanded: Binding<Bool>, @TableRowBuilder<V> content: () -> Content) where Parent == TableHeaderRowContent<V, Text>, Footer == EmptyTableRowContent<V>, V == Content.TableRowValue, S : StringProtocol
 }
@@ -16512,7 +16605,7 @@ extension Section where Parent : TableRowContent, Content : TableRowContent {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Section {
 
-    public init(@ContentBuilder content: () -> Content, @ContentBuilder header: () -> Parent, @ContentBuilder footer: () -> Footer)
+    @export(implementation) public init(@ContentBuilder content: () -> Content, @ContentBuilder header: () -> Parent, @ContentBuilder footer: () -> Footer)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -16524,46 +16617,46 @@ extension Section : View where Parent : View, Content : View, Footer : View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Section where Parent == EmptyView {
 
-    public init(@ContentBuilder content: () -> Content, @ContentBuilder footer: () -> Footer)
+    @export(implementation) public init(@ContentBuilder content: () -> Content, @ContentBuilder footer: () -> Footer)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Section where Footer == EmptyView {
 
-    public init(@ContentBuilder content: () -> Content, @ContentBuilder header: () -> Parent)
+    @export(implementation) public init(@ContentBuilder content: () -> Content, @ContentBuilder header: () -> Parent)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Section where Parent == EmptyView, Footer == EmptyView {
 
-    public init(@ContentBuilder content: () -> Content)
+    @export(implementation) public init(@ContentBuilder content: () -> Content)
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Section where Parent == Text, Footer == EmptyView {
 
-    public init(_ titleKey: LocalizedStringKey, @ContentBuilder content: () -> Content)
+    @export(implementation) public init(_ titleKey: LocalizedStringKey, @ContentBuilder content: () -> Content)
 
-    public init<S>(_ title: S, @ContentBuilder content: () -> Content) where S : StringProtocol
+    @export(implementation) public init<S>(_ title: S, @ContentBuilder content: () -> Content) where S : StringProtocol
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content)
+    @export(implementation) public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: () -> Content)
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension Section where Footer == EmptyView {
 
-    public init(isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content, @ContentBuilder header: () -> Parent)
+    @export(implementation) public init(isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content, @ContentBuilder header: () -> Parent)
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension Section where Parent == Text, Footer == EmptyView {
 
-    public init(_ titleKey: LocalizedStringKey, isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content)
+    @export(implementation) public init(_ titleKey: LocalizedStringKey, isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content)
 
-    public init(_ titleResource: LocalizedStringResource, isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content)
+    @export(implementation) public init(_ titleResource: LocalizedStringResource, isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content)
 
-    public init<S>(_ title: S, isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content) where S : StringProtocol
+    @export(implementation) public init<S>(_ title: S, isExpanded: Binding<Bool>, @ContentBuilder content: () -> Content) where S : StringProtocol
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -16801,7 +16894,7 @@ extension SecureField where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, prompt: Text?)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, prompt: Text?)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, prompt: Text?)
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     nonisolated public init<S>(_ title: S, text: Binding<String>, prompt: Text?) where S : StringProtocol
@@ -16816,13 +16909,13 @@ extension SecureField {
 extension SecureField where Label == Text {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>)
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    nonisolated public init<S>(_ title: S, text: Binding<String>) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, text: Binding<String>) where S : StringProtocol
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -17023,19 +17116,19 @@ public struct Shader : Equatable, Sendable {
 
     public struct Argument : Equatable, Sendable {
 
-        public static func float<T>(_ x: T) -> Shader.Argument where T : BinaryFloatingPoint
+        @export(implementation) public static func float<T>(_ x: T) -> Shader.Argument where T : BinaryFloatingPoint
 
-        public static func float2<T>(_ x: T, _ y: T) -> Shader.Argument where T : BinaryFloatingPoint
+        @export(implementation) public static func float2<T>(_ x: T, _ y: T) -> Shader.Argument where T : BinaryFloatingPoint
 
-        public static func float3<T>(_ x: T, _ y: T, _ z: T) -> Shader.Argument where T : BinaryFloatingPoint
+        @export(implementation) public static func float3<T>(_ x: T, _ y: T, _ z: T) -> Shader.Argument where T : BinaryFloatingPoint
 
-        public static func float4<T>(_ x: T, _ y: T, _ z: T, _ w: T) -> Shader.Argument where T : BinaryFloatingPoint
+        @export(implementation) public static func float4<T>(_ x: T, _ y: T, _ z: T, _ w: T) -> Shader.Argument where T : BinaryFloatingPoint
 
-        public static func float2(_ point: CGPoint) -> Shader.Argument
+        @export(implementation) public static func float2(_ point: CGPoint) -> Shader.Argument
 
-        public static func float2(_ size: CGSize) -> Shader.Argument
+        @export(implementation) public static func float2(_ size: CGSize) -> Shader.Argument
 
-        public static func float2(_ vector: CGVector) -> Shader.Argument
+        @export(implementation) public static func float2(_ vector: CGVector) -> Shader.Argument
 
         public static func floatArray(_ array: [Float]) -> Shader.Argument
 
@@ -17204,91 +17297,91 @@ extension Shape {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Rectangle {
 
-    public static var rect: Rectangle { get }
+    @export(implementation) public static var rect: Rectangle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == RoundedRectangle {
 
-    public static func rect(cornerSize: CGSize, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(cornerSize: CGSize, style: RoundedCornerStyle = .continuous) -> Self
 
-    public static func rect(cornerRadius: CGFloat, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(cornerRadius: CGFloat, style: RoundedCornerStyle = .continuous) -> Self
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension Shape where Self == UnevenRoundedRectangle {
 
-    public static func rect(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) -> Self
 
-    public static func rect(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Capsule {
 
-    public static var capsule: Capsule { get }
+    @export(implementation) public static var capsule: Capsule { get }
 
-    public static func capsule(style: RoundedCornerStyle) -> Self
+    @export(implementation) public static func capsule(style: RoundedCornerStyle) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Ellipse {
 
-    public static var ellipse: Ellipse { get }
+    @export(implementation) public static var ellipse: Ellipse { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Circle {
 
-    public static var circle: Circle { get }
+    @export(implementation) public static var circle: Circle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Shape {
 
-    nonisolated public func intersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func intersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func union<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func union<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func subtracting<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func subtracting<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func symmetricDifference<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func symmetricDifference<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func lineIntersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func lineIntersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func lineSubtraction<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func lineSubtraction<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension Shape where Self == ConcentricRectangle {
 
-    public static func rect(corners: Edge.Corner.Style, isUniform: Bool = false) -> Self
+    @export(implementation) public static func rect(corners: Edge.Corner.Style, isUniform: Bool = false) -> Self
 
-    public static func rect(topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformTopCorners: Edge.Corner.Style, uniformBottomCorners: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformTopCorners: Edge.Corner.Style, uniformBottomCorners: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformLeadingCorners: Edge.Corner.Style, uniformTrailingCorners: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformLeadingCorners: Edge.Corner.Style, uniformTrailingCorners: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformTopCorners: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformTopCorners: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformBottomCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformBottomCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformLeadingCorners: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformLeadingCorners: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformTrailingCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformTrailingCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style) -> Self
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Shape where Self == ContainerRelativeShape {
 
-    public static var containerRelative: ContainerRelativeShape { get }
+    @export(implementation) public static var containerRelative: ContainerRelativeShape { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -17354,11 +17447,17 @@ extension Shape {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Shape {
 
-    nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> _ShapeView<Self, S> where S : ShapeStyle
+    @export(implementation) nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> _ShapeView<Self, S> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
+}
+
+@available(anyAppleOS 27.0, *)
+extension Shape where Self == TextInputBorderShape {
+
+    public static var textInputBorder: TextInputBorderShape { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -17398,19 +17497,19 @@ public protocol ShapeStyle : Sendable {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == FillShapeStyle {
 
-    public static var fill: FillShapeStyle { get }
+    @export(implementation) public static var fill: FillShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == PlaceholderTextShapeStyle {
 
-    public static var placeholder: PlaceholderTextShapeStyle { get }
+    @export(implementation) public static var placeholder: PlaceholderTextShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == LinkShapeStyle {
 
-    public static var link: LinkShapeStyle { get }
+    @export(implementation) public static var link: LinkShapeStyle { get }
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -17418,107 +17517,107 @@ extension ShapeStyle where Self == LinkShapeStyle {
 @available(watchOS, unavailable)
 extension ShapeStyle where Self == SelectionShapeStyle {
 
-    public static var selection: SelectionShapeStyle { get }
+    @export(implementation) public static var selection: SelectionShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @available(visionOS, unavailable)
 extension ShapeStyle where Self == WindowBackgroundShapeStyle {
 
-    public static var windowBackground: WindowBackgroundShapeStyle { get }
+    @export(implementation) public static var windowBackground: WindowBackgroundShapeStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == LinearGradient {
 
-    public static func linearGradient(_ gradient: Gradient, startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+    @export(implementation) public static func linearGradient(_ gradient: Gradient, startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
 
-    public static func linearGradient(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+    @export(implementation) public static func linearGradient(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
 
-    public static func linearGradient(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+    @export(implementation) public static func linearGradient(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == RadialGradient {
 
-    public static func radialGradient(_ gradient: Gradient, center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+    @export(implementation) public static func radialGradient(_ gradient: Gradient, center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
 
-    public static func radialGradient(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+    @export(implementation) public static func radialGradient(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
 
-    public static func radialGradient(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+    @export(implementation) public static func radialGradient(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ShapeStyle where Self == EllipticalGradient {
 
-    public static func ellipticalGradient(_ gradient: Gradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+    @export(implementation) public static func ellipticalGradient(_ gradient: Gradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
 
-    public static func ellipticalGradient(colors: [Color], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+    @export(implementation) public static func ellipticalGradient(colors: [Color], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
 
-    public static func ellipticalGradient(stops: [Gradient.Stop], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+    @export(implementation) public static func ellipticalGradient(stops: [Gradient.Stop], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == AngularGradient {
 
-    public static func angularGradient(_ gradient: Gradient, center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+    @export(implementation) public static func angularGradient(_ gradient: Gradient, center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
 
-    public static func angularGradient(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+    @export(implementation) public static func angularGradient(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
 
-    public static func angularGradient(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+    @export(implementation) public static func angularGradient(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == AngularGradient {
 
-    public static func conicGradient(_ gradient: Gradient, center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+    @export(implementation) public static func conicGradient(_ gradient: Gradient, center: UnitPoint, angle: Angle = .zero) -> AngularGradient
 
-    public static func conicGradient(colors: [Color], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+    @export(implementation) public static func conicGradient(colors: [Color], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
 
-    public static func conicGradient(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+    @export(implementation) public static func conicGradient(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == LinearGradient {
 
-    public static func linearGradient(_ gradient: AnyGradient, startPoint: UnitPoint, endPoint: UnitPoint) -> some ShapeStyle
+    @export(implementation) public static func linearGradient(_ gradient: AnyGradient, startPoint: UnitPoint, endPoint: UnitPoint) -> some ShapeStyle
 
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == RadialGradient {
 
-    public static func radialGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadius: CGFloat = 0, endRadius: CGFloat) -> some ShapeStyle
+    @export(implementation) public static func radialGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadius: CGFloat = 0, endRadius: CGFloat) -> some ShapeStyle
 
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == EllipticalGradient {
 
-    public static func ellipticalGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> some ShapeStyle
+    @export(implementation) public static func ellipticalGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> some ShapeStyle
 
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AngularGradient {
 
-    public static func angularGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startAngle: Angle, endAngle: Angle) -> some ShapeStyle
+    @export(implementation) public static func angularGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startAngle: Angle, endAngle: Angle) -> some ShapeStyle
 
 
-    public static func conicGradient(_ gradient: AnyGradient, center: UnitPoint = .center, angle: Angle = .zero) -> some ShapeStyle
+    @export(implementation) public static func conicGradient(_ gradient: AnyGradient, center: UnitPoint = .center, angle: Angle = .zero) -> some ShapeStyle
 
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == ImagePaint {
 
-    public static func image(_ image: Image, sourceRect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) -> ImagePaint
+    @export(implementation) public static func image(_ image: Image, sourceRect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) -> ImagePaint
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AnyShapeStyle {
 
-    public static func opacity(_ opacity: Double) -> some ShapeStyle
+    @export(implementation) public static func opacity(_ opacity: Double) -> some ShapeStyle
 
 }
 
@@ -17539,22 +17638,22 @@ extension ShapeStyle {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AnyShapeStyle {
 
-    public static func blendMode(_ mode: BlendMode) -> some ShapeStyle
+    @export(implementation) public static func blendMode(_ mode: BlendMode) -> some ShapeStyle
 
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 10.0, *)
 extension ShapeStyle where Self == Material {
 
-    public static var regularMaterial: Material { get }
+    @export(implementation) public static var regularMaterial: Material { get }
 
-    public static var thickMaterial: Material { get }
+    @export(implementation) public static var thickMaterial: Material { get }
 
-    public static var thinMaterial: Material { get }
+    @export(implementation) public static var thinMaterial: Material { get }
 
-    public static var ultraThinMaterial: Material { get }
+    @export(implementation) public static var ultraThinMaterial: Material { get }
 
-    public static var ultraThickMaterial: Material { get }
+    @export(implementation) public static var ultraThickMaterial: Material { get }
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -17562,7 +17661,7 @@ extension ShapeStyle where Self == Material {
 @available(watchOS, unavailable)
 extension ShapeStyle where Self == Material {
 
-    public static var bar: Material { get }
+    @export(implementation) public static var bar: Material { get }
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -17575,78 +17674,78 @@ extension ShapeStyle {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ShapeStyle where Self == HierarchicalShapeStyle {
 
-    public static var primary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var primary: HierarchicalShapeStyle { get }
 
-    public static var secondary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var secondary: HierarchicalShapeStyle { get }
 
-    public static var tertiary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var tertiary: HierarchicalShapeStyle { get }
 
-    public static var quaternary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var quaternary: HierarchicalShapeStyle { get }
 }
 
 @available(iOS 16.0, macOS 12.0, macCatalyst 15.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == HierarchicalShapeStyle {
 
-    public static var quinary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var quinary: HierarchicalShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle {
 
-    public var secondary: some ShapeStyle { get }
+    @export(implementation) public var secondary: some ShapeStyle { get }
 
-    public var tertiary: some ShapeStyle { get }
+    @export(implementation) public var tertiary: some ShapeStyle { get }
 
-    public var quaternary: some ShapeStyle { get }
+    @export(implementation) public var quaternary: some ShapeStyle { get }
 
-    public var quinary: some ShapeStyle { get }
+    @export(implementation) public var quinary: some ShapeStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == Color {
 
-    public static var red: Color { get }
+    @export(implementation) public static var red: Color { get }
 
-    public static var orange: Color { get }
+    @export(implementation) public static var orange: Color { get }
 
-    public static var yellow: Color { get }
+    @export(implementation) public static var yellow: Color { get }
 
-    public static var green: Color { get }
-
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var mint: Color { get }
+    @export(implementation) public static var green: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var teal: Color { get }
+    @export(implementation) public static var mint: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var cyan: Color { get }
-
-    public static var blue: Color { get }
+    @export(implementation) public static var teal: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var indigo: Color { get }
+    @export(implementation) public static var cyan: Color { get }
 
-    public static var purple: Color { get }
-
-    public static var pink: Color { get }
+    @export(implementation) public static var blue: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var brown: Color { get }
+    @export(implementation) public static var indigo: Color { get }
 
-    public static var white: Color { get }
+    @export(implementation) public static var purple: Color { get }
 
-    public static var gray: Color { get }
+    @export(implementation) public static var pink: Color { get }
 
-    public static var black: Color { get }
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @export(implementation) public static var brown: Color { get }
 
-    public static var clear: Color { get }
+    @export(implementation) public static var white: Color { get }
+
+    @export(implementation) public static var gray: Color { get }
+
+    @export(implementation) public static var black: Color { get }
+
+    @export(implementation) public static var clear: Color { get }
 }
 
 @available(iOS 17.0, macOS 10.15, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == SeparatorShapeStyle {
 
-    public static var separator: SeparatorShapeStyle { get }
+    @export(implementation) public static var separator: SeparatorShapeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -17659,7 +17758,7 @@ extension ShapeStyle {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AnyShapeStyle {
 
-    public static func shadow(_ style: ShadowStyle) -> some ShapeStyle
+    @export(implementation) public static func shadow(_ style: ShadowStyle) -> some ShapeStyle
 
 }
 
@@ -17673,13 +17772,13 @@ extension ShapeStyle {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ShapeStyle where Self == BackgroundStyle {
 
-    public static var background: BackgroundStyle { get }
+    @export(implementation) public static var background: BackgroundStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == ForegroundStyle {
 
-    public static var foreground: ForegroundStyle { get }
+    @export(implementation) public static var foreground: ForegroundStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -17697,7 +17796,7 @@ extension ShapeStyle where Self : View, Self.Body == _ShapeView<Rectangle, Self>
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ShapeStyle where Self == TintShapeStyle {
 
-    public static var tint: TintShapeStyle { get }
+    @export(implementation) public static var tint: TintShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -17711,19 +17810,19 @@ nonisolated public protocol ShapeView<Content> : View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeView {
 
-    nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> FillShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> FillShapeView<Self.Content, S, Self> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeView where Self.Content : InsettableShape {
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
@@ -17777,7 +17876,7 @@ extension ShareLink where Label == DefaultShareLinkLabel {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, items: Data, subject: Text? = nil, message: Text? = nil, preview: @escaping (Data.Element) -> SharePreview<PreviewImage, PreviewIcon>)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, items: Data, subject: Text? = nil, message: Text? = nil, preview: @escaping (Data.Element) -> SharePreview<PreviewImage, PreviewIcon>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, items: Data, subject: Text? = nil, message: Text? = nil, preview: @escaping (Data.Element) -> SharePreview<PreviewImage, PreviewIcon>)
 
     nonisolated public init<S>(_ title: S, items: Data, subject: Text? = nil, message: Text? = nil, preview: @escaping (Data.Element) -> SharePreview<PreviewImage, PreviewIcon>) where S : StringProtocol
 
@@ -17792,7 +17891,7 @@ extension ShareLink where Label == DefaultShareLinkLabel {
 
     nonisolated public init<I>(_ titleKey: LocalizedStringKey, item: I, subject: Text? = nil, message: Text? = nil, preview: SharePreview<PreviewImage, PreviewIcon>) where Data == CollectionOfOne<I>, I : Transferable
 
-    nonisolated public init<I>(_ titleResource: LocalizedStringResource, item: I, subject: Text? = nil, message: Text? = nil, preview: SharePreview<PreviewImage, PreviewIcon>) where Data == CollectionOfOne<I>, I : Transferable
+    @export(implementation) nonisolated public init<I>(_ titleResource: LocalizedStringResource, item: I, subject: Text? = nil, message: Text? = nil, preview: SharePreview<PreviewImage, PreviewIcon>) where Data == CollectionOfOne<I>, I : Transferable
 
     nonisolated public init<S, I>(_ title: S, item: I, subject: Text? = nil, message: Text? = nil, preview: SharePreview<PreviewImage, PreviewIcon>) where Data == CollectionOfOne<I>, S : StringProtocol, I : Transferable
 
@@ -17807,7 +17906,7 @@ extension ShareLink where PreviewImage == Never, PreviewIcon == Never, Label == 
 
     nonisolated public init(_ titleKey: LocalizedStringKey, items: Data, subject: Text? = nil, message: Text? = nil)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, items: Data, subject: Text? = nil, message: Text? = nil)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, items: Data, subject: Text? = nil, message: Text? = nil)
 
     nonisolated public init<S>(_ title: S, items: Data, subject: Text? = nil, message: Text? = nil) where S : StringProtocol
 
@@ -17822,7 +17921,7 @@ extension ShareLink where PreviewImage == Never, PreviewIcon == Never, Label == 
 
     nonisolated public init(_ titleKey: LocalizedStringKey, items: Data, subject: Text? = nil, message: Text? = nil)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, items: Data, subject: Text? = nil, message: Text? = nil)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, items: Data, subject: Text? = nil, message: Text? = nil)
 
     nonisolated public init<S>(_ title: S, items: Data, subject: Text? = nil, message: Text? = nil) where S : StringProtocol
 
@@ -17839,11 +17938,11 @@ extension ShareLink where PreviewImage == Never, PreviewIcon == Never, Label == 
 
     nonisolated public init(_ titleKey: LocalizedStringKey, item: URL, subject: Text? = nil, message: Text? = nil) where Data == CollectionOfOne<URL>
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, item: URL, subject: Text? = nil, message: Text? = nil) where Data == CollectionOfOne<URL>
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, item: URL, subject: Text? = nil, message: Text? = nil) where Data == CollectionOfOne<URL>
 
     nonisolated public init(_ titleKey: LocalizedStringKey, item: String, subject: Text? = nil, message: Text? = nil) where Data == CollectionOfOne<String>
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, item: String, subject: Text? = nil, message: Text? = nil) where Data == CollectionOfOne<String>
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, item: String, subject: Text? = nil, message: Text? = nil) where Data == CollectionOfOne<String>
 
     nonisolated public init<S>(_ title: S, item: URL, subject: Text? = nil, message: Text? = nil) where Data == CollectionOfOne<URL>, S : StringProtocol
 
@@ -17860,7 +17959,7 @@ public struct SharePreview<Image, Icon> : ~Sendable where Image : Transferable, 
 
     public init(_ titleKey: LocalizedStringKey, image: Image, icon: Icon)
 
-    public init(_ titleResource: LocalizedStringResource, image: Image, icon: Icon)
+    @export(implementation) public init(_ titleResource: LocalizedStringResource, image: Image, icon: Icon)
 
     public init<S>(_ title: S, image: Image, icon: Icon) where S : StringProtocol
 
@@ -17873,7 +17972,7 @@ extension SharePreview where Image == Never {
 
     public init(_ titleKey: LocalizedStringKey, icon: Icon)
 
-    public init(_ titleResource: LocalizedStringResource, icon: Icon)
+    @export(implementation) public init(_ titleResource: LocalizedStringResource, icon: Icon)
 
     public init<S>(_ title: S, icon: Icon) where S : StringProtocol
 
@@ -17886,7 +17985,7 @@ extension SharePreview where Icon == Never {
 
     public init(_ titleKey: LocalizedStringKey, image: Image)
 
-    public init(_ titleResource: LocalizedStringResource, image: Image)
+    @export(implementation) public init(_ titleResource: LocalizedStringResource, image: Image)
 
     public init<S>(_ title: S, image: Image) where S : StringProtocol
 
@@ -17899,7 +17998,7 @@ extension SharePreview where Image == Never, Icon == Never {
 
     public init(_ titleKey: LocalizedStringKey)
 
-    public init(_ titleResource: LocalizedStringResource)
+    @export(implementation) public init(_ titleResource: LocalizedStringResource)
 
     public init<S>(_ title: S) where S : StringProtocol
 
@@ -18025,18 +18124,18 @@ nonisolated public struct Slider<Label, ValueLabel> : View, ~Sendable where Labe
 @available(tvOS, unavailable)
 extension Slider {
 
-    nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V> = 0...1, @ContentBuilder label: () -> Label, @ContentBuilder minimumValueLabel: () -> ValueLabel, @ContentBuilder maximumValueLabel: () -> ValueLabel, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
+    @export(implementation) nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V> = 0...1, @ContentBuilder label: () -> Label, @ContentBuilder minimumValueLabel: () -> ValueLabel, @ContentBuilder maximumValueLabel: () -> ValueLabel, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
 
-    nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, @ContentBuilder minimumValueLabel: () -> ValueLabel, @ContentBuilder maximumValueLabel: () -> ValueLabel, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
+    @export(implementation) nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, @ContentBuilder minimumValueLabel: () -> ValueLabel, @ContentBuilder maximumValueLabel: () -> ValueLabel, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
 }
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 @available(tvOS, unavailable)
 extension Slider where ValueLabel == EmptyView {
 
-    nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V> = 0...1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
+    @export(implementation) nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V> = 0...1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
 
-    nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
+    @export(implementation) nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint
 }
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
@@ -18145,33 +18244,25 @@ extension SliderTick {
     public static func buildBlock() -> some SliderTickContent<V>
 
 
-    public static func buildBlock(_ content: some SliderTickContent<V>) -> some SliderTickContent<V>
+    @export(implementation) public static func buildBlock(_ content: some SliderTickContent<V>) -> some SliderTickContent<V>
 
 
-    public static func buildExpression(_ content: some SliderTickContent<V>) -> some SliderTickContent<V>
+    @export(implementation) public static func buildExpression(_ content: some SliderTickContent<V>) -> some SliderTickContent<V>
 
 
-    public static func buildIf(_ content: some SliderTickContent<V>) -> some SliderTickContent<V>
+    @export(implementation) public static func buildIf(_ content: some SliderTickContent<V>) -> some SliderTickContent<V>
 
 
-    public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where V == T.Value, T : SliderTickContent, F : SliderTickContent, T.Body == F.Body
+    @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where V == T.Value, T : SliderTickContent, F : SliderTickContent, T.Body == F.Body
 
-    public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where V == T.Value, T : SliderTickContent, F : SliderTickContent, T.Body == F.Body
+    @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where V == T.Value, T : SliderTickContent, F : SliderTickContent, T.Body == F.Body
 }
 
 @available(iOS 26.0, macOS 26.0, watchOS 26.0, *)
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C0.Value == C1.Value
-
-}
-
-@available(iOS 26.0, macOS 26.0, watchOS 26.0, *)
-@available(tvOS, unavailable)
-extension SliderTickBuilder {
-
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C0.Value == C1.Value
 
 }
 
@@ -18179,7 +18270,7 @@ extension SliderTickBuilder {
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value
 
 }
 
@@ -18187,7 +18278,7 @@ extension SliderTickBuilder {
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value
 
 }
 
@@ -18195,7 +18286,7 @@ extension SliderTickBuilder {
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value
 
 }
 
@@ -18203,7 +18294,7 @@ extension SliderTickBuilder {
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value
 
 }
 
@@ -18211,7 +18302,7 @@ extension SliderTickBuilder {
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C7 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value, C6.Value == C7.Value
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value
 
 }
 
@@ -18219,7 +18310,7 @@ extension SliderTickBuilder {
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C7 : SliderTickContent, C8 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value, C6.Value == C7.Value, C7.Value == C8.Value
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C7 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value, C6.Value == C7.Value
 
 }
 
@@ -18227,7 +18318,15 @@ extension SliderTickBuilder {
 @available(tvOS, unavailable)
 extension SliderTickBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C7 : SliderTickContent, C8 : SliderTickContent, C9 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value, C6.Value == C7.Value, C7.Value == C8.Value, C8.Value == C9.Value
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C7 : SliderTickContent, C8 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value, C6.Value == C7.Value, C7.Value == C8.Value
+
+}
+
+@available(iOS 26.0, macOS 26.0, watchOS 26.0, *)
+@available(tvOS, unavailable)
+extension SliderTickBuilder {
+
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some SliderTickContent<V> where V == C0.Value, C0 : SliderTickContent, C1 : SliderTickContent, C2 : SliderTickContent, C3 : SliderTickContent, C4 : SliderTickContent, C5 : SliderTickContent, C6 : SliderTickContent, C7 : SliderTickContent, C8 : SliderTickContent, C9 : SliderTickContent, C0.Value == C1.Value, C1.Value == C2.Value, C2.Value == C3.Value, C3.Value == C4.Value, C4.Value == C5.Value, C5.Value == C6.Value, C6.Value == C7.Value, C7.Value == C8.Value, C8.Value == C9.Value
 
 }
 
@@ -18565,17 +18664,17 @@ extension Spring {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Spring {
 
-    public static var smooth: Spring { get }
+    @export(implementation) public static var smooth: Spring { get }
 
-    public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+    @export(implementation) public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
 
-    public static var snappy: Spring { get }
+    @export(implementation) public static var snappy: Spring { get }
 
-    public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+    @export(implementation) public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
 
-    public static var bouncy: Spring { get }
+    @export(implementation) public static var bouncy: Spring { get }
 
-    public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+    @export(implementation) public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -18618,7 +18717,7 @@ public struct StackNavigationViewStyle : NavigationViewStyle, ~Sendable {
 
     public init(wrappedValue value: Value)
 
-    public init(initialValue value: Value)
+    @export(implementation) public init(initialValue value: Value)
 
     public var wrappedValue: Value { get nonmutating set }
 
@@ -18663,7 +18762,7 @@ extension StateObject.Storage : Sendable {
 @available(tvOS, unavailable)
 nonisolated public struct Stepper<Label> : View, ~Sendable where Label : View {
 
-    nonisolated public init(@ContentBuilder label: () -> Label, onIncrement: (() -> Void)?, onDecrement: (() -> Void)?, onEditingChanged: @escaping (Bool) -> Void = { _ in })
+    @export(implementation) nonisolated public init(@ContentBuilder label: () -> Label, onIncrement: (() -> Void)?, onDecrement: (() -> Void)?, onEditingChanged: @escaping (Bool) -> Void = { _ in })
 
     nonisolated public var body: some View { get }
 
@@ -18678,11 +18777,11 @@ extension Stepper {
 
     @available(watchOS 9.0, *)
     @available(tvOS, unavailable)
-    nonisolated public init<V>(value: Binding<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
+    @export(implementation) nonisolated public init<V>(value: Binding<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
 
     @available(watchOS 9.0, *)
     @available(tvOS, unavailable)
-    nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
+    @export(implementation) nonisolated public init<V>(value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, @ContentBuilder label: () -> Label, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
 }
 
 @available(iOS 13.0, macOS 10.15, watchOS 9.0, *)
@@ -18695,7 +18794,7 @@ extension Stepper where Label == Text {
 
     @available(iOS 16.0, macOS 13.0, *)
     @available(tvOS, unavailable)
-    nonisolated public init(_ titleResource: LocalizedStringResource, onIncrement: (() -> Void)?, onDecrement: (() -> Void)?, onEditingChanged: @escaping (Bool) -> Void = { _ in })
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, onIncrement: (() -> Void)?, onDecrement: (() -> Void)?, onEditingChanged: @escaping (Bool) -> Void = { _ in })
 
     @available(watchOS 9.0, *)
     @available(tvOS, unavailable)
@@ -18707,7 +18806,7 @@ extension Stepper where Label == Text {
 
     @available(iOS 16.0, macOS 13.0, *)
     @available(tvOS, unavailable)
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, step: V.Stride = 1, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, step: V.Stride = 1, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
 
     @available(watchOS 9.0, *)
     @available(tvOS, unavailable)
@@ -18719,7 +18818,7 @@ extension Stepper where Label == Text {
 
     @available(iOS 16.0, macOS 13.0, *)
     @available(tvOS, unavailable)
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, in bounds: ClosedRange<V>, step: V.Stride = 1, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : Strideable
 
     @available(watchOS 9.0, *)
     @available(tvOS, unavailable)
@@ -18741,13 +18840,13 @@ extension Stepper where Label == Text {
 
     nonisolated public init<F>(_ titleKey: LocalizedStringKey, value: Binding<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
 
-    nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
+    @export(implementation) nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
 
     nonisolated public init<S, F>(_ title: S, value: Binding<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where S : StringProtocol, F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
 
     nonisolated public init<F>(_ titleKey: LocalizedStringKey, value: Binding<F.FormatInput>, in bounds: ClosedRange<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
 
-    nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput>, in bounds: ClosedRange<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
+    @export(implementation) nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput>, in bounds: ClosedRange<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
 
     nonisolated public init<S, F>(_ title: S, value: Binding<F.FormatInput>, in bounds: ClosedRange<F.FormatInput>, step: F.FormatInput.Stride = 1, format: F, onEditingChanged: @escaping (Bool) -> Void = { _ in }) where S : StringProtocol, F : ParseableFormatStyle, F.FormatInput : BinaryFloatingPoint, F.FormatOutput == String
 }
@@ -18780,15 +18879,15 @@ extension Stepper {
 
     public var shape: Content
 
-    nonisolated public var style: Style
+    @export(implementation) nonisolated public var style: Style
 
-    nonisolated public var strokeStyle: StrokeStyle
+    @export(implementation) nonisolated public var strokeStyle: StrokeStyle
 
-    nonisolated public var isAntialiased: Bool
+    @export(implementation) nonisolated public var isAntialiased: Bool
 
-    nonisolated public var background: Background
+    @export(implementation) nonisolated public var background: Background
 
-    nonisolated public init(shape: Content, style: Style, strokeStyle: StrokeStyle, isAntialiased: Bool, background: Background)
+    @export(implementation) nonisolated public init(shape: Content, style: Style, strokeStyle: StrokeStyle, isAntialiased: Bool, background: Background)
 
     @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
     public typealias Body = Never
@@ -18797,17 +18896,17 @@ extension Stepper {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @frozen nonisolated public struct StrokeShapeView<Content, Style, Background> : ShapeView, ~Sendable where Content : Shape, Style : ShapeStyle, Background : View {
 
-    nonisolated public var shape: Content
+    @export(implementation) nonisolated public var shape: Content
 
-    nonisolated public var style: Style
+    @export(implementation) nonisolated public var style: Style
 
-    nonisolated public var strokeStyle: StrokeStyle
+    @export(implementation) nonisolated public var strokeStyle: StrokeStyle
 
-    nonisolated public var isAntialiased: Bool
+    @export(implementation) nonisolated public var isAntialiased: Bool
 
-    nonisolated public var background: Background
+    @export(implementation) nonisolated public var background: Background
 
-    nonisolated public init(shape: Content, style: Style, strokeStyle: StrokeStyle, isAntialiased: Bool, background: Background)
+    @export(implementation) nonisolated public init(shape: Content, style: Style, strokeStyle: StrokeStyle, isAntialiased: Bool, background: Background)
 
     @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
     public typealias Body = Never
@@ -19037,7 +19136,7 @@ public struct SymbolColorRenderingMode : Equatable, Sendable {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @MainActor @frozen @preconcurrency public struct SymbolEffectTransition : Transition, ~Sendable {
 
-    @MainActor @preconcurrency public init<T>(effect: T, options: SymbolEffectOptions) where T : SymbolEffect, T : TransitionSymbolEffect
+    @MainActor @export(implementation) @preconcurrency public init<T>(effect: T, options: SymbolEffectOptions) where T : SymbolEffect, T : TransitionSymbolEffect
 
     @MainActor @preconcurrency public func body(content: SymbolEffectTransition.Content, phase: TransitionPhase) -> some View
 
@@ -19498,7 +19597,7 @@ extension TabContent {
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
 
 
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
 
 
     nonisolated public func accessibilityValue<S>(_ value: S, isEnabled: Bool = true) -> some TabContent<Self.TabValue> where S : StringProtocol
@@ -19514,7 +19613,7 @@ extension TabContent {
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
 
 
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
 
 
     nonisolated public func accessibilityLabel<S>(_ label: S, isEnabled: Bool = true) -> some TabContent<Self.TabValue> where S : StringProtocol
@@ -19530,7 +19629,7 @@ extension TabContent {
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
 
 
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool = true) -> some TabContent<Self.TabValue>
 
 
     nonisolated public func accessibilityHint<S>(_ hint: S, isEnabled: Bool = true) -> some TabContent<Self.TabValue> where S : StringProtocol
@@ -19594,7 +19693,7 @@ extension TabContent {
     nonisolated public func badge(_ key: LocalizedStringKey) -> some TabContent<Self.TabValue>
 
 
-    nonisolated public func badge(_ resource: LocalizedStringResource) -> some TabContent<Self.TabValue>
+    @export(implementation) nonisolated public func badge(_ resource: LocalizedStringResource) -> some TabContent<Self.TabValue>
 
 
     nonisolated public func badge<S>(_ label: S) -> some TabContent<Self.TabValue> where S : StringProtocol
@@ -19718,50 +19817,50 @@ extension TabContent {
         public typealias Body = some View
     }
 
-    public static func buildExpression(_ content: some TabContent<TabValue>) -> some TabContent<TabValue>
+    @export(implementation) public static func buildExpression(_ content: some TabContent<TabValue>) -> some TabContent<TabValue>
 
 
-    public static func buildBlock(_ content: some TabContent<TabValue>) -> some TabContent<TabValue>
+    @export(implementation) public static func buildBlock(_ content: some TabContent<TabValue>) -> some TabContent<TabValue>
 
 
-    public static func buildIf(_ content: (some TabContent<TabValue>)?) -> (some TabContent<TabValue>)?
+    @export(implementation) public static func buildIf(_ content: (some TabContent<TabValue>)?) -> (some TabContent<TabValue>)?
 
 
-    public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where TabValue == T.TabValue, T : TabContent, F : TabContent, T.TabValue == F.TabValue
+    @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where TabValue == T.TabValue, T : TabContent, F : TabContent, T.TabValue == F.TabValue
 
-    public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where TabValue == T.TabValue, T : TabContent, F : TabContent, T.TabValue == F.TabValue
+    @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where TabValue == T.TabValue, T : TabContent, F : TabContent, T.TabValue == F.TabValue
 
-    public static func buildLimitedAvailability<T>(_ content: T) -> AnyTabContent<T.TabValue> where T : TabContent
+    @export(implementation) public static func buildLimitedAvailability<T>(_ content: T) -> AnyTabContent<T.TabValue> where T : TabContent
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension TabContentBuilder {
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C0.TabValue == C1.TabValue
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C0.TabValue == C1.TabValue
 
 
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue
 
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue
 
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue
 
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue
 
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue
 
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C7 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue, C6.TabValue == C7.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C7 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue, C6.TabValue == C7.TabValue
 
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C7 : TabContent, C8 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue, C6.TabValue == C7.TabValue, C7.TabValue == C8.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C7 : TabContent, C8 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue, C6.TabValue == C7.TabValue, C7.TabValue == C8.TabValue
 
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C7 : TabContent, C8 : TabContent, C9 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue, C6.TabValue == C7.TabValue, C7.TabValue == C8.TabValue, C8.TabValue == C9.TabValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some TabContent<TabValue> where TabValue == C0.TabValue, C0 : TabContent, C1 : TabContent, C2 : TabContent, C3 : TabContent, C4 : TabContent, C5 : TabContent, C6 : TabContent, C7 : TabContent, C8 : TabContent, C9 : TabContent, C0.TabValue == C1.TabValue, C1.TabValue == C2.TabValue, C2.TabValue == C3.TabValue, C3.TabValue == C4.TabValue, C4.TabValue == C5.TabValue, C5.TabValue == C6.TabValue, C6.TabValue == C7.TabValue, C7.TabValue == C8.TabValue, C8.TabValue == C9.TabValue
 
 }
 
@@ -19856,7 +19955,7 @@ extension TabSection where Content : TabContent, SelectionValue : Hashable {
 
     public init(_ titleKey: LocalizedStringKey, @TabContentBuilder<SelectionValue> content: () -> Content) where Header == Text, Footer == EmptyView
 
-    public init(_ titleResource: LocalizedStringResource, @TabContentBuilder<SelectionValue> content: () -> Content) where Header == Text, Footer == EmptyView
+    @export(implementation) public init(_ titleResource: LocalizedStringResource, @TabContentBuilder<SelectionValue> content: () -> Content) where Header == Text, Footer == EmptyView
 
     public init<V>(@TabContentBuilder<V?> content: () -> Content, @ContentBuilder header: () -> Header) where Header : View, Footer == EmptyView, SelectionValue == V?, V : Hashable
 
@@ -19866,7 +19965,7 @@ extension TabSection where Content : TabContent, SelectionValue : Hashable {
 
     public init<V>(_ titleKey: LocalizedStringKey, @TabContentBuilder<V?> content: () -> Content) where Header == Text, Footer == EmptyView, SelectionValue == V?, V : Hashable
 
-    public init<V>(_ titleResource: LocalizedStringResource, @TabContentBuilder<V?> content: () -> Content) where Header == Text, Footer == EmptyView, SelectionValue == V?, V : Hashable
+    @export(implementation) public init<V>(_ titleResource: LocalizedStringResource, @TabContentBuilder<V?> content: () -> Content) where Header == Text, Footer == EmptyView, SelectionValue == V?, V : Hashable
 }
 
 @available(anyAppleOS 27.0, *)
@@ -20010,29 +20109,29 @@ extension TabViewCustomization {
 @available(watchOS, unavailable)
 extension TabViewStyle where Self == SidebarAdaptableTabViewStyle {
 
-    @MainActor @preconcurrency public static var sidebarAdaptable: SidebarAdaptableTabViewStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var sidebarAdaptable: SidebarAdaptableTabViewStyle { get }
 }
 
 @available(iOS 14.0, tvOS 14.0, watchOS 7.0, *)
 @available(macOS, unavailable)
 extension TabViewStyle where Self == PageTabViewStyle {
 
-    @MainActor @preconcurrency public static var page: PageTabViewStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var page: PageTabViewStyle { get }
 
-    @MainActor @preconcurrency public static func page(indexDisplayMode: PageTabViewStyle.IndexDisplayMode) -> PageTabViewStyle
+    @MainActor @export(implementation) @preconcurrency public static func page(indexDisplayMode: PageTabViewStyle.IndexDisplayMode) -> PageTabViewStyle
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *)
 @available(watchOS, unavailable)
 extension TabViewStyle where Self == TabBarOnlyTabViewStyle {
 
-    @MainActor @preconcurrency public static var tabBarOnly: TabBarOnlyTabViewStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var tabBarOnly: TabBarOnlyTabViewStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension TabViewStyle where Self == DefaultTabViewStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultTabViewStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultTabViewStyle { get }
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20051,23 +20150,23 @@ nonisolated public struct Table<Value, Rows, Columns> : View, ~Sendable where Va
 @available(watchOS, unavailable)
 extension Table {
 
-    nonisolated public init(of valueType: Value.Type, @TableColumnBuilder<Value, Never> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows)
+    @export(implementation) nonisolated public init(of valueType: Value.Type, @TableColumnBuilder<Value, Never> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows)
 
-    nonisolated public init(of valueType: Value.Type, selection: Binding<Value.ID?>, @TableColumnBuilder<Value, Never> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows)
+    @export(implementation) nonisolated public init(of valueType: Value.Type, selection: Binding<Value.ID?>, @TableColumnBuilder<Value, Never> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows)
 
-    nonisolated public init(of valueType: Value.Type, selection: Binding<Set<Value.ID>>, @TableColumnBuilder<Value, Never> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows)
+    @export(implementation) nonisolated public init(of valueType: Value.Type, selection: Binding<Set<Value.ID>>, @TableColumnBuilder<Value, Never> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows)
 
     nonisolated public init<Sort>(sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
 
-    nonisolated public init<Sort>(of valueType: Value.Type, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
+    @export(implementation) nonisolated public init<Sort>(of valueType: Value.Type, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
 
     nonisolated public init<Sort>(selection: Binding<Value.ID?>, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
 
-    nonisolated public init<Sort>(of valueType: Value.Type, selection: Binding<Value.ID?>, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
+    @export(implementation) nonisolated public init<Sort>(of valueType: Value.Type, selection: Binding<Value.ID?>, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
 
     nonisolated public init<Sort>(selection: Binding<Set<Value.ID>>, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
 
-    nonisolated public init<Sort>(of valueType: Value.Type, selection: Binding<Set<Value.ID>>, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
+    @export(implementation) nonisolated public init<Sort>(of valueType: Value.Type, selection: Binding<Set<Value.ID>>, sortOrder: Binding<[Sort]>, @TableColumnBuilder<Value, Sort> columns: () -> Columns, @TableRowBuilder<Value> rows: () -> Rows) where Sort : SortComparator, Columns.TableRowValue == Sort.Compared
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20159,7 +20258,7 @@ extension TableColumn where RowValue == Sort.Compared, Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, sortUsing comparator: Sort, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, sortUsing comparator: Sort, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, sortUsing comparator: Sort, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, sortUsing comparator: Sort, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20175,7 +20274,7 @@ extension TableColumn where Sort == Never, Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20185,7 +20284,7 @@ extension TableColumn where Sort == Never, Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, String>) where Content == Text
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>) where Content == Text
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>) where Content == Text
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, String>) where Content == Text, S : StringProtocol
 
@@ -20203,7 +20302,7 @@ extension TableColumn {
     nonisolated public func width(min: CGFloat? = nil, ideal: CGFloat? = nil, max: CGFloat? = nil) -> TableColumn<RowValue, Sort, Content, Label>
 
     @available(*, deprecated, message: "Please pass one or more parameters to modify a column's width.")
-    nonisolated public func width() -> TableColumn<RowValue, Sort, Content, Label>
+    @export(implementation) nonisolated public func width() -> TableColumn<RowValue, Sort, Content, Label>
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20214,7 +20313,7 @@ extension TableColumn where Sort == KeyPathComparator<RowValue>, Label == Text {
     nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, V>, @ContentBuilder content: @escaping (RowValue) -> Content) where V : Comparable
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, V>, @ContentBuilder content: @escaping (RowValue) -> Content) where V : Comparable
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, V>, @ContentBuilder content: @escaping (RowValue) -> Content) where V : Comparable
 
     nonisolated public init<S, V>(_ title: S, value: KeyPath<RowValue, V>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol, V : Comparable
 
@@ -20224,7 +20323,7 @@ extension TableColumn where Sort == KeyPathComparator<RowValue>, Label == Text {
     nonisolated public init<V, C>(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, V>, comparator: C, @ContentBuilder content: @escaping (RowValue) -> Content) where V == C.Compared, C : SortComparator
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init<V, C>(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, V>, comparator: C, @ContentBuilder content: @escaping (RowValue) -> Content) where V == C.Compared, C : SortComparator
+    @export(implementation) nonisolated public init<V, C>(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, V>, comparator: C, @ContentBuilder content: @escaping (RowValue) -> Content) where V == C.Compared, C : SortComparator
 
     nonisolated public init<S, V, C>(_ title: S, value: KeyPath<RowValue, V>, comparator: C, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol, V == C.Compared, C : SortComparator
 
@@ -20234,7 +20333,7 @@ extension TableColumn where Sort == KeyPathComparator<RowValue>, Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text, S : StringProtocol
 
@@ -20250,7 +20349,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Bool>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Bool>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Bool>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Bool>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20260,7 +20359,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Bool?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Bool?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Bool?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Bool?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20270,7 +20369,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Double>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Double>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Double>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Double>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20280,7 +20379,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Double?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Double?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Double?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Double?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20290,7 +20389,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Float>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Float>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Float>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Float>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20300,7 +20399,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Float?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Float?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Float?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Float?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20310,7 +20409,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int8>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int8>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int8>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int8>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20320,7 +20419,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int8?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int8?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int8?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int8?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20330,7 +20429,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int16>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int16>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int16>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int16>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20340,7 +20439,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int16?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int16?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int16?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int16?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20350,7 +20449,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int32>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int32>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int32>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int32>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20360,7 +20459,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int32?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int32?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int32?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int32?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20370,7 +20469,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int64>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int64>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int64>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int64>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20380,7 +20479,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int64?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int64?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int64?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int64?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20390,7 +20489,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20400,7 +20499,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Int?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Int?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Int?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20410,7 +20509,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt8>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt8>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt8>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt8>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20420,7 +20519,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt8?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt8?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt8?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt8?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20430,7 +20529,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt16>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt16>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt16>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt16>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20440,7 +20539,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt16?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt16?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt16?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt16?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20450,7 +20549,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt32>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt32>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt32>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt32>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20460,7 +20559,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt32?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt32?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt32?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt32?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20470,7 +20569,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt64>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt64>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt64>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt64>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20480,7 +20579,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt64?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt64?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt64?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt64?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20490,7 +20589,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20500,7 +20599,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UInt?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UInt?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UInt?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20510,7 +20609,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Date>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Date>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Date>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Date>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20520,7 +20619,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, Date?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Date?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, Date?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, Date?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20530,7 +20629,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UUID>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UUID>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UUID>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UUID>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20540,7 +20639,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, UUID?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UUID?>, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, UUID?>, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, UUID?>, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20550,7 +20649,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20560,7 +20659,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, String?>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String?>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String?>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content)
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, String?>, comparator: String.StandardComparator = .localizedStandard, @ContentBuilder content: @escaping (RowValue) -> Content) where S : StringProtocol
 
@@ -20570,7 +20669,7 @@ extension TableColumn where RowValue : NSObject, Sort == SortDescriptor<RowValue
     nonisolated public init(_ titleKey: LocalizedStringKey, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text
 
     @available(iOS 16.6, macOS 13.5, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text
 
     nonisolated public init<S>(_ title: S, value: KeyPath<RowValue, String>, comparator: String.StandardComparator = .localizedStandard) where Content == Text, S : StringProtocol
 
@@ -20607,17 +20706,17 @@ public struct TableColumnAlignment : Hashable, Sendable {
 @available(watchOS, unavailable)
 @resultBuilder public struct TableColumnBuilder<RowValue, Sort> : ~Sendable where RowValue : Identifiable, Sort : SortComparator {
 
-    public static func buildExpression<Content, Label>(_ column: TableColumn<RowValue, Sort, Content, Label>) -> TableColumn<RowValue, Sort, Content, Label> where Content : View, Label : View
+    @export(implementation) public static func buildExpression<Content, Label>(_ column: TableColumn<RowValue, Sort, Content, Label>) -> TableColumn<RowValue, Sort, Content, Label> where Content : View, Label : View
 
-    public static func buildExpression<Content, Label>(_ column: TableColumn<RowValue, Never, Content, Label>) -> TableColumn<RowValue, Never, Content, Label> where Content : View, Label : View
+    @export(implementation) public static func buildExpression<Content, Label>(_ column: TableColumn<RowValue, Never, Content, Label>) -> TableColumn<RowValue, Never, Content, Label> where Content : View, Label : View
 
-    public static func buildExpression<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Sort == Column.TableColumnSortComparator, Column : TableColumnContent
+    @export(implementation) public static func buildExpression<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Sort == Column.TableColumnSortComparator, Column : TableColumnContent
 
-    public static func buildExpression<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Column : TableColumnContent, Column.TableColumnSortComparator == Never
+    @export(implementation) public static func buildExpression<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Column : TableColumnContent, Column.TableColumnSortComparator == Never
 
-    public static func buildBlock<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Sort == Column.TableColumnSortComparator, Column : TableColumnContent
+    @export(implementation) public static func buildBlock<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Sort == Column.TableColumnSortComparator, Column : TableColumnContent
 
-    public static func buildBlock<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Column : TableColumnContent, Column.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<Column>(_ column: Column) -> Column where RowValue == Column.TableRowValue, Column : TableColumnContent, Column.TableColumnSortComparator == Never
 }
 
 @available(iOS 17.4, macOS 14.4, visionOS 1.1, *)
@@ -20625,17 +20724,17 @@ public struct TableColumnAlignment : Hashable, Sendable {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildIf<C>(_ content: C?) -> C? where RowValue == C.TableRowValue, Sort == C.TableColumnSortComparator, C : TableColumnContent
+    @export(implementation) public static func buildIf<C>(_ content: C?) -> C? where RowValue == C.TableRowValue, Sort == C.TableColumnSortComparator, C : TableColumnContent
 
-    public static func buildIf<C>(_ content: C?) -> C? where RowValue == C.TableRowValue, C : TableColumnContent, C.TableColumnSortComparator == Never
+    @export(implementation) public static func buildIf<C>(_ content: C?) -> C? where RowValue == C.TableRowValue, C : TableColumnContent, C.TableColumnSortComparator == Never
 
-    public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, Sort == T.TableColumnSortComparator, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == F.TableColumnSortComparator, T.TableRowValue == F.TableRowValue
+    @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, Sort == T.TableColumnSortComparator, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == F.TableColumnSortComparator, T.TableRowValue == F.TableRowValue
 
-    public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == Never, T.TableRowValue == F.TableRowValue, F.TableColumnSortComparator == Never
+    @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == Never, T.TableRowValue == F.TableRowValue, F.TableColumnSortComparator == Never
 
-    public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, Sort == T.TableColumnSortComparator, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == F.TableColumnSortComparator, T.TableRowValue == F.TableRowValue
+    @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, Sort == T.TableColumnSortComparator, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == F.TableColumnSortComparator, T.TableRowValue == F.TableRowValue
 
-    public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == Never, T.TableRowValue == F.TableRowValue, F.TableColumnSortComparator == Never
+    @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where RowValue == T.TableRowValue, T : TableColumnContent, F : TableColumnContent, T.TableColumnSortComparator == Never, T.TableRowValue == F.TableRowValue, F.TableColumnSortComparator == Never
 }
 
 @available(iOS 17.5, macOS 14.5, visionOS 1.2, *)
@@ -20643,10 +20742,10 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildLimitedAvailability(_ content: any TableColumnContent<RowValue, Sort>) -> some TableColumnContent<RowValue, Sort>
+    @export(implementation) public static func buildLimitedAvailability(_ content: any TableColumnContent<RowValue, Sort>) -> some TableColumnContent<RowValue, Sort>
 
 
-    public static func buildLimitedAvailability(_ content: any TableColumnContent<RowValue, Never>) -> some TableColumnContent<RowValue, Never>
+    @export(implementation) public static func buildLimitedAvailability(_ content: any TableColumnContent<RowValue, Never>) -> some TableColumnContent<RowValue, Never>
 
 }
 
@@ -20655,9 +20754,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> TupleTableColumnContent<RowValue, Sort, (C0, C1)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C0.TableRowValue == C1.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> TupleTableColumnContent<RowValue, Sort, (C0, C1)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C0.TableRowValue == C1.TableRowValue
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> TupleTableColumnContent<RowValue, Never, (C0, C1)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> TupleTableColumnContent<RowValue, Never, (C0, C1)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20665,9 +20764,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue
 
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20675,9 +20774,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20685,9 +20784,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20695,9 +20794,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20705,9 +20804,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20715,9 +20814,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6, C7)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6, C7)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6, C7)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never, C6.TableRowValue == C7.TableRowValue, C7.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6, C7)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never, C6.TableRowValue == C7.TableRowValue, C7.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20725,9 +20824,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6, C7, C8)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6, C7, C8)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6, C7, C8)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never, C6.TableRowValue == C7.TableRowValue, C7.TableColumnSortComparator == Never, C7.TableRowValue == C8.TableRowValue, C8.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6, C7, C8)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never, C6.TableRowValue == C7.TableRowValue, C7.TableColumnSortComparator == Never, C7.TableRowValue == C8.TableRowValue, C8.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20735,9 +20834,9 @@ extension TableColumnBuilder {
 @available(watchOS, unavailable)
 extension TableColumnBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C9 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue, C8.TableRowValue == C9.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> TupleTableColumnContent<RowValue, Sort, (C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C9 : TableColumnContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue, C8.TableRowValue == C9.TableRowValue
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C9 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never, C6.TableRowValue == C7.TableRowValue, C7.TableColumnSortComparator == Never, C7.TableRowValue == C8.TableRowValue, C8.TableColumnSortComparator == Never, C8.TableRowValue == C9.TableRowValue, C9.TableColumnSortComparator == Never
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> TupleTableColumnContent<RowValue, Never, (C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> where RowValue == C0.TableRowValue, C0 : TableColumnContent, C1 : TableColumnContent, C2 : TableColumnContent, C3 : TableColumnContent, C4 : TableColumnContent, C5 : TableColumnContent, C6 : TableColumnContent, C7 : TableColumnContent, C8 : TableColumnContent, C9 : TableColumnContent, C0.TableColumnSortComparator == Never, C0.TableRowValue == C1.TableRowValue, C1.TableColumnSortComparator == Never, C1.TableRowValue == C2.TableRowValue, C2.TableColumnSortComparator == Never, C2.TableRowValue == C3.TableRowValue, C3.TableColumnSortComparator == Never, C3.TableRowValue == C4.TableRowValue, C4.TableColumnSortComparator == Never, C4.TableRowValue == C5.TableRowValue, C5.TableColumnSortComparator == Never, C5.TableRowValue == C6.TableRowValue, C6.TableColumnSortComparator == Never, C6.TableRowValue == C7.TableRowValue, C7.TableColumnSortComparator == Never, C7.TableRowValue == C8.TableRowValue, C8.TableColumnSortComparator == Never, C8.TableRowValue == C9.TableRowValue, C9.TableColumnSortComparator == Never
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20925,9 +21024,9 @@ nonisolated public struct TableRow<Value> : TableRowContent, ~Sendable where Val
 @available(watchOS, unavailable)
 @resultBuilder public struct TableRowBuilder<Value> : ~Sendable where Value : Identifiable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Value == Content.TableRowValue, Content : TableRowContent
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Value == Content.TableRowValue, Content : TableRowContent
 
-    public static func buildBlock<C>(_ content: C) -> C where Value == C.TableRowValue, C : TableRowContent
+    @export(implementation) public static func buildBlock<C>(_ content: C) -> C where Value == C.TableRowValue, C : TableRowContent
 }
 
 @available(iOS 16.0, macOS 13.0, *)
@@ -20935,11 +21034,11 @@ nonisolated public struct TableRow<Value> : TableRowContent, ~Sendable where Val
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildIf<C>(_ content: C?) -> C? where Value == C.TableRowValue, C : TableRowContent
+    @export(implementation) public static func buildIf<C>(_ content: C?) -> C? where Value == C.TableRowValue, C : TableRowContent
 
-    public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where Value == T.TableRowValue, T : TableRowContent, F : TableRowContent, T.TableRowValue == F.TableRowValue
+    @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where Value == T.TableRowValue, T : TableRowContent, F : TableRowContent, T.TableRowValue == F.TableRowValue
 
-    public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where Value == T.TableRowValue, T : TableRowContent, F : TableRowContent, T.TableRowValue == F.TableRowValue
+    @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where Value == T.TableRowValue, T : TableRowContent, F : TableRowContent, T.TableRowValue == F.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20947,7 +21046,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> TupleTableRowContent<Value, (C0, C1)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C0.TableRowValue == C1.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> TupleTableRowContent<Value, (C0, C1)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C0.TableRowValue == C1.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20955,7 +21054,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> TupleTableRowContent<Value, (C0, C1, C2)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> TupleTableRowContent<Value, (C0, C1, C2)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20963,7 +21062,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> TupleTableRowContent<Value, (C0, C1, C2, C3)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> TupleTableRowContent<Value, (C0, C1, C2, C3)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20971,7 +21070,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20979,7 +21078,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20987,7 +21086,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -20995,7 +21094,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6, C7)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C7 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6, C7)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C7 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -21003,7 +21102,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6, C7, C8)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C7 : TableRowContent, C8 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6, C7, C8)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C7 : TableRowContent, C8 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -21011,7 +21110,7 @@ extension TableRowBuilder {
 @available(watchOS, unavailable)
 extension TableRowBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C7 : TableRowContent, C8 : TableRowContent, C9 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue, C8.TableRowValue == C9.TableRowValue
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> TupleTableRowContent<Value, (C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> where Value == C0.TableRowValue, C0 : TableRowContent, C1 : TableRowContent, C2 : TableRowContent, C3 : TableRowContent, C4 : TableRowContent, C5 : TableRowContent, C6 : TableRowContent, C7 : TableRowContent, C8 : TableRowContent, C9 : TableRowContent, C0.TableRowValue == C1.TableRowValue, C1.TableRowValue == C2.TableRowValue, C2.TableRowValue == C3.TableRowValue, C3.TableRowValue == C4.TableRowValue, C4.TableRowValue == C5.TableRowValue, C5.TableRowValue == C6.TableRowValue, C6.TableRowValue == C7.TableRowValue, C7.TableRowValue == C8.TableRowValue, C8.TableRowValue == C9.TableRowValue
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -21084,7 +21183,7 @@ extension TableRowContent {
 @available(watchOS, unavailable)
 extension TableStyle where Self == InsetTableStyle {
 
-    @MainActor @preconcurrency public static var inset: InsetTableStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var inset: InsetTableStyle { get }
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -21092,7 +21191,7 @@ extension TableStyle where Self == InsetTableStyle {
 @available(watchOS, unavailable)
 extension TableStyle where Self == AutomaticTableStyle {
 
-    @MainActor @preconcurrency public static var automatic: AutomaticTableStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: AutomaticTableStyle { get }
 }
 
 @available(iOS 16.0, macOS 12.0, *)
@@ -21150,7 +21249,7 @@ extension Text {
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> Text
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
 
     nonisolated public func accessibilityLabel<S>(_ label: S) -> Text where S : StringProtocol
 }
@@ -21380,11 +21479,11 @@ extension Text {
 
         @frozen public struct CharacterIndex : Comparable, Hashable, Strideable, Sendable {
 
-            public static func < (lhs: Text.Layout.CharacterIndex, rhs: Text.Layout.CharacterIndex) -> Bool
+            @export(implementation) public static func < (lhs: Text.Layout.CharacterIndex, rhs: Text.Layout.CharacterIndex) -> Bool
 
-            public func advanced(by n: Int) -> Text.Layout.CharacterIndex
+            @export(implementation) public func advanced(by n: Int) -> Text.Layout.CharacterIndex
 
-            public func distance(to other: Text.Layout.CharacterIndex) -> Int
+            @export(implementation) public func distance(to other: Text.Layout.CharacterIndex) -> Int
 
             @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
             public typealias Stride = Int
@@ -21406,7 +21505,7 @@ extension Text {
 
             public var leading: CGFloat
 
-            public init()
+            @export(implementation) public init()
 
             public var rect: CGRect { get }
 
@@ -21720,9 +21819,9 @@ extension Text.Layout {
 
         public let rawValue: UInt32
 
-        public init(rawValue: UInt32)
+        @export(implementation) public init(rawValue: UInt32)
 
-        public static var disablesSubpixelQuantization: Text.Layout.DrawingOptions { get }
+        @export(implementation) public static var disablesSubpixelQuantization: Text.Layout.DrawingOptions { get }
 
         @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
         public typealias ArrayLiteralElement = Text.Layout.DrawingOptions
@@ -21839,7 +21938,7 @@ nonisolated public struct TextEditor : View, ~Sendable {
 @available(watchOS, unavailable)
 extension TextEditorStyle where Self == AutomaticTextEditorStyle {
 
-    @MainActor @preconcurrency public static var automatic: AutomaticTextEditorStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: AutomaticTextEditorStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, visionOS 1.0, *)
@@ -21847,7 +21946,7 @@ extension TextEditorStyle where Self == AutomaticTextEditorStyle {
 @available(watchOS, unavailable)
 extension TextEditorStyle where Self == PlainTextEditorStyle {
 
-    @MainActor @preconcurrency public static var plain: PlainTextEditorStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var plain: PlainTextEditorStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, visionOS 1.0, *)
@@ -21871,7 +21970,7 @@ extension TextField where Label == Text {
     nonisolated public init<F>(_ titleKey: LocalizedStringKey, value: Binding<F.FormatInput?>, format: F, prompt: Text? = nil) where F : ParseableFormatStyle, F.FormatOutput == String
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput?>, format: F, prompt: Text? = nil) where F : ParseableFormatStyle, F.FormatOutput == String
+    @export(implementation) nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput?>, format: F, prompt: Text? = nil) where F : ParseableFormatStyle, F.FormatOutput == String
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     nonisolated public init<S, F>(_ title: S, value: Binding<F.FormatInput?>, format: F, prompt: Text? = nil) where S : StringProtocol, F : ParseableFormatStyle, F.FormatOutput == String
@@ -21880,7 +21979,7 @@ extension TextField where Label == Text {
     nonisolated public init<F>(_ titleKey: LocalizedStringKey, value: Binding<F.FormatInput>, format: F, prompt: Text? = nil) where F : ParseableFormatStyle, F.FormatOutput == String
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput>, format: F, prompt: Text? = nil) where F : ParseableFormatStyle, F.FormatOutput == String
+    @export(implementation) nonisolated public init<F>(_ titleResource: LocalizedStringResource, value: Binding<F.FormatInput>, format: F, prompt: Text? = nil) where F : ParseableFormatStyle, F.FormatOutput == String
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     nonisolated public init<S, F>(_ title: S, value: Binding<F.FormatInput>, format: F, prompt: Text? = nil) where S : StringProtocol, F : ParseableFormatStyle, F.FormatOutput == String
@@ -21901,7 +22000,7 @@ extension TextField where Label == Text {
     nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: Binding<V>, formatter: Formatter, prompt: Text?)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, formatter: Formatter, prompt: Text?)
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, formatter: Formatter, prompt: Text?)
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     nonisolated public init<S, V>(_ title: S, value: Binding<V>, formatter: Formatter, prompt: Text?) where S : StringProtocol
@@ -21916,13 +22015,13 @@ extension TextField {
 extension TextField where Label == Text {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: Binding<V>, formatter: Formatter)
+    @export(implementation) nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: Binding<V>, formatter: Formatter)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, formatter: Formatter)
+    @export(implementation) nonisolated public init<V>(_ titleResource: LocalizedStringResource, value: Binding<V>, formatter: Formatter)
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    nonisolated public init<S, V>(_ title: S, value: Binding<V>, formatter: Formatter) where S : StringProtocol
+    @export(implementation) nonisolated public init<S, V>(_ title: S, value: Binding<V>, formatter: Formatter) where S : StringProtocol
 }
 
 extension TextField where Label == Text {
@@ -21939,14 +22038,14 @@ extension TextField where Label == Text {
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: Binding<V>, formatter: Formatter, onEditingChanged: @escaping (Bool) -> Void)
+    @export(implementation) nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: Binding<V>, formatter: Formatter, onEditingChanged: @escaping (Bool) -> Void)
 
     @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: Binding<V>, formatter: Formatter, onCommit: @escaping () -> Void)
+    @export(implementation) nonisolated public init<V>(_ titleKey: LocalizedStringKey, value: Binding<V>, formatter: Formatter, onCommit: @escaping () -> Void)
 
     @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
@@ -21958,13 +22057,13 @@ extension TextField where Label == Text {
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init<S, V>(_ title: S, value: Binding<V>, formatter: Formatter, onEditingChanged: @escaping (Bool) -> Void) where S : StringProtocol
+    @export(implementation) nonisolated public init<S, V>(_ title: S, value: Binding<V>, formatter: Formatter, onEditingChanged: @escaping (Bool) -> Void) where S : StringProtocol
 
     @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:value:formatter:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init<S, V>(_ title: S, value: Binding<V>, formatter: Formatter, onCommit: @escaping () -> Void) where S : StringProtocol
+    @export(implementation) nonisolated public init<S, V>(_ title: S, value: Binding<V>, formatter: Formatter, onCommit: @escaping () -> Void) where S : StringProtocol
 }
 
 extension TextField where Label == Text {
@@ -21973,13 +22072,13 @@ extension TextField where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, axis: Axis)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, axis: Axis)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, axis: Axis)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, prompt: Text?, axis: Axis)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, prompt: Text?, axis: Axis)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, prompt: Text?, axis: Axis)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     nonisolated public init<S>(_ title: S, text: Binding<String>, axis: Axis) where S : StringProtocol
@@ -22000,7 +22099,7 @@ extension TextField where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, prompt: Text?)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, prompt: Text?)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, prompt: Text?)
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     nonisolated public init<S>(_ title: S, text: Binding<String>, prompt: Text?) where S : StringProtocol
@@ -22019,7 +22118,7 @@ extension TextField where Label == Text {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, selection: Binding<TextSelection?>, prompt: Text? = nil, axis: Axis? = nil)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, selection: Binding<TextSelection?>, prompt: Text? = nil, axis: Axis? = nil)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>, selection: Binding<TextSelection?>, prompt: Text? = nil, axis: Axis? = nil)
 
     nonisolated public init<S>(_ title: S, text: Binding<String>, selection: Binding<TextSelection?>, prompt: Text? = nil, axis: Axis? = nil) where S : StringProtocol
 }
@@ -22035,13 +22134,13 @@ extension TextField {
 extension TextField where Label == Text {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>)
 
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
     nonisolated public init(_ titleResource: LocalizedStringResource, text: Binding<String>)
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    nonisolated public init<S>(_ title: S, text: Binding<String>) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, text: Binding<String>) where S : StringProtocol
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -22059,14 +22158,14 @@ extension TextField where Label == Text {
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, onEditingChanged: @escaping (Bool) -> Void)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, onEditingChanged: @escaping (Bool) -> Void)
 
     @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, onCommit: @escaping () -> Void)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, text: Binding<String>, onCommit: @escaping () -> Void)
 
     @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
@@ -22080,14 +22179,14 @@ extension TextField where Label == Text {
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init<S>(_ title: S, text: Binding<String>, onEditingChanged: @escaping (Bool) -> Void) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, text: Binding<String>, onEditingChanged: @escaping (Bool) -> Void) where S : StringProtocol
 
     @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Renamed TextField.init(_:text:onEditingChanged:). Use View.onSubmit(of:_:) for functionality previously provided by the onCommit parameter. Use FocusState<T> and View.focused(_:equals:) for functionality previously provided by the onEditingChanged parameter.")
-    nonisolated public init<S>(_ title: S, text: Binding<String>, onCommit: @escaping () -> Void) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, text: Binding<String>, onCommit: @escaping () -> Void) where S : StringProtocol
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -22097,21 +22196,28 @@ public protocol TextFieldStyle {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension TextFieldStyle where Self == DefaultTextFieldStyle {
 
-    public static var automatic: DefaultTextFieldStyle { get }
+    @export(implementation) public static var automatic: DefaultTextFieldStyle { get }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "Use `textFieldStyle(.bordered)` with `textInputBorderShape(.roundedRectangle)`")
+@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "Use `textFieldStyle(.bordered)` with `textInputBorderShape(.roundedRectangle)`")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 extension TextFieldStyle where Self == RoundedBorderTextFieldStyle {
 
-    public static var roundedBorder: RoundedBorderTextFieldStyle { get }
+    @export(implementation) public static var roundedBorder: RoundedBorderTextFieldStyle { get }
+}
+
+@available(anyAppleOS 27.0, *)
+extension TextFieldStyle where Self == BorderedTextFieldStyle {
+
+    @export(implementation) public static var bordered: BorderedTextFieldStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension TextFieldStyle where Self == PlainTextFieldStyle {
 
-    public static var plain: PlainTextFieldStyle { get }
+    @export(implementation) public static var plain: PlainTextFieldStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, *)
@@ -22148,6 +22254,40 @@ public struct TextInputAutocapitalization : Sendable {
 extension TextInputAutocapitalization {
 
     public init?(_ type: UITextAutocapitalizationType)
+}
+
+@available(anyAppleOS 27.0, *)
+public struct TextInputBorderShape : Sendable, Equatable {
+
+    public static var automatic: TextInputBorderShape { get }
+
+    public static var capsule: TextInputBorderShape { get }
+
+    public static var roundedRectangle: TextInputBorderShape { get }
+
+    public static func == (a: TextInputBorderShape, b: TextInputBorderShape) -> Bool
+}
+
+@available(anyAppleOS 27.0, *)
+extension TextInputBorderShape : Shape {
+
+    nonisolated public func path(in rect: CGRect) -> Path
+
+    @available(anyAppleOS 27.0, *)
+    public typealias AnimatableData = EmptyAnimatableData
+
+    @available(anyAppleOS 27.0, *)
+    public typealias Body
+}
+
+@available(anyAppleOS 27.0, *)
+extension TextInputBorderShape : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(anyAppleOS 27.0, *)
+    public typealias InsetShape = some InsettableShape
 }
 
 @available(iOS 17.0, visionOS 1.0, *)
@@ -22248,9 +22388,9 @@ public protocol TextRenderer : Animatable {
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension TextRenderer {
 
-    public func sizeThatFits(proposal: ProposedViewSize, text: TextProxy) -> CGSize
+    @export(implementation) public func sizeThatFits(proposal: ProposedViewSize, text: TextProxy) -> CGSize
 
-    public var displayPadding: EdgeInsets { get }
+    @export(implementation) public var displayPadding: EdgeInsets { get }
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -22266,7 +22406,7 @@ public protocol TextSelectability {
 @available(watchOS, unavailable)
 extension TextSelectability where Self == EnabledTextSelectability {
 
-    public static var enabled: EnabledTextSelectability { get }
+    @export(implementation) public static var enabled: EnabledTextSelectability { get }
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -22274,7 +22414,7 @@ extension TextSelectability where Self == EnabledTextSelectability {
 @available(watchOS, unavailable)
 extension TextSelectability where Self == DisabledTextSelectability {
 
-    public static var disabled: DisabledTextSelectability { get }
+    @export(implementation) public static var disabled: DisabledTextSelectability { get }
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -22381,27 +22521,27 @@ public protocol TimelineSchedule {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule where Self == AnimationTimelineSchedule {
 
-    public static var animation: AnimationTimelineSchedule { get }
+    @export(implementation) public static var animation: AnimationTimelineSchedule { get }
 
-    public static func animation(minimumInterval: Double? = nil, paused: Bool = false) -> AnimationTimelineSchedule
+    @export(implementation) public static func animation(minimumInterval: Double? = nil, paused: Bool = false) -> AnimationTimelineSchedule
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule where Self == PeriodicTimelineSchedule {
 
-    public static func periodic(from startDate: Date, by interval: TimeInterval) -> PeriodicTimelineSchedule
+    @export(implementation) public static func periodic(from startDate: Date, by interval: TimeInterval) -> PeriodicTimelineSchedule
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule where Self == EveryMinuteTimelineSchedule {
 
-    public static var everyMinute: EveryMinuteTimelineSchedule { get }
+    @export(implementation) public static var everyMinute: EveryMinuteTimelineSchedule { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule {
 
-    public static func explicit<S>(_ dates: S) -> ExplicitTimelineSchedule<S> where Self == ExplicitTimelineSchedule<S>, S : Sequence, S.Element == Date
+    @export(implementation) public static func explicit<S>(_ dates: S) -> ExplicitTimelineSchedule<S> where Self == ExplicitTimelineSchedule<S>, S : Sequence, S.Element == Date
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -22459,7 +22599,7 @@ extension TimelineView : View where Content : View {
 
     public typealias Body = Never
 
-    nonisolated public init(_ schedule: Schedule, @ContentBuilder content: @escaping (TimelineViewDefaultContext) -> Content)
+    @export(implementation) nonisolated public init(_ schedule: Schedule, @ContentBuilder content: @escaping (TimelineViewDefaultContext) -> Content)
 
     @available(iOS, deprecated, introduced: 15.0, message: "Use TimelineViewDefaultContext for the type of the context parameter passed into TimelineView's content closure to resolve this warning. The new version of this initializer, using TimelineViewDefaultContext, improves compilation performance by using an independent generic type signature, which helps avoid unintended cyclical type dependencies.")
     @available(macOS, deprecated, introduced: 12.0, message: "Use TimelineViewDefaultContext for the type of the context parameter passed into TimelineView's content closure to resolve this warning. The new version of this initializer, using TimelineViewDefaultContext, improves compilation performance by using an independent generic type signature, which helps avoid unintended cyclical type dependencies.")
@@ -22544,7 +22684,7 @@ extension Toggle where Label == Text {
     nonisolated public init(_ titleKey: LocalizedStringKey, isOn: Binding<Bool>)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, isOn: Binding<Bool>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, isOn: Binding<Bool>)
 
     nonisolated public init<S>(_ title: S, isOn: Binding<Bool>) where S : StringProtocol
 
@@ -22552,7 +22692,7 @@ extension Toggle where Label == Text {
     nonisolated public init<C>(_ titleKey: LocalizedStringKey, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     nonisolated public init<S, C>(_ title: S, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where S : StringProtocol, C : RandomAccessCollection
@@ -22561,21 +22701,21 @@ extension Toggle where Label == Text {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Toggle where Label == Label<Text, Image> {
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, isOn: Binding<Bool>)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, systemImage: String, isOn: Binding<Bool>)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, isOn: Binding<Bool>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, systemImage: String, isOn: Binding<Bool>)
 
-    nonisolated public init<S>(_ title: S, systemImage: String, isOn: Binding<Bool>) where S : StringProtocol
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
+    @export(implementation) nonisolated public init<S>(_ title: S, systemImage: String, isOn: Binding<Bool>) where S : StringProtocol
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
+    @export(implementation) nonisolated public init<C>(_ titleKey: LocalizedStringKey, systemImage: String, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init<S, C>(_ title: S, systemImage: String, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where S : StringProtocol, C : RandomAccessCollection
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, systemImage: String, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public init<S, C>(_ title: S, systemImage: String, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where S : StringProtocol, C : RandomAccessCollection
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -22583,13 +22723,13 @@ extension Toggle where Label == Label<Text, Image> {
 
     nonisolated public init(_ titleKey: LocalizedStringKey, image: ImageResource, isOn: Binding<Bool>)
 
-    nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, isOn: Binding<Bool>)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, image: ImageResource, isOn: Binding<Bool>)
 
     nonisolated public init<S>(_ title: S, image: ImageResource, isOn: Binding<Bool>) where S : StringProtocol
 
     nonisolated public init<C>(_ titleKey: LocalizedStringKey, image: ImageResource, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
 
-    nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
+    @export(implementation) nonisolated public init<C>(_ titleResource: LocalizedStringResource, image: ImageResource, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where C : RandomAccessCollection
 
     nonisolated public init<S, C>(_ title: S, image: ImageResource, sources: C, isOn: KeyPath<C.Element, Binding<Bool>>) where S : StringProtocol, C : RandomAccessCollection
 }
@@ -22608,19 +22748,19 @@ extension Toggle where Label == Label<Text, Image> {
 @available(tvOS, unavailable)
 extension ToggleStyle where Self == ButtonToggleStyle {
 
-    nonisolated public static var button: ButtonToggleStyle { get }
+    @export(implementation) nonisolated public static var button: ButtonToggleStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ToggleStyle where Self == DefaultToggleStyle {
 
-    @MainActor @preconcurrency public static var automatic: DefaultToggleStyle { get }
+    @MainActor @export(implementation) @preconcurrency public static var automatic: DefaultToggleStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 18.0, watchOS 6.0, *)
 extension ToggleStyle where Self == SwitchToggleStyle {
 
-    nonisolated public static var `switch`: SwitchToggleStyle { get }
+    @export(implementation) nonisolated public static var `switch`: SwitchToggleStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -22703,12 +22843,12 @@ extension ToolbarContent {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @resultBuilder public struct ToolbarContentBuilder : ~Sendable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : ToolbarContent
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : ToolbarContent
 
     public static func buildBlock<Content>(_ content: Content) -> some ToolbarContent where Content : ToolbarContent
 
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : CustomizableToolbarContent
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : CustomizableToolbarContent
 
     public static func buildBlock<Content>(_ content: Content) -> some CustomizableToolbarContent where Content : CustomizableToolbarContent
 
@@ -22735,151 +22875,137 @@ extension ToolbarContentBuilder {
     public static func buildEither<TrueContent, FalseContent>(second: FalseContent) -> _ConditionalContent<TrueContent, FalseContent> where TrueContent : CustomizableToolbarContent, FalseContent : CustomizableToolbarContent
 
     @available(iOS 17.5, macOS 14.5, tvOS 17.5, watchOS 10.5, *)
-    public static func buildLimitedAvailability(_ content: any ToolbarContent) -> some ToolbarContent
-
-
-    @available(iOS, introduced: 14.0, deprecated: 14.0, obsoleted: 17.5, message: "this code may crash on earlier versions of the OS; specify '#available(iOS 17.5, *)' or newer instead")
-    @available(macOS, introduced: 11.0, deprecated: 11.0, obsoleted: 14.5, message: "this code may crash on earlier versions of the OS; specify '#available(macOS 14.5, *)' or newer instead")
-    @available(tvOS, introduced: 14.0, deprecated: 14.0, obsoleted: 17.5, message: "this code may crash on earlier versions of the OS; specify '#available(tvOS 17.5, *)' or newer instead")
-    @available(watchOS, introduced: 7.0, deprecated: 7.0, obsoleted: 10.5, message: "this code may crash on earlier versions of the OS; specify '#available(watchOS 10.5, *)' or newer instead")
-    public static func buildLimitedAvailability<Content>(_ content: Content) -> some ToolbarContent where Content : ToolbarContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any ToolbarContent) -> some ToolbarContent
 
 
     @available(iOS 17.5, macOS 14.5, tvOS 17.5, watchOS 10.5, *)
-    public static func buildLimitedAvailability(_ content: any CustomizableToolbarContent) -> some CustomizableToolbarContent
-
-
-    @available(iOS, introduced: 14.0, deprecated: 14.0, obsoleted: 17.5, message: "this code may crash on earlier versions of the OS; specify '#available(iOS 17.5, *)' or newer instead")
-    @available(macOS, introduced: 11.0, deprecated: 11.0, obsoleted: 14.5, message: "this code may crash on earlier versions of the OS; specify '#available(macOS 14.5, *)' or newer instead")
-    @available(tvOS, introduced: 14.0, deprecated: 14.0, obsoleted: 17.5, message: "this code may crash on earlier versions of the OS; specify '#available(tvOS 17.5, *)' or newer instead")
-    @available(watchOS, introduced: 7.0, deprecated: 7.0, obsoleted: 10.5, message: "this code may crash on earlier versions of the OS; specify '#available(watchOS 10.5, *)' or newer instead")
-    public static func buildLimitedAvailability<Content>(_ content: Content) -> some CustomizableToolbarContent where Content : CustomizableToolbarContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any CustomizableToolbarContent) -> some CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent, C7 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent, C7 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent, C7 : ToolbarContent, C8 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent, C7 : ToolbarContent, C8 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent, C7 : ToolbarContent, C8 : ToolbarContent, C9 : ToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some ToolbarContent where C0 : ToolbarContent, C1 : ToolbarContent, C2 : ToolbarContent, C3 : ToolbarContent, C4 : ToolbarContent, C5 : ToolbarContent, C6 : ToolbarContent, C7 : ToolbarContent, C8 : ToolbarContent, C9 : ToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1>(_ c0: C0, _ c1: C1) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2>(_ c0: C0, _ c1: C1, _ c2: C2) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent, C7 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent, C7 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent, C7 : CustomizableToolbarContent, C8 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent, C7 : CustomizableToolbarContent, C8 : CustomizableToolbarContent
 
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ToolbarContentBuilder {
 
-    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent, C7 : CustomizableToolbarContent, C8 : CustomizableToolbarContent, C9 : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> some CustomizableToolbarContent where C0 : CustomizableToolbarContent, C1 : CustomizableToolbarContent, C2 : CustomizableToolbarContent, C3 : CustomizableToolbarContent, C4 : CustomizableToolbarContent, C5 : CustomizableToolbarContent, C6 : CustomizableToolbarContent, C7 : CustomizableToolbarContent, C8 : CustomizableToolbarContent, C9 : CustomizableToolbarContent
 
 }
 
@@ -22944,7 +23070,7 @@ extension ToolbarItem where ID == () {
 extension ToolbarItem : CustomizableToolbarContent where ID == String {
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    nonisolated public init(id: String, placement: ToolbarItemPlacement = .automatic, @ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(id: String, placement: ToolbarItemPlacement = .automatic, @ContentBuilder content: () -> Content)
 
     @available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Use the CustomizableToolbarContent/defaultCustomization(_:options) modifier with a value of .hidden")
     @available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Use the CustomizableToolbarContent/defaultCustomization(_:options) modifier with a value of .hidden")
@@ -23043,7 +23169,7 @@ public struct ToolbarItemPlacement : ~Sendable {
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     @available(visionOS, unavailable)
-    public static var title: ToolbarItemPlacement { get }
+    @export(implementation) public static var title: ToolbarItemPlacement { get }
 
     @available(iOS 26.0, *)
     @available(macOS, unavailable)
@@ -23122,6 +23248,54 @@ public struct ToolbarLabelStyle : Sendable, Equatable {
 }
 
 @available(anyAppleOS 27.0, *)
+public struct ToolbarMinimizationBehavior : Hashable, Sendable {
+
+    public static var automatic: ToolbarMinimizationBehavior { get }
+
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let onScrollDown: ToolbarMinimizationBehavior
+
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let onScrollUp: ToolbarMinimizationBehavior
+
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let never: ToolbarMinimizationBehavior
+
+    public static func == (a: ToolbarMinimizationBehavior, b: ToolbarMinimizationBehavior) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(anyAppleOS 27.0, *)
+public struct ToolbarMinimizationRestoration : Hashable, Sendable {
+
+    public static let automatic: ToolbarMinimizationRestoration
+
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let atScrollEdge: ToolbarMinimizationRestoration
+
+    public static func == (a: ToolbarMinimizationRestoration, b: ToolbarMinimizationRestoration) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(anyAppleOS 27.0, *)
 public struct ToolbarMinimizationSafeAreaAdjustment : Hashable, Sendable {
 
     public static let automatic: ToolbarMinimizationSafeAreaAdjustment
@@ -23139,36 +23313,6 @@ public struct ToolbarMinimizationSafeAreaAdjustment : Hashable, Sendable {
     public static let disabled: ToolbarMinimizationSafeAreaAdjustment
 
     public static func == (a: ToolbarMinimizationSafeAreaAdjustment, b: ToolbarMinimizationSafeAreaAdjustment) -> Bool
-
-    public func hash(into hasher: inout Hasher)
-
-    public var hashValue: Int { get }
-}
-
-@available(anyAppleOS 27.0, *)
-public struct ToolbarMinimizeBehavior : Hashable, Sendable {
-
-    public static var automatic: ToolbarMinimizeBehavior { get }
-
-    @available(macOS, unavailable)
-    @available(tvOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(visionOS, unavailable)
-    public static let onScrollDown: ToolbarMinimizeBehavior
-
-    @available(macOS, unavailable)
-    @available(tvOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(visionOS, unavailable)
-    public static let onScrollUp: ToolbarMinimizeBehavior
-
-    @available(macOS, unavailable)
-    @available(tvOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(visionOS, unavailable)
-    public static let never: ToolbarMinimizeBehavior
-
-    public static func == (a: ToolbarMinimizeBehavior, b: ToolbarMinimizeBehavior) -> Bool
 
     public func hash(into hasher: inout Hasher)
 
@@ -23389,41 +23533,41 @@ public protocol TransactionKey {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == SymbolEffectTransition {
 
-    @MainActor @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
+    @MainActor @export(implementation) @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
 
-    @MainActor @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == OffsetTransition {
 
-    @MainActor @preconcurrency public static func offset(_ offset: CGSize) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func offset(_ offset: CGSize) -> Self
 
-    @MainActor @preconcurrency public static func offset(x: CGFloat = 0, y: CGFloat = 0) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func offset(x: CGFloat = 0, y: CGFloat = 0) -> Self
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == MoveTransition {
 
-    @MainActor @preconcurrency public static func move(edge: Edge) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func move(edge: Edge) -> Self
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == OpacityTransition {
 
-    @MainActor @preconcurrency public static var opacity: OpacityTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var opacity: OpacityTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == SlideTransition {
 
-    @MainActor @preconcurrency public static var slide: SlideTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var slide: SlideTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == PushTransition {
 
-    @MainActor @preconcurrency public static func push(from edge: Edge) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func push(from edge: Edge) -> Self
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -23452,23 +23596,23 @@ extension Transition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == IdentityTransition {
 
-    nonisolated public static var identity: IdentityTransition { get }
+    @export(implementation) nonisolated public static var identity: IdentityTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == BlurReplaceTransition {
 
-    @MainActor @preconcurrency public static func blurReplace(_ config: BlurReplaceTransition.Configuration = .downUp) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func blurReplace(_ config: BlurReplaceTransition.Configuration = .downUp) -> Self
 
-    @MainActor @preconcurrency public static var blurReplace: BlurReplaceTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var blurReplace: BlurReplaceTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == ScaleTransition {
 
-    @MainActor @preconcurrency public static var scale: ScaleTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var scale: ScaleTransition { get }
 
-    @MainActor @preconcurrency public static func scale(_ scale: Double, anchor: UnitPoint = .center) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func scale(_ scale: Double, anchor: UnitPoint = .center) -> Self
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -23524,9 +23668,9 @@ public struct TransitionProperties : Sendable {
 
     public var content: (repeat each Content)
 
-    public init(_ content: (repeat each Content))
+    @export(implementation) public init(_ content: (repeat each Content))
 
-    public init(_ content: repeat each Content)
+    @export(implementation) public init(_ content: repeat each Content)
 
     public var body: Never { get }
 }
@@ -23757,17 +23901,17 @@ public struct UIGestureRecognizerRepresentableContext<Representable> : ~Sendable
 @available(visionOS, unavailable)
 public struct UIGestureRecognizerRepresentableCoordinateSpaceConverter : ~Sendable {
 
-    public var localLocation: CGPoint { get }
+    @export(implementation) public var localLocation: CGPoint { get }
 
     public func convert(globalPoint: CGPoint, to coordinateSpace: some CoordinateSpaceProtocol = .local) -> CGPoint
 
     public func location(in coordinateSpace: some CoordinateSpaceProtocol) -> CGPoint
 
-    public var localVelocity: CGPoint? { get }
+    @export(implementation) public var localVelocity: CGPoint? { get }
 
     public func velocity(in coordinateSpace: some CoordinateSpaceProtocol) -> CGPoint?
 
-    public var localTranslation: CGPoint? { get }
+    @export(implementation) public var localTranslation: CGPoint? { get }
 
     public func translation(in coordinateSpace: some CoordinateSpaceProtocol) -> CGPoint?
 }
@@ -23788,7 +23932,7 @@ public struct UIHostingConfiguration<Content, Background> : UIContentConfigurati
     public func minSize(width: CGFloat? = nil, height: CGFloat? = nil) -> UIHostingConfiguration<Content, Background>
 
     @available(*, deprecated, message: "Please pass one or more parameters.")
-    public func minSize() -> UIHostingConfiguration<Content, Background>
+    @export(implementation) public func minSize() -> UIHostingConfiguration<Content, Background>
 
     @MainActor public func makeContentView() -> any UIView & UIContentView
 
@@ -24064,11 +24208,11 @@ extension UIViewRepresentableContext : Sendable {
 @available(tvOS, unavailable)
 @MainActor final public class URLDocumentConfiguration {
 
-    nonisolated(unsafe) final public var fileURL: URL?
+    @MainActor final public var fileURL: URL?
 
-    nonisolated(unsafe) final public var lastContentModificationDate: Date?
+    @MainActor final public var lastContentModificationDate: Date?
 
-    nonisolated final public func makeFileCoordinator() -> sending NSFileCoordinator
+    @MainActor final public func makeFileCoordinator() -> sending NSFileCoordinator
 
     @objc deinit
 }
@@ -24076,27 +24220,27 @@ extension UIViewRepresentableContext : Sendable {
 @available(iOS 27.0, macOS 27.0, *)
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
-extension URLDocumentConfiguration : Sendable {
-}
-
-@available(iOS 27.0, macOS 27.0, *)
-@available(watchOS, unavailable)
-@available(tvOS, unavailable)
 extension URLDocumentConfiguration : CustomStringConvertible {
 
-    @MainActor final public var description: String { get }
+    nonisolated final public var description: String { get }
 }
 
 @available(iOS 27.0, macOS 27.0, *)
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
-extension URLDocumentConfiguration : Equatable, Hashable {
+extension URLDocumentConfiguration : Hashable {
 
-    @MainActor public static func == (lhs: URLDocumentConfiguration, rhs: URLDocumentConfiguration) -> Bool
-
-    @MainActor final public func hash(into hasher: inout Hasher)
+    nonisolated final public func hash(into hasher: inout Hasher)
 
     nonisolated final public var hashValue: Int { get }
+}
+
+@available(iOS 27.0, macOS 27.0, *)
+@available(watchOS, unavailable)
+@available(tvOS, unavailable)
+extension URLDocumentConfiguration : Equatable {
+
+    nonisolated public static func == (lhs: URLDocumentConfiguration, rhs: URLDocumentConfiguration) -> Bool
 }
 
 @available(iOS 27.0, *)
@@ -24114,6 +24258,12 @@ extension URLDocumentConfiguration {
 extension URLDocumentConfiguration : nonisolated Observable {
 }
 
+@available(iOS 27.0, macOS 27.0, *)
+@available(watchOS, unavailable)
+@available(tvOS, unavailable)
+extension URLDocumentConfiguration : Sendable {
+}
+
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 @frozen public struct UnevenRoundedRectangle : Shape {
 
@@ -24123,7 +24273,7 @@ extension URLDocumentConfiguration : nonisolated Observable {
 
     @inlinable public init(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous)
 
-    public init(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous)
+    @export(implementation) public init(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous)
 
     nonisolated public func path(in rect: CGRect) -> Path
 
@@ -24332,11 +24482,11 @@ public protocol VectorArithmetic : AdditiveArithmetic {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension VectorArithmetic {
 
-    public func scaled(by rhs: Double) -> Self
+    @export(implementation) public func scaled(by rhs: Double) -> Self
 
-    public mutating func interpolate(towards other: Self, amount: Double)
+    @export(implementation) public mutating func interpolate(towards other: Self, amount: Double)
 
-    public func interpolated(towards other: Self, amount: Double) -> Self
+    @export(implementation) public func interpolated(towards other: Self, amount: Double) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -24534,7 +24684,7 @@ extension View {
 
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -24547,7 +24697,7 @@ extension View {
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -24649,7 +24799,7 @@ extension View {
 
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -24669,7 +24819,7 @@ extension View {
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -24739,6 +24889,7 @@ extension View {
 
 }
 
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -24822,7 +24973,7 @@ extension View {
     nonisolated public func allowsWindowActivationEvents(_ value: Bool?) -> some View
 
 
-    nonisolated public func allowsWindowActivationEvents() -> some View
+    @export(implementation) nonisolated public func allowsWindowActivationEvents() -> some View
 
 }
 
@@ -24838,7 +24989,7 @@ extension View {
     nonisolated public func sensoryFeedback<T>(trigger: T, _ feedback: @escaping (_ oldValue: T, _ newValue: T) -> SensoryFeedback?) -> some View where T : Equatable
 
 
-    nonisolated public func sensoryFeedback<T>(trigger: T, _ feedback: @escaping () -> SensoryFeedback?) -> some View where T : Equatable
+    @export(implementation) nonisolated public func sensoryFeedback<T>(trigger: T, _ feedback: @escaping () -> SensoryFeedback?) -> some View where T : Equatable
 
 }
 
@@ -24940,14 +25091,14 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
-    nonisolated public func symbolEffectsRemoved(_ isEnabled: Bool = true) -> some View
+    @export(implementation) nonisolated public func symbolEffectsRemoved(_ isEnabled: Bool = true) -> some View
 
 }
 
 extension View {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func selectionDisabled(_ isDisabled: Bool = true) -> some View
+    @export(implementation) nonisolated public func selectionDisabled(_ isDisabled: Bool = true) -> some View
 
 }
 
@@ -24983,7 +25134,7 @@ extension View {
 
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -24996,7 +25147,7 @@ extension View {
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -25045,8 +25196,8 @@ extension View {
     @available(macOS, unavailable)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    @available(visionOS, introduced: 1.0, deprecated: 27.0, message: "Has no effect on visionOS")
-    nonisolated public func statusBarHidden(_ hidden: Bool = true) -> some View
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Has no effect on visionOS")
+    @export(implementation) nonisolated public func statusBarHidden(_ hidden: Bool = true) -> some View
 
 }
 
@@ -25056,7 +25207,7 @@ extension View {
     @available(macOS, unavailable)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    @available(visionOS, introduced: 1.0, deprecated: 27.0, message: "Has no effect on visionOS")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Has no effect on visionOS")
     nonisolated public func statusBar(hidden: Bool) -> some View
 
 }
@@ -25111,7 +25262,7 @@ extension View {
     nonisolated public func focusedValue<T>(_ object: T?) -> some View where T : AnyObject, T : Observable
 
 
-    nonisolated public func focusedSceneValue<T>(_ object: T?) -> some View where T : AnyObject, T : Observable
+    @export(implementation) nonisolated public func focusedSceneValue<T>(_ object: T?) -> some View where T : AnyObject, T : Observable
 
 }
 
@@ -25162,11 +25313,11 @@ extension View {
 extension View {
 
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
-    nonisolated public func sectionIndexLabel(_ label: Text?) -> some View
+    @export(implementation) nonisolated public func sectionIndexLabel(_ label: Text?) -> some View
 
 
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
-    nonisolated public func sectionIndexLabel<S>(_ label: S?) -> some View where S : StringProtocol
+    @export(implementation) nonisolated public func sectionIndexLabel<S>(_ label: S?) -> some View where S : StringProtocol
 
 }
 
@@ -25207,10 +25358,10 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
-    nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
+    @export(implementation) nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
 
 
-    nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
+    @export(implementation) nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
 
 }
 
@@ -25235,14 +25386,14 @@ extension View {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension View {
 
-    nonisolated public func task(name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View
+    @export(implementation) nonisolated public func task(name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View
 
 
     @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
     nonisolated public func task(name: String? = nil, executorPreference taskExecutor: any TaskExecutor, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, action: sending @escaping @isolated(any) () async -> Void) -> some View
 
 
-    nonisolated public func task<T>(id: T, name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View where T : Equatable
+    @export(implementation) nonisolated public func task<T>(id: T, name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View where T : Equatable
 
 
     @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
@@ -25267,7 +25418,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func searchable(text: Binding<String>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func searchable(text: Binding<String>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
 
 
     nonisolated public func searchable<S>(text: Binding<String>, placement: SearchFieldPlacement = .automatic, prompt: S) -> some View where S : StringProtocol
@@ -25291,7 +25442,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable(text: Binding<String>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func searchable(text: Binding<String>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -25367,26 +25518,19 @@ extension View {
 
 }
 
-@available(anyAppleOS 27.0, *)
-extension View {
-
-    nonisolated public func onMenuItemHighlight(perform action: @escaping (Bool) -> Void) -> some View
-
-}
-
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension View {
 
     @inlinable nonisolated public func typeSelectEquivalent(_ text: Text?) -> some View
 
 
-    nonisolated public func typeSelectEquivalent(_ stringKey: LocalizedStringKey) -> some View
+    @export(implementation) nonisolated public func typeSelectEquivalent(_ stringKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func typeSelectEquivalent(_ stringResource: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func typeSelectEquivalent(_ stringResource: LocalizedStringResource) -> some View
 
 
-    nonisolated public func typeSelectEquivalent<S>(_ string: S) -> some View where S : StringProtocol
+    @export(implementation) nonisolated public func typeSelectEquivalent<S>(_ string: S) -> some View where S : StringProtocol
 
 }
 
@@ -25518,7 +25662,7 @@ extension View {
     nonisolated public func fileDialogMessage(_ messageKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func fileDialogMessage(_ messageResource: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func fileDialogMessage(_ messageResource: LocalizedStringResource) -> some View
 
 
     nonisolated public func fileDialogMessage<S>(_ message: S) -> some View where S : StringProtocol
@@ -25533,7 +25677,7 @@ extension View {
     nonisolated public func fileDialogConfirmationLabel(_ labelKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func fileDialogConfirmationLabel(_ label: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func fileDialogConfirmationLabel(_ label: LocalizedStringResource) -> some View
 
 
     nonisolated public func fileExporterFilenameLabel(_ label: Text?) -> some View
@@ -25542,7 +25686,7 @@ extension View {
     nonisolated public func fileExporterFilenameLabel(_ labelKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func fileExporterFilenameLabel(_ label: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func fileExporterFilenameLabel(_ label: LocalizedStringResource) -> some View
 
 
     nonisolated public func fileExporterFilenameLabel<S>(_ label: S) -> some View where S : StringProtocol
@@ -25564,7 +25708,7 @@ extension View {
     nonisolated public func dialogSuppressionToggle(_ titleKey: LocalizedStringKey, isSuppressed: Binding<Bool>) -> some View
 
 
-    nonisolated public func dialogSuppressionToggle(_ titleResource: LocalizedStringResource, isSuppressed: Binding<Bool>) -> some View
+    @export(implementation) nonisolated public func dialogSuppressionToggle(_ titleResource: LocalizedStringResource, isSuppressed: Binding<Bool>) -> some View
 
 
     nonisolated public func dialogSuppressionToggle<S>(_ title: S, isSuppressed: Binding<Bool>) -> some View where S : StringProtocol
@@ -25639,7 +25783,7 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension View {
 
-    @MainActor @preconcurrency public func navigationLinkIndicatorVisibility(_ visibility: Visibility) -> some View
+    @MainActor @export(implementation) @preconcurrency public func navigationLinkIndicatorVisibility(_ visibility: Visibility) -> some View
 
 }
 
@@ -25965,7 +26109,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A) -> some View where A : View
 
 
     nonisolated public func alert<S, A>(_ title: S, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A) -> some View where S : StringProtocol, A : View
@@ -25982,7 +26126,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func alert<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
 
 
     nonisolated public func alert<S, A, M>(_ title: S, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -25999,7 +26143,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
     nonisolated public func alert<S, A, T>(_ title: S, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
@@ -26008,20 +26152,17 @@ extension View {
     nonisolated public func alert<A, T>(_ title: Text, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<S, A, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
+    @export(implementation) nonisolated public func alert<S, A, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, T>(_ title: Text, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A, T>(_ title: Text, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 }
 
@@ -26032,7 +26173,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
     nonisolated public func alert<S, A, M, T>(_ title: S, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -26041,16 +26182,14 @@ extension View {
     nonisolated public func alert<A, M, T>(_ title: Text, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func alert<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<S, A, M, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
+    @export(implementation) nonisolated public func alert<S, A, M, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
 
 }
 
@@ -26069,6 +26208,12 @@ extension View {
 
     @available(anyAppleOS 27.0, *)
     nonisolated public func alert<E, A, M>(error: Binding<E?>, @ContentBuilder actions: (E) -> A, @ContentBuilder message: (E) -> M) -> some View where E : Error, A : View, M : View
+
+
+    @export(implementation) nonisolated public func alert<E, A>(error: Binding<E?>, @ContentBuilder actions: () -> A) -> some View where E : LocalizedError, A : View
+
+
+    @export(implementation) nonisolated public func alert<E, A, M>(error: Binding<E?>, @ContentBuilder actions: (E) -> A, @ContentBuilder message: (E) -> M) -> some View where E : LocalizedError, A : View, M : View
 
 }
 
@@ -26156,10 +26301,13 @@ extension View {
 @available(anyAppleOS 27.0, *)
 extension View {
 
-    nonisolated public func toolbarMinimizeBehavior(_ behavior: ToolbarMinimizeBehavior, for bars: ToolbarPlacement...) -> some View
+    nonisolated public func toolbarMinimizationBehavior(_ behavior: ToolbarMinimizationBehavior, for bars: ToolbarPlacement...) -> some View
 
 
     nonisolated public func toolbarMinimizationSafeAreaAdjustment(_ adjustment: ToolbarMinimizationSafeAreaAdjustment, for bars: ToolbarPlacement...) -> some View
+
+
+    nonisolated public func toolbarMinimizationRestoration(_ restoration: ToolbarMinimizationRestoration, for bars: ToolbarPlacement...) -> some View
 
 }
 
@@ -26226,7 +26374,7 @@ extension View {
     @available(iOS 16.0, macOS 13.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -26238,7 +26386,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
 
 
     @available(iOS 16.0, macOS 13.0, *)
@@ -26277,7 +26425,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -26289,7 +26437,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -26322,7 +26470,7 @@ extension View {
     @available(iOS 16.0, macOS 13.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : MutableCollection, C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : MutableCollection, C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 16.0, macOS 13.0, *)
@@ -26346,7 +26494,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -26359,20 +26507,25 @@ extension View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
+    @available(anyAppleOS, deprecated: 27.0, message: "Use the device picker in Xcode's canvas.")
     @inlinable nonisolated public func previewDevice(_ value: PreviewDevice?) -> some View
 
 
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview(traits: .sizeThatFitsLayout) or .fixedLayout(width:height:) instead.")
     @inlinable nonisolated public func previewLayout(_ value: PreviewLayout) -> some View
 
 
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview(\"name\") instead.")
     @inlinable nonisolated public func previewDisplayName(_ value: String?) -> some View
 
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview with a Widget timeline provider or entries instead.")
     @inlinable nonisolated public func previewContext<C>(_ value: C) -> some View where C : PreviewContext
 
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview(traits: .landscapeLeft) or other orientation traits instead.")
     nonisolated public func previewInterfaceOrientation(_ value: InterfaceOrientation) -> some View
 
 }
@@ -26396,12 +26549,12 @@ extension View {
 @available(watchOS, unavailable)
 extension View {
 
-    nonisolated public func popover<Item, Content>(item: Binding<Item?>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping (Item) -> Content) -> some View where Item : Identifiable, Content : View
+    @export(implementation) nonisolated public func popover<Item, Content>(item: Binding<Item?>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping (Item) -> Content) -> some View where Item : Identifiable, Content : View
 
 
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func popover<Content>(isPresented: Binding<Bool>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping () -> Content) -> some View where Content : View
+    @export(implementation) nonisolated public func popover<Content>(isPresented: Binding<Bool>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping () -> Content) -> some View where Content : View
 
 }
 
@@ -26514,6 +26667,38 @@ extension View {
 
     @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
     nonisolated public func containerBackground<V>(for container: ContainerBackgroundPlacement, alignment: Alignment = .center, @ContentBuilder content: () -> V) -> some View where V : View
+
+}
+
+@available(iOS 27.0, *)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension View {
+
+    nonisolated public func documentLaunchTitle(_ title: Text) -> some View
+
+
+    nonisolated public func documentLaunchTitle(_ titleKey: LocalizedStringKey) -> some View
+
+
+    nonisolated public func documentLaunchTitle(_ titleResource: LocalizedStringResource) -> some View
+
+
+    nonisolated public func documentLaunchTitle<S>(_ title: S) -> some View where S : StringProtocol
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitle: Text) -> some View
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitleKey: LocalizedStringKey) -> some View
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitleResource: LocalizedStringResource) -> some View
+
+
+    nonisolated public func documentLaunchSubtitle<S>(_ subtitle: S) -> some View where S : StringProtocol
 
 }
 
@@ -26646,7 +26831,7 @@ extension View {
 
     nonisolated public func accessibilityScrollStatus(_ status: some StringProtocol, isEnabled: Bool = true) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -26721,13 +26906,13 @@ extension View {
 
 }
 
+@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
 extension View {
 
-    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
     @inlinable nonisolated public func coordinateSpace<T>(name: T) -> some View where T : Hashable
 
 }
@@ -26786,7 +26971,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor<Content>(_ label: LocalizedStringResource, @ContentBuilder entries: @escaping () -> Content) -> some View where Content : AccessibilityRotorContent
+    @export(implementation) nonisolated public func accessibilityRotor<Content>(_ label: LocalizedStringResource, @ContentBuilder entries: @escaping () -> Content) -> some View where Content : AccessibilityRotorContent
 
 
     nonisolated public func accessibilityRotor<L, Content>(_ label: L, @ContentBuilder entries: @escaping () -> Content) -> some View where L : StringProtocol, Content : AccessibilityRotorContent
@@ -26796,7 +26981,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor<EntryModel>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryLabel: KeyPath<EntryModel, String>) -> some View where EntryModel : Identifiable
+    @export(implementation) nonisolated public func accessibilityRotor<EntryModel>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryLabel: KeyPath<EntryModel, String>) -> some View where EntryModel : Identifiable
 
 
     nonisolated public func accessibilityRotor<L, EntryModel>(_ rotorLabel: L, entries: [EntryModel], entryLabel: KeyPath<EntryModel, String>) -> some View where L : StringProtocol, EntryModel : Identifiable
@@ -26806,7 +26991,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor<EntryModel, ID>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryID: KeyPath<EntryModel, ID>, entryLabel: KeyPath<EntryModel, String>) -> some View where ID : Hashable
+    @export(implementation) nonisolated public func accessibilityRotor<EntryModel, ID>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryID: KeyPath<EntryModel, ID>, entryLabel: KeyPath<EntryModel, String>) -> some View where ID : Hashable
 
 
     nonisolated public func accessibilityRotor<L, EntryModel, ID>(_ rotorLabel: L, entries: [EntryModel], entryID: KeyPath<EntryModel, ID>, entryLabel: KeyPath<EntryModel, String>) -> some View where L : StringProtocol, ID : Hashable
@@ -26816,7 +27001,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor(_ label: LocalizedStringResource, textRanges: [Range<String.Index>]) -> some View
+    @export(implementation) nonisolated public func accessibilityRotor(_ label: LocalizedStringResource, textRanges: [Range<String.Index>]) -> some View
 
 
     nonisolated public func accessibilityRotor<L>(_ label: L, textRanges: [Range<String.Index>]) -> some View where L : StringProtocol
@@ -26857,6 +27042,37 @@ extension View {
 extension View {
 
     nonisolated public func swipeActionsContainer() -> some View
+
+}
+
+@available(iOS 27.0, macOS 15.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension View {
+
+    nonisolated public func dismissalConfirmationDialog<A>(_ titleKey: LocalizedStringKey, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where A : View
+
+
+    @export(implementation) nonisolated public func dismissalConfirmationDialog<A>(_ titleResource: LocalizedStringResource, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where A : View
+
+
+    nonisolated public func dismissalConfirmationDialog<S, A>(_ title: S, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where S : StringProtocol, A : View
+
+
+    nonisolated public func dismissalConfirmationDialog<A>(_ title: Text, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where A : View
+
+
+    nonisolated public func dismissalConfirmationDialog<A, M>(_ titleKey: LocalizedStringKey, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+
+
+    @export(implementation) nonisolated public func dismissalConfirmationDialog<A, M>(_ titleResource: LocalizedStringResource, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+
+
+    nonisolated public func dismissalConfirmationDialog<S, A, M>(_ title: S, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where S : StringProtocol, A : View, M : View
+
+
+    nonisolated public func dismissalConfirmationDialog<A, M>(_ title: Text, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
 
 }
 
@@ -26951,7 +27167,7 @@ extension View {
 extension View {
 
     @available(tvOS, unavailable)
-    nonisolated public func onLongPressGesture(minimumDuration: Double = 0.5, maximumDistance: CGFloat = 10, perform action: @escaping () -> Void, onPressingChanged: ((Bool) -> Void)? = nil) -> some View
+    @export(implementation) nonisolated public func onLongPressGesture(minimumDuration: Double = 0.5, maximumDistance: CGFloat = 10, perform action: @escaping () -> Void, onPressingChanged: ((Bool) -> Void)? = nil) -> some View
 
 }
 
@@ -26982,7 +27198,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A) -> some View where A : View
 
 
     nonisolated public func confirmationDialog<S, A>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A) -> some View where S : StringProtocol, A : View
@@ -26999,7 +27215,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
 
 
     nonisolated public func confirmationDialog<S, A, M>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -27016,7 +27232,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
     nonisolated public func confirmationDialog<S, A, T>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
@@ -27025,20 +27241,17 @@ extension View {
     nonisolated public func confirmationDialog<A, T>(_ title: Text, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<S, A, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
+    @export(implementation) nonisolated public func confirmationDialog<S, A, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 }
 
@@ -27049,7 +27262,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
     nonisolated public func confirmationDialog<S, A, M, T>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -27058,20 +27271,17 @@ extension View {
     nonisolated public func confirmationDialog<A, M, T>(_ title: Text, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<S, A, M, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<S, A, M, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 }
 
@@ -27124,7 +27334,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func navigationTitle(_ titleResource: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func navigationTitle(_ titleResource: LocalizedStringResource) -> some View
 
 
     nonisolated public func navigationTitle<S>(_ title: S) -> some View where S : StringProtocol
@@ -27168,7 +27378,7 @@ extension View {
 
 
     @available(macOS 13.0, macCatalyst 16.0, *)
-    nonisolated public func navigationSubtitle(_ subtitleKey: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func navigationSubtitle(_ subtitleKey: LocalizedStringResource) -> some View
 
 
     nonisolated public func navigationSubtitle<S>(_ subtitle: S) -> some View where S : StringProtocol
@@ -27278,7 +27488,7 @@ extension View {
     nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ key: AccessibilityCustomContentKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
 }
@@ -27291,17 +27501,17 @@ extension View {
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ labelKey: LocalizedStringKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent<V>(_ label: LocalizedStringResource, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
+    @export(implementation) nonisolated public func accessibilityCustomContent<V>(_ label: LocalizedStringResource, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -27396,7 +27606,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public func badge(_ resource: LocalizedStringResource?) -> some View
+    @export(implementation) nonisolated public func badge(_ resource: LocalizedStringResource?) -> some View
 
 
     nonisolated public func badge<S>(_ label: S?) -> some View where S : StringProtocol
@@ -27441,7 +27651,7 @@ extension View {
 extension View {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
-    nonisolated public func autocorrectionDisabled(_ disable: Bool = true) -> some View
+    @export(implementation) nonisolated public func autocorrectionDisabled(_ disable: Bool = true) -> some View
 
 }
 
@@ -27636,9 +27846,11 @@ extension View {
 
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable instead.")
 extension View {
 
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentType: UTType, defaultFilename: String? = nil, onCompletion: @escaping (_ result: Result<URL, any Error>) -> Void) -> some View where D : FileDocument
@@ -27665,15 +27877,27 @@ extension View {
     nonisolated public func fileExporter<C, T>(isPresented: Binding<Bool>, items: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: @escaping () -> Void = { }) -> some View where C : Collection, T : Transferable, T == C.Element
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentTypes: [UTType] = [], defaultFilename: String? = nil, onCompletion: @escaping (Result<URL, any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where D : FileDocument
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentTypes: [UTType] = [], defaultFilename: String? = nil, onCompletion: @escaping (Result<URL, any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where D : ReferenceFileDocument
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
     nonisolated public func fileExporter<C>(isPresented: Binding<Bool>, documents: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where C : Collection, C.Element : FileDocument
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
     nonisolated public func fileExporter<C>(isPresented: Binding<Bool>, documents: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where C : Collection, C.Element : ReferenceFileDocument
 
 }
@@ -27684,6 +27908,9 @@ extension View {
 extension View {
 
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentType: UTType? = nil, defaultFilename: String? = nil, onCompletion: @escaping (Result<URL, any Error>) -> Void, onCancellation: (() -> Void)? = nil) -> some View where D : WritableDocument, D.Writer.Destination == URL
+
+
+    nonisolated public func fileExporter<C>(isPresented: Binding<Bool>, documents: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: (() -> Void)? = nil) -> some View where C : Collection, C.Element : WritableDocument, C.Element.Writer.Destination == URL
 
 }
 
@@ -27839,7 +28066,7 @@ extension View {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 
@@ -27847,7 +28074,7 @@ extension View {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -27869,7 +28096,7 @@ extension View {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 
@@ -27877,7 +28104,7 @@ extension View {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -27944,7 +28171,7 @@ extension View {
     nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -27956,7 +28183,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func help(_ textKey: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func help(_ textKey: LocalizedStringResource) -> some View
 
 
     nonisolated public func help(_ text: Text) -> some View
@@ -28088,7 +28315,7 @@ extension View {
     @inlinable nonisolated public func fixedSize(horizontal: Bool, vertical: Bool) -> some View
 
 
-    nonisolated public func fixedSize() -> some View
+    @export(implementation) nonisolated public func fixedSize() -> some View
 
 }
 
@@ -28298,7 +28525,7 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
-    nonisolated public func geometryGroup() -> some View
+    @export(implementation) nonisolated public func geometryGroup() -> some View
 
 }
 
@@ -28372,7 +28599,7 @@ extension View {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension View {
 
-    @preconcurrency nonisolated public func onGeometryChange<T>(for type: T.Type, of transform: @escaping @Sendable (GeometryProxy) -> T, action: @escaping (_ newValue: T) -> Void) -> some View where T : Equatable, T : Sendable
+    @export(implementation) @preconcurrency nonisolated public func onGeometryChange<T>(for type: T.Type, of transform: @escaping @Sendable (GeometryProxy) -> T, action: @escaping (_ newValue: T) -> Void) -> some View where T : Equatable, T : Sendable
 
 }
 
@@ -28428,14 +28655,14 @@ extension View {
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension View {
 
-    nonisolated public func symbolVariableValueMode(_ mode: SymbolVariableValueMode?) -> some View
+    @export(implementation) nonisolated public func symbolVariableValueMode(_ mode: SymbolVariableValueMode?) -> some View
 
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension View {
 
-    nonisolated public func symbolColorRenderingMode(_ mode: SymbolColorRenderingMode?) -> some View
+    @export(implementation) nonisolated public func symbolColorRenderingMode(_ mode: SymbolColorRenderingMode?) -> some View
 
 }
 
@@ -28664,7 +28891,7 @@ extension View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
-    nonisolated public func tag<V>(_ tag: V, includeOptional: Bool = true) -> some View where V : Hashable
+    @export(implementation) nonisolated public func tag<V>(_ tag: V, includeOptional: Bool = true) -> some View where V : Hashable
 
 }
 
@@ -28688,7 +28915,7 @@ extension View {
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension View {
 
-    nonisolated public func containerValue<V>(_ keyPath: WritableKeyPath<ContainerValues, V>, _ value: V) -> some View
+    @export(implementation) nonisolated public func containerValue<V>(_ keyPath: WritableKeyPath<ContainerValues, V>, _ value: V) -> some View
 
 }
 
@@ -28720,7 +28947,7 @@ extension View {
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension View {
 
-    nonisolated public func textRenderer<T>(_ renderer: T) -> some View where T : TextRenderer
+    @export(implementation) nonisolated public func textRenderer<T>(_ renderer: T) -> some View where T : TextRenderer
 
 }
 
@@ -28853,7 +29080,7 @@ extension View {
 @available(watchOS, unavailable)
 extension View {
 
-    nonisolated public func allowedDynamicRange(_ range: Image.DynamicRange?) -> some View
+    @export(implementation) nonisolated public func allowedDynamicRange(_ range: Image.DynamicRange?) -> some View
 
 }
 
@@ -28904,7 +29131,7 @@ extension View {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension View {
 
-    nonisolated public func contentTransition(_ transition: ContentTransition) -> some View
+    @export(implementation) nonisolated public func contentTransition(_ transition: ContentTransition) -> some View
 
 }
 
@@ -28939,7 +29166,7 @@ extension View {
 @available(anyAppleOS 27.0, *)
 extension View {
 
-    nonisolated public func ignoresSafeArea(_ regions: SafeAreaRegions = .all, edges: Edge.Set = .all, alignment: Alignment?) -> some View
+    @export(implementation) nonisolated public func ignoresSafeArea(_ regions: SafeAreaRegions = .all, edges: Edge.Set = .all, alignment: Alignment?) -> some View
 
 }
 
@@ -29055,7 +29282,7 @@ extension View {
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func transaction(value: some Equatable, _ transform: @escaping (inout Transaction) -> Void) -> some View
+    @export(implementation) nonisolated public func transaction(value: some Equatable, _ transform: @escaping (inout Transaction) -> Void) -> some View
 
 
     @available(iOS, introduced: 13.0, deprecated: 15.0, message: "Use withAnimation or animation(_:value:) instead.")
@@ -29114,13 +29341,13 @@ extension View {
     nonisolated public func simultaneousGesture<T>(_ gesture: T, including mask: GestureMask = .all) -> some View where T : Gesture
 
 
-    nonisolated public func gesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+    @export(implementation) nonisolated public func gesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
 
 
-    nonisolated public func highPriorityGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+    @export(implementation) nonisolated public func highPriorityGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
 
 
-    nonisolated public func simultaneousGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+    @export(implementation) nonisolated public func simultaneousGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
 
 }
 
@@ -29164,15 +29391,15 @@ extension View {
 extension View {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func safeAreaPadding(_ insets: EdgeInsets) -> some View
+    @export(implementation) nonisolated public func safeAreaPadding(_ insets: EdgeInsets) -> some View
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func safeAreaPadding(_ edges: Edge.Set = .all, _ length: CGFloat? = nil) -> some View
+    @export(implementation) nonisolated public func safeAreaPadding(_ edges: Edge.Set = .all, _ length: CGFloat? = nil) -> some View
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func safeAreaPadding(_ length: CGFloat) -> some View
+    @export(implementation) nonisolated public func safeAreaPadding(_ length: CGFloat) -> some View
 
 }
 
@@ -29197,6 +29424,13 @@ extension View {
 
 }
 
+@available(anyAppleOS 27.0, *)
+extension View {
+
+    nonisolated public func textInputBorderShape(_ shape: TextInputBorderShape) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -29204,7 +29438,7 @@ extension View {
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func transition<T>(_ transition: T) -> some View where T : Transition
+    @export(implementation) nonisolated public func transition<T>(_ transition: T) -> some View where T : Transition
 
 }
 
@@ -29246,43 +29480,43 @@ extension ViewAlignedScrollTargetBehavior {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 @resultBuilder public struct ViewBuilder {
 
-    public static func buildBlock() -> EmptyContent
+    @export(implementation) public static func buildBlock() -> EmptyContent
 
-    public static func buildBlock<Content>(_ content: Content) -> Content
+    @export(implementation) public static func buildBlock<Content>(_ content: Content) -> Content
 
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> TupleView<(repeat each Content)> where repeat each Content : View
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> TupleView<(repeat each Content)> where repeat each Content : View
 
     @available(iOS 27.0, macOS 27.0, tvOS 27.0, watchOS 27.0, *)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> TupleContent<repeat each Content>
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> TupleContent<repeat each Content>
 }
 
 extension ViewBuilder {
 
     @available(iOS 17.5, macOS 14.5, tvOS 17.5, watchOS 10.5, *)
-    public static func buildLimitedAvailability(_ content: any ToolbarContent) -> some ToolbarContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any ToolbarContent) -> some ToolbarContent
 
 
     @available(iOS 17.5, macOS 14.5, tvOS 17.5, watchOS 10.5, *)
-    public static func buildLimitedAvailability(_ content: any CustomizableToolbarContent) -> some CustomizableToolbarContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any CustomizableToolbarContent) -> some CustomizableToolbarContent
 
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some ToolbarContent where repeat each Content : ToolbarContent
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some ToolbarContent where repeat each Content : ToolbarContent
 
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some CustomizableToolbarContent where repeat each Content : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some CustomizableToolbarContent where repeat each Content : CustomizableToolbarContent
 
 }
 
 extension ViewBuilder {
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some AccessibilityRotorContent where repeat each Content : AccessibilityRotorContent
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some AccessibilityRotorContent where repeat each Content : AccessibilityRotorContent
 
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static func buildIf<Content>(_ content: Content?) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
+    @export(implementation) public static func buildIf<Content>(_ content: Content?) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
 
 }
 
@@ -29292,13 +29526,13 @@ extension ViewBuilder {
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     @available(visionOS, unavailable)
-    public static func buildLimitedAvailability(_ content: any Commands) -> some Commands
+    @export(implementation) public static func buildLimitedAvailability(_ content: any Commands) -> some Commands
 
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some Commands where repeat each Content : Commands
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some Commands where repeat each Content : Commands
 
 }
 
@@ -29310,24 +29544,24 @@ extension ViewBuilder {
 @available(visionOS, unavailable)
 extension ViewBuilder {
 
-    public static func buildLimitedAvailability(_ content: any SceneAccessoryContent) -> some SceneAccessoryContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any SceneAccessoryContent) -> some SceneAccessoryContent
 
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ViewBuilder {
 
-    public static func buildIf<Content>(_ content: Content?) -> Content?
+    @export(implementation) public static func buildIf<Content>(_ content: Content?) -> Content?
 
-    public static func buildEither<TrueContent, FalseContent>(first: TrueContent) -> _ConditionalContent<TrueContent, FalseContent>
+    @export(implementation) public static func buildEither<TrueContent, FalseContent>(first: TrueContent) -> _ConditionalContent<TrueContent, FalseContent>
 
-    public static func buildEither<TrueContent, FalseContent>(second: FalseContent) -> _ConditionalContent<TrueContent, FalseContent>
+    @export(implementation) public static func buildEither<TrueContent, FalseContent>(second: FalseContent) -> _ConditionalContent<TrueContent, FalseContent>
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ViewBuilder {
 
-    public static func buildLimitedAvailability<Content>(_ content: Content) -> AnyView where Content : View
+    @export(implementation) public static func buildLimitedAvailability<Content>(_ content: Content) -> AnyView where Content : View
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -29608,7 +29842,7 @@ public struct WheelPickerStyle : PickerStyle, ~Sendable {
 @available(tvOS, unavailable)
 @resultBuilder public struct WidgetBundleBuilder : ~Sendable {
 
-    public static func buildExpression<Content>(_ content: Content) -> Content where Content : Widget
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> Content where Content : Widget
 
     public static func buildBlock() -> some Widget
 
@@ -29616,7 +29850,7 @@ public struct WheelPickerStyle : PickerStyle, ~Sendable {
     public static func buildBlock<Content>(_ content: Content) -> some Widget where Content : Widget
 
 
-    public static func buildBlock<each C>(_ c: repeat each C) -> some Widget where repeat each C : Widget
+    @export(implementation) public static func buildBlock<each C>(_ c: repeat each C) -> some Widget where repeat each C : Widget
 
 }
 
@@ -29624,11 +29858,11 @@ public struct WheelPickerStyle : PickerStyle, ~Sendable {
 @available(tvOS, unavailable)
 extension WidgetBundleBuilder {
 
-    public static func buildOptional(_ widget: (any Widget & _LimitedAvailabilityWidgetMarker)?) -> some Widget
+    @export(implementation) public static func buildOptional(_ widget: (any Widget & _LimitedAvailabilityWidgetMarker)?) -> some Widget
 
 
     @available(iOS 16.1, macOS 13.0, watchOS 9.1, *)
-    public static func buildLimitedAvailability(_ widget: some Widget) -> any Widget & _LimitedAvailabilityWidgetMarker
+    @export(implementation) public static func buildLimitedAvailability(_ widget: some Widget) -> any Widget & _LimitedAvailabilityWidgetMarker
 }
 
 @available(iOS 18.0, macOS 26.0, watchOS 26.0, *)
@@ -29636,10 +29870,10 @@ extension WidgetBundleBuilder {
 @available(visionOS, unavailable)
 extension WidgetBundleBuilder {
 
-    public static func buildExpression<Content>(_ content: Content) -> some Widget where Content : ControlWidget
+    @export(implementation) public static func buildExpression<Content>(_ content: Content) -> some Widget where Content : ControlWidget
 
 
-    public static func buildLimitedAvailability(_ widget: some ControlWidget) -> any Widget & _LimitedAvailabilityWidgetMarker
+    @export(implementation) public static func buildLimitedAvailability(_ widget: some ControlWidget) -> any Widget & _LimitedAvailabilityWidgetMarker
 }
 
 @available(iOS 14.0, macOS 11.0, watchOS 9.0, visionOS 1.0, *)
@@ -29746,7 +29980,7 @@ extension WindowGroup {
 
     nonisolated public init<D, C>(_ titleKey: LocalizedStringKey, id: String, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
-    nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, id: String, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
+    @export(implementation) nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, id: String, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
     nonisolated public init<S, D, C>(_ title: S, id: String, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, S : StringProtocol, D : Decodable, D : Encodable, D : Hashable, C : View
 
@@ -29756,7 +29990,7 @@ extension WindowGroup {
 
     nonisolated public init<D, C>(_ titleKey: LocalizedStringKey, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
-    nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
+    @export(implementation) nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
     nonisolated public init<S, D, C>(_ title: S, for type: D.Type, @ContentBuilder content: @escaping (Binding<D?>) -> C) where Content == PresentedWindowContent<D, C>, S : StringProtocol, D : Decodable, D : Encodable, D : Hashable, C : View
 
@@ -29766,7 +30000,7 @@ extension WindowGroup {
 
     nonisolated public init<D, C>(_ titleKey: LocalizedStringKey, id: String, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
-    nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, id: String, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
+    @export(implementation) nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, id: String, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
     nonisolated public init<S, D, C>(_ title: S, id: String, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, S : StringProtocol, D : Decodable, D : Encodable, D : Hashable, C : View
 
@@ -29776,7 +30010,7 @@ extension WindowGroup {
 
     nonisolated public init<D, C>(_ titleKey: LocalizedStringKey, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
-    nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
+    @export(implementation) nonisolated public init<D, C>(_ titleResource: LocalizedStringResource, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, D : Decodable, D : Encodable, D : Hashable, C : View
 
     nonisolated public init<S, D, C>(_ title: S, for type: D.Type = D.self, @ContentBuilder content: @escaping (Binding<D>) -> C, defaultValue: @escaping () -> D) where Content == PresentedWindowContent<D, C>, S : StringProtocol, D : Decodable, D : Encodable, D : Hashable, C : View
 }
@@ -29784,27 +30018,27 @@ extension WindowGroup {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *)
 extension WindowGroup {
 
-    nonisolated public init(id: String, @ContentBuilder makeContent: @escaping () -> Content)
+    @export(implementation) nonisolated public init(id: String, @ContentBuilder makeContent: @escaping () -> Content)
 
-    nonisolated public init(_ title: Text, id: String, @ContentBuilder makeContent: @escaping () -> Content)
+    @export(implementation) nonisolated public init(_ title: Text, id: String, @ContentBuilder makeContent: @escaping () -> Content)
 
-    nonisolated public init(_ titleKey: LocalizedStringKey, id: String, @ContentBuilder makeContent: @escaping () -> Content)
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, id: String, @ContentBuilder makeContent: @escaping () -> Content)
-
-    nonisolated public init<S>(_ title: S, id: String, @ContentBuilder makeContent: @escaping () -> Content) where S : StringProtocol
-
-    nonisolated public init(@ContentBuilder makeContent: @escaping () -> Content)
-
-    nonisolated public init(_ title: Text, @ContentBuilder makeContent: @escaping () -> Content)
-
-    nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder makeContent: @escaping () -> Content)
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, id: String, @ContentBuilder makeContent: @escaping () -> Content)
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder makeContent: @escaping () -> Content)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, id: String, @ContentBuilder makeContent: @escaping () -> Content)
 
-    nonisolated public init<S>(_ title: S, @ContentBuilder makeContent: @escaping () -> Content) where S : StringProtocol
+    @export(implementation) nonisolated public init<S>(_ title: S, id: String, @ContentBuilder makeContent: @escaping () -> Content) where S : StringProtocol
+
+    @export(implementation) nonisolated public init(@ContentBuilder makeContent: @escaping () -> Content)
+
+    @export(implementation) nonisolated public init(_ title: Text, @ContentBuilder makeContent: @escaping () -> Content)
+
+    @export(implementation) nonisolated public init(_ titleKey: LocalizedStringKey, @ContentBuilder makeContent: @escaping () -> Content)
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public init(_ titleResource: LocalizedStringResource, @ContentBuilder makeContent: @escaping () -> Content)
+
+    @export(implementation) nonisolated public init<S>(_ title: S, @ContentBuilder makeContent: @escaping () -> Content) where S : StringProtocol
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -29909,7 +30143,7 @@ public func withAnimation<Result>(_ animation: Animation? = .default, _ body: ()
 public func withTransaction<Result>(_ transaction: Transaction, _ body: () throws -> Result) rethrows -> Result
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public func withTransaction<R, V>(_ keyPath: WritableKeyPath<Transaction, V>, _ value: V, _ body: () throws -> R) rethrows -> R
+@export(implementation) public func withTransaction<R, V>(_ keyPath: WritableKeyPath<Transaction, V>, _ value: V, _ body: () throws -> R) rethrows -> R
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension View {
@@ -29918,7 +30152,7 @@ extension View {
 
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -29930,7 +30164,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -29943,7 +30177,7 @@ extension View {
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -29960,7 +30194,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityValue(_ valueKey: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityValue(_ valueResource: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityValue<S>(_ value: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -30112,7 +30346,7 @@ extension View {
 
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -30124,7 +30358,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -30144,7 +30378,7 @@ extension View {
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -30157,7 +30391,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -30241,6 +30475,7 @@ extension EnvironmentValues {
     public var isPresented: Bool { get }
 }
 
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -30345,7 +30580,7 @@ extension Text {
     nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> Text
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
 
     nonisolated public func accessibilityLabel<S>(_ label: S) -> Text where S : StringProtocol
 }
@@ -30381,7 +30616,7 @@ extension View {
     nonisolated public func allowsWindowActivationEvents(_ value: Bool?) -> some View
 
 
-    nonisolated public func allowsWindowActivationEvents() -> some View
+    @export(implementation) nonisolated public func allowsWindowActivationEvents() -> some View
 
 }
 
@@ -30397,14 +30632,14 @@ extension View {
     nonisolated public func sensoryFeedback<T>(trigger: T, _ feedback: @escaping (_ oldValue: T, _ newValue: T) -> SensoryFeedback?) -> some View where T : Equatable
 
 
-    nonisolated public func sensoryFeedback<T>(trigger: T, _ feedback: @escaping () -> SensoryFeedback?) -> some View where T : Equatable
+    @export(implementation) nonisolated public func sensoryFeedback<T>(trigger: T, _ feedback: @escaping () -> SensoryFeedback?) -> some View where T : Equatable
 
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == FillShapeStyle {
 
-    public static var fill: FillShapeStyle { get }
+    @export(implementation) public static var fill: FillShapeStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, *)
@@ -30533,7 +30768,7 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
-    nonisolated public func symbolEffectsRemoved(_ isEnabled: Bool = true) -> some View
+    @export(implementation) nonisolated public func symbolEffectsRemoved(_ isEnabled: Bool = true) -> some View
 
 }
 
@@ -30551,7 +30786,7 @@ extension Subview {
 extension View {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func selectionDisabled(_ isDisabled: Bool = true) -> some View
+    @export(implementation) nonisolated public func selectionDisabled(_ isDisabled: Bool = true) -> some View
 
 }
 
@@ -30587,7 +30822,7 @@ extension View {
 
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -30599,7 +30834,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -30612,7 +30847,7 @@ extension View {
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -30625,7 +30860,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityHint(_ hintKey: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityHint(_ hint: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityHint<S>(_ hint: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -30658,6 +30893,23 @@ extension View {
 
     @inlinable nonisolated public func flipsForRightToLeftLayoutDirection(_ enabled: Bool) -> some View
 
+}
+
+@available(iOS 27.0, *)
+@available(macCatalyst, unavailable)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension ForEach : SceneAccessoryContent where Content : SceneAccessoryContent {
+
+    @available(iOS 27.0, *)
+    @available(macOS, unavailable, introduced: 10.15)
+    @available(tvOS, unavailable, introduced: 13.0)
+    @available(watchOS, unavailable, introduced: 6.0)
+    @available(macCatalyst, unavailable)
+    @available(visionOS, unavailable)
+    public typealias Body = Never
 }
 
 @available(iOS 17.0, macOS 14.0, visionOS 1.0, *)
@@ -30702,8 +30954,8 @@ extension View {
     @available(macOS, unavailable)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    @available(visionOS, introduced: 1.0, deprecated: 27.0, message: "Has no effect on visionOS")
-    nonisolated public func statusBarHidden(_ hidden: Bool = true) -> some View
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Has no effect on visionOS")
+    @export(implementation) nonisolated public func statusBarHidden(_ hidden: Bool = true) -> some View
 
 }
 
@@ -30713,7 +30965,7 @@ extension View {
     @available(macOS, unavailable)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    @available(visionOS, introduced: 1.0, deprecated: 27.0, message: "Has no effect on visionOS")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Has no effect on visionOS")
     nonisolated public func statusBar(hidden: Bool) -> some View
 
 }
@@ -30780,7 +31032,7 @@ extension View {
     nonisolated public func focusedValue<T>(_ object: T?) -> some View where T : AnyObject, T : Observable
 
 
-    nonisolated public func focusedSceneValue<T>(_ object: T?) -> some View where T : AnyObject, T : Observable
+    @export(implementation) nonisolated public func focusedSceneValue<T>(_ object: T?) -> some View where T : AnyObject, T : Observable
 
 }
 
@@ -30831,7 +31083,7 @@ extension EnvironmentValues {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == PlaceholderTextShapeStyle {
 
-    public static var placeholder: PlaceholderTextShapeStyle { get }
+    @export(implementation) public static var placeholder: PlaceholderTextShapeStyle { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -30859,11 +31111,11 @@ extension View {
 extension View {
 
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
-    nonisolated public func sectionIndexLabel(_ label: Text?) -> some View
+    @export(implementation) nonisolated public func sectionIndexLabel(_ label: Text?) -> some View
 
 
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
-    nonisolated public func sectionIndexLabel<S>(_ label: S?) -> some View where S : StringProtocol
+    @export(implementation) nonisolated public func sectionIndexLabel<S>(_ label: S?) -> some View where S : StringProtocol
 
 }
 
@@ -30913,19 +31165,19 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
-    nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
+    @export(implementation) nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
 
 
-    nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
+    @export(implementation) nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
 
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == SymbolEffectTransition {
 
-    @MainActor @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
+    @MainActor @export(implementation) @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
 
-    @MainActor @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -30933,13 +31185,13 @@ extension ContentTransition {
 
     public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> ContentTransition where T : ContentTransitionSymbolEffect, T : SymbolEffect
 
-    public static var symbolEffect: ContentTransition { get }
+    @export(implementation) public static var symbolEffect: ContentTransition { get }
 }
 
+@available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension WiggleSymbolEffect {
 
-    @available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-    public func custom(angle: Angle) -> WiggleSymbolEffect
+    @export(implementation) public func custom(angle: Angle) -> WiggleSymbolEffect
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -30963,14 +31215,14 @@ extension View {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension View {
 
-    nonisolated public func task(name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View
+    @export(implementation) nonisolated public func task(name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View
 
 
     @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
     nonisolated public func task(name: String? = nil, executorPreference taskExecutor: any TaskExecutor, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, action: sending @escaping @isolated(any) () async -> Void) -> some View
 
 
-    nonisolated public func task<T>(id: T, name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View where T : Equatable
+    @export(implementation) nonisolated public func task<T>(id: T, name: String? = nil, priority: TaskPriority = .userInitiated, file: String = #fileID, line: Int = #line, _ action: sending @escaping @isolated(any) () async -> Void) -> some View where T : Equatable
 
 
     @available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, *)
@@ -31041,7 +31293,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func searchable(text: Binding<String>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func searchable(text: Binding<String>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
 
 
     nonisolated public func searchable<S>(text: Binding<String>, placement: SearchFieldPlacement = .automatic, prompt: S) -> some View where S : StringProtocol
@@ -31065,7 +31317,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable(text: Binding<String>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func searchable(text: Binding<String>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource) -> some View
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -31115,7 +31367,7 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == LinkShapeStyle {
 
-    public static var link: LinkShapeStyle { get }
+    @export(implementation) public static var link: LinkShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -31155,13 +31407,6 @@ extension View {
 
 }
 
-@available(anyAppleOS 27.0, *)
-extension View {
-
-    nonisolated public func onMenuItemHighlight(perform action: @escaping (Bool) -> Void) -> some View
-
-}
-
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension LayoutSubview {
 
@@ -31174,13 +31419,13 @@ extension View {
     @inlinable nonisolated public func typeSelectEquivalent(_ text: Text?) -> some View
 
 
-    nonisolated public func typeSelectEquivalent(_ stringKey: LocalizedStringKey) -> some View
+    @export(implementation) nonisolated public func typeSelectEquivalent(_ stringKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func typeSelectEquivalent(_ stringResource: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func typeSelectEquivalent(_ stringResource: LocalizedStringResource) -> some View
 
 
-    nonisolated public func typeSelectEquivalent<S>(_ string: S) -> some View where S : StringProtocol
+    @export(implementation) nonisolated public func typeSelectEquivalent<S>(_ string: S) -> some View where S : StringProtocol
 
 }
 
@@ -31390,7 +31635,7 @@ extension View {
     nonisolated public func fileDialogMessage(_ messageKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func fileDialogMessage(_ messageResource: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func fileDialogMessage(_ messageResource: LocalizedStringResource) -> some View
 
 
     nonisolated public func fileDialogMessage<S>(_ message: S) -> some View where S : StringProtocol
@@ -31405,7 +31650,7 @@ extension View {
     nonisolated public func fileDialogConfirmationLabel(_ labelKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func fileDialogConfirmationLabel(_ label: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func fileDialogConfirmationLabel(_ label: LocalizedStringResource) -> some View
 
 
     nonisolated public func fileExporterFilenameLabel(_ label: Text?) -> some View
@@ -31414,7 +31659,7 @@ extension View {
     nonisolated public func fileExporterFilenameLabel(_ labelKey: LocalizedStringKey) -> some View
 
 
-    nonisolated public func fileExporterFilenameLabel(_ label: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func fileExporterFilenameLabel(_ label: LocalizedStringResource) -> some View
 
 
     nonisolated public func fileExporterFilenameLabel<S>(_ label: S) -> some View where S : StringProtocol
@@ -31436,7 +31681,7 @@ extension View {
     nonisolated public func dialogSuppressionToggle(_ titleKey: LocalizedStringKey, isSuppressed: Binding<Bool>) -> some View
 
 
-    nonisolated public func dialogSuppressionToggle(_ titleResource: LocalizedStringResource, isSuppressed: Binding<Bool>) -> some View
+    @export(implementation) nonisolated public func dialogSuppressionToggle(_ titleResource: LocalizedStringResource, isSuppressed: Binding<Bool>) -> some View
 
 
     nonisolated public func dialogSuppressionToggle<S>(_ title: S, isSuppressed: Binding<Bool>) -> some View where S : StringProtocol
@@ -31525,14 +31770,14 @@ extension View {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension View {
 
-    @MainActor @preconcurrency public func navigationLinkIndicatorVisibility(_ visibility: Visibility) -> some View
+    @MainActor @export(implementation) @preconcurrency public func navigationLinkIndicatorVisibility(_ visibility: Visibility) -> some View
 
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension EnvironmentValues {
 
-    public var navigationLinkIndicatorVisibility: Visibility { get }
+    @export(implementation) public var navigationLinkIndicatorVisibility: Visibility { get }
 }
 
 @available(iOS 13.0, macOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -31672,6 +31917,12 @@ extension View {
 
 }
 
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.0, *)
+    public var systemPrefersReducedResourceUsage: Bool
+}
+
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension View {
 
@@ -31685,9 +31936,9 @@ extension View {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule where Self == AnimationTimelineSchedule {
 
-    public static var animation: AnimationTimelineSchedule { get }
+    @export(implementation) public static var animation: AnimationTimelineSchedule { get }
 
-    public static func animation(minimumInterval: Double? = nil, paused: Bool = false) -> AnimationTimelineSchedule
+    @export(implementation) public static func animation(minimumInterval: Double? = nil, paused: Bool = false) -> AnimationTimelineSchedule
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -32040,7 +32291,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A) -> some View where A : View
 
 
     nonisolated public func alert<S, A>(_ title: S, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A) -> some View where S : StringProtocol, A : View
@@ -32057,7 +32308,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func alert<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
 
 
     nonisolated public func alert<S, A, M>(_ title: S, isPresented: Binding<Bool>, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -32074,7 +32325,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
     nonisolated public func alert<S, A, T>(_ title: S, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
@@ -32083,20 +32334,17 @@ extension View {
     nonisolated public func alert<A, T>(_ title: Text, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func alert<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<S, A, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
+    @export(implementation) nonisolated public func alert<S, A, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, T>(_ title: Text, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func alert<A, T>(_ title: Text, item data: Binding<T?>, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 }
 
@@ -32107,7 +32355,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
     nonisolated public func alert<S, A, M, T>(_ title: S, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -32116,16 +32364,14 @@ extension View {
     nonisolated public func alert<A, M, T>(_ title: Text, isPresented: Binding<Bool>, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func alert<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func alert<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func alert<S, A, M, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
+    @export(implementation) nonisolated public func alert<S, A, M, T>(_ title: S, item data: Binding<T?>, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
 
 }
 
@@ -32144,6 +32390,12 @@ extension View {
 
     @available(anyAppleOS 27.0, *)
     nonisolated public func alert<E, A, M>(error: Binding<E?>, @ContentBuilder actions: (E) -> A, @ContentBuilder message: (E) -> M) -> some View where E : Error, A : View, M : View
+
+
+    @export(implementation) nonisolated public func alert<E, A>(error: Binding<E?>, @ContentBuilder actions: () -> A) -> some View where E : LocalizedError, A : View
+
+
+    @export(implementation) nonisolated public func alert<E, A, M>(error: Binding<E?>, @ContentBuilder actions: (E) -> A, @ContentBuilder message: (E) -> M) -> some View where E : LocalizedError, A : View, M : View
 
 }
 
@@ -32238,10 +32490,13 @@ extension View {
 @available(anyAppleOS 27.0, *)
 extension View {
 
-    nonisolated public func toolbarMinimizeBehavior(_ behavior: ToolbarMinimizeBehavior, for bars: ToolbarPlacement...) -> some View
+    nonisolated public func toolbarMinimizationBehavior(_ behavior: ToolbarMinimizationBehavior, for bars: ToolbarPlacement...) -> some View
 
 
     nonisolated public func toolbarMinimizationSafeAreaAdjustment(_ adjustment: ToolbarMinimizationSafeAreaAdjustment, for bars: ToolbarPlacement...) -> some View
+
+
+    nonisolated public func toolbarMinimizationRestoration(_ restoration: ToolbarMinimizationRestoration, for bars: ToolbarPlacement...) -> some View
 
 }
 
@@ -32357,7 +32612,7 @@ extension View {
     @available(iOS 16.0, macOS 13.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -32369,7 +32624,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
 
 
     @available(iOS 16.0, macOS 13.0, *)
@@ -32408,7 +32663,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -32420,7 +32675,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C>(text: Binding<String>, editableTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (Binding<C.Element>) -> some View) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -32453,7 +32708,7 @@ extension View {
     @available(iOS 16.0, macOS 13.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : MutableCollection, C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : MutableCollection, C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 16.0, macOS 13.0, *)
@@ -32477,7 +32732,7 @@ extension View {
     @available(iOS 17.0, macOS 14.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
+    @export(implementation) nonisolated public func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, suggestedTokens: Binding<C>, isPresented: Binding<Bool>, placement: SearchFieldPlacement = .automatic, prompt: LocalizedStringResource, @ContentBuilder token: @escaping (C.Element) -> T) -> some View where C : RandomAccessCollection, C : RangeReplaceableCollection, T : View, C.Element : Identifiable
 
 
     @available(iOS 17.0, macOS 14.0, *)
@@ -32490,20 +32745,25 @@ extension View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
+    @available(anyAppleOS, deprecated: 27.0, message: "Use the device picker in Xcode's canvas.")
     @inlinable nonisolated public func previewDevice(_ value: PreviewDevice?) -> some View
 
 
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview(traits: .sizeThatFitsLayout) or .fixedLayout(width:height:) instead.")
     @inlinable nonisolated public func previewLayout(_ value: PreviewLayout) -> some View
 
 
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview(\"name\") instead.")
     @inlinable nonisolated public func previewDisplayName(_ value: String?) -> some View
 
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview with a Widget timeline provider or entries instead.")
     @inlinable nonisolated public func previewContext<C>(_ value: C) -> some View where C : PreviewContext
 
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @available(anyAppleOS, deprecated: 27.0, message: "Use #Preview(traits: .landscapeLeft) or other orientation traits instead.")
     nonisolated public func previewInterfaceOrientation(_ value: InterfaceOrientation) -> some View
 
 }
@@ -32527,12 +32787,12 @@ extension View {
 @available(watchOS, unavailable)
 extension View {
 
-    nonisolated public func popover<Item, Content>(item: Binding<Item?>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping (Item) -> Content) -> some View where Item : Identifiable, Content : View
+    @export(implementation) nonisolated public func popover<Item, Content>(item: Binding<Item?>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping (Item) -> Content) -> some View where Item : Identifiable, Content : View
 
 
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    nonisolated public func popover<Content>(isPresented: Binding<Bool>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping () -> Content) -> some View where Content : View
+    @export(implementation) nonisolated public func popover<Content>(isPresented: Binding<Bool>, attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: Edge? = nil, @ContentBuilder content: @escaping () -> Content) -> some View where Content : View
 
 }
 
@@ -32685,6 +32945,38 @@ extension View {
 
 }
 
+@available(iOS 27.0, *)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension View {
+
+    nonisolated public func documentLaunchTitle(_ title: Text) -> some View
+
+
+    nonisolated public func documentLaunchTitle(_ titleKey: LocalizedStringKey) -> some View
+
+
+    nonisolated public func documentLaunchTitle(_ titleResource: LocalizedStringResource) -> some View
+
+
+    nonisolated public func documentLaunchTitle<S>(_ title: S) -> some View where S : StringProtocol
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitle: Text) -> some View
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitleKey: LocalizedStringKey) -> some View
+
+
+    nonisolated public func documentLaunchSubtitle(_ subtitleResource: LocalizedStringResource) -> some View
+
+
+    nonisolated public func documentLaunchSubtitle<S>(_ subtitle: S) -> some View where S : StringProtocol
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -32832,7 +33124,7 @@ extension View {
 
     nonisolated public func accessibilityScrollStatus(_ status: some StringProtocol, isEnabled: Bool = true) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
@@ -32844,7 +33136,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityScrollStatus(_ status: some StringProtocol, isEnabled: Bool = true) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityScrollStatus(_ status: LocalizedStringResource, isEnabled: Bool = true) -> ModifiedContent<Content, Modifier>
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -32946,7 +33238,7 @@ extension EnvironmentValues {
 @available(watchOS, unavailable)
 extension ShapeStyle where Self == SelectionShapeStyle {
 
-    public static var selection: SelectionShapeStyle { get }
+    @export(implementation) public static var selection: SelectionShapeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -32989,13 +33281,13 @@ extension Shape where Self == ButtonBorderShape {
     public static var buttonBorder: ButtonBorderShape { get }
 }
 
+@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
 extension View {
 
-    @available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
     @inlinable nonisolated public func coordinateSpace<T>(name: T) -> some View where T : Hashable
 
 }
@@ -33097,7 +33389,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor<Content>(_ label: LocalizedStringResource, @ContentBuilder entries: @escaping () -> Content) -> some View where Content : AccessibilityRotorContent
+    @export(implementation) nonisolated public func accessibilityRotor<Content>(_ label: LocalizedStringResource, @ContentBuilder entries: @escaping () -> Content) -> some View where Content : AccessibilityRotorContent
 
 
     nonisolated public func accessibilityRotor<L, Content>(_ label: L, @ContentBuilder entries: @escaping () -> Content) -> some View where L : StringProtocol, Content : AccessibilityRotorContent
@@ -33107,7 +33399,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor<EntryModel>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryLabel: KeyPath<EntryModel, String>) -> some View where EntryModel : Identifiable
+    @export(implementation) nonisolated public func accessibilityRotor<EntryModel>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryLabel: KeyPath<EntryModel, String>) -> some View where EntryModel : Identifiable
 
 
     nonisolated public func accessibilityRotor<L, EntryModel>(_ rotorLabel: L, entries: [EntryModel], entryLabel: KeyPath<EntryModel, String>) -> some View where L : StringProtocol, EntryModel : Identifiable
@@ -33117,7 +33409,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor<EntryModel, ID>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryID: KeyPath<EntryModel, ID>, entryLabel: KeyPath<EntryModel, String>) -> some View where ID : Hashable
+    @export(implementation) nonisolated public func accessibilityRotor<EntryModel, ID>(_ rotorLabelResource: LocalizedStringResource, entries: [EntryModel], entryID: KeyPath<EntryModel, ID>, entryLabel: KeyPath<EntryModel, String>) -> some View where ID : Hashable
 
 
     nonisolated public func accessibilityRotor<L, EntryModel, ID>(_ rotorLabel: L, entries: [EntryModel], entryID: KeyPath<EntryModel, ID>, entryLabel: KeyPath<EntryModel, String>) -> some View where L : StringProtocol, ID : Hashable
@@ -33127,7 +33419,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityRotor(_ label: LocalizedStringResource, textRanges: [Range<String.Index>]) -> some View
+    @export(implementation) nonisolated public func accessibilityRotor(_ label: LocalizedStringResource, textRanges: [Range<String.Index>]) -> some View
 
 
     nonisolated public func accessibilityRotor<L>(_ label: L, textRanges: [Range<String.Index>]) -> some View where L : StringProtocol
@@ -33187,6 +33479,37 @@ extension View {
 
 }
 
+@available(iOS 27.0, macOS 15.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension View {
+
+    nonisolated public func dismissalConfirmationDialog<A>(_ titleKey: LocalizedStringKey, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where A : View
+
+
+    @export(implementation) nonisolated public func dismissalConfirmationDialog<A>(_ titleResource: LocalizedStringResource, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where A : View
+
+
+    nonisolated public func dismissalConfirmationDialog<S, A>(_ title: S, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where S : StringProtocol, A : View
+
+
+    nonisolated public func dismissalConfirmationDialog<A>(_ title: Text, shouldPresent: Bool, @ContentBuilder actions: () -> A) -> some View where A : View
+
+
+    nonisolated public func dismissalConfirmationDialog<A, M>(_ titleKey: LocalizedStringKey, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+
+
+    @export(implementation) nonisolated public func dismissalConfirmationDialog<A, M>(_ titleResource: LocalizedStringResource, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+
+
+    nonisolated public func dismissalConfirmationDialog<S, A, M>(_ title: S, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where S : StringProtocol, A : View, M : View
+
+
+    nonisolated public func dismissalConfirmationDialog<A, M>(_ title: Text, shouldPresent: Bool, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension DynamicViewContent {
 
@@ -33241,19 +33564,19 @@ extension TupleContent : CustomizableToolbarContent where repeat each Content : 
 extension ViewBuilder {
 
     @available(iOS 17.5, macOS 14.5, tvOS 17.5, watchOS 10.5, *)
-    public static func buildLimitedAvailability(_ content: any ToolbarContent) -> some ToolbarContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any ToolbarContent) -> some ToolbarContent
 
 
     @available(iOS 17.5, macOS 14.5, tvOS 17.5, watchOS 10.5, *)
-    public static func buildLimitedAvailability(_ content: any CustomizableToolbarContent) -> some CustomizableToolbarContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any CustomizableToolbarContent) -> some CustomizableToolbarContent
 
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some ToolbarContent where repeat each Content : ToolbarContent
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some ToolbarContent where repeat each Content : ToolbarContent
 
 
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some CustomizableToolbarContent where repeat each Content : CustomizableToolbarContent
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some CustomizableToolbarContent where repeat each Content : CustomizableToolbarContent
 
 }
 
@@ -33404,7 +33727,7 @@ extension View {
 extension View {
 
     @available(tvOS, unavailable)
-    nonisolated public func onLongPressGesture(minimumDuration: Double = 0.5, maximumDistance: CGFloat = 10, perform action: @escaping () -> Void, onPressingChanged: ((Bool) -> Void)? = nil) -> some View
+    @export(implementation) nonisolated public func onLongPressGesture(minimumDuration: Double = 0.5, maximumDistance: CGFloat = 10, perform action: @escaping () -> Void, onPressingChanged: ((Bool) -> Void)? = nil) -> some View
 
 }
 
@@ -33450,7 +33773,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A) -> some View where A : View
 
 
     nonisolated public func confirmationDialog<S, A>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A) -> some View where S : StringProtocol, A : View
@@ -33467,7 +33790,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where A : View, M : View
 
 
     nonisolated public func confirmationDialog<S, A, M>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: () -> A, @ContentBuilder message: () -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -33484,7 +33807,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
     nonisolated public func confirmationDialog<S, A, T>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
@@ -33493,20 +33816,17 @@ extension View {
     nonisolated public func confirmationDialog<A, T>(_ title: Text, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<S, A, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
+    @export(implementation) nonisolated public func confirmationDialog<S, A, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where S : StringProtocol, A : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
+    @export(implementation) nonisolated public func confirmationDialog<A, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A) -> some View where A : View
 
 }
 
@@ -33517,7 +33837,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
     nonisolated public func confirmationDialog<S, A, M, T>(_ title: S, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
@@ -33526,20 +33846,17 @@ extension View {
     nonisolated public func confirmationDialog<A, M, T>(_ title: Text, isPresented: Binding<Bool>, titleVisibility: Visibility = .automatic, presenting data: T?, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ titleKey: LocalizedStringKey, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ titleResource: LocalizedStringResource, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<S, A, M, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<S, A, M, T>(_ title: S, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where S : StringProtocol, A : View, M : View
 
 
-    @available(anyAppleOS 27.0, *)
-    nonisolated public func confirmationDialog<A, M, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
+    @export(implementation) nonisolated public func confirmationDialog<A, M, T>(_ title: Text, item data: Binding<T?>, titleVisibility: Visibility = .automatic, @ContentBuilder actions: (T) -> A, @ContentBuilder message: (T) -> M) -> some View where A : View, M : View
 
 }
 
@@ -33648,7 +33965,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func navigationTitle(_ titleResource: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func navigationTitle(_ titleResource: LocalizedStringResource) -> some View
 
 
     nonisolated public func navigationTitle<S>(_ title: S) -> some View where S : StringProtocol
@@ -33692,7 +34009,7 @@ extension View {
 
 
     @available(macOS 13.0, macCatalyst 16.0, *)
-    nonisolated public func navigationSubtitle(_ subtitleKey: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func navigationSubtitle(_ subtitleKey: LocalizedStringResource) -> some View
 
 
     nonisolated public func navigationSubtitle<S>(_ subtitle: S) -> some View where S : StringProtocol
@@ -33877,11 +34194,11 @@ extension Optional : AccessibilityRotorContent where Wrapped : AccessibilityRoto
 extension ViewBuilder {
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some AccessibilityRotorContent where repeat each Content : AccessibilityRotorContent
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some AccessibilityRotorContent where repeat each Content : AccessibilityRotorContent
 
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static func buildIf<Content>(_ content: Content?) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
+    @export(implementation) public static func buildIf<Content>(_ content: Content?) -> some AccessibilityRotorContent where Content : AccessibilityRotorContent
 
 }
 
@@ -34007,7 +34324,7 @@ extension View {
     nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ key: AccessibilityCustomContentKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
 }
@@ -34020,17 +34337,17 @@ extension View {
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ labelKey: LocalizedStringKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent<V>(_ label: LocalizedStringResource, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
+    @export(implementation) nonisolated public func accessibilityCustomContent<V>(_ label: LocalizedStringResource, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where V : StringProtocol
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -34041,7 +34358,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ key: AccessibilityCustomContentKey, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ key: AccessibilityCustomContentKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier> where V : StringProtocol
 
@@ -34050,12 +34367,12 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ value: Text, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityCustomContent(_ labelKey: LocalizedStringKey, _ valueKey: LocalizedStringKey, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityCustomContent(_ label: LocalizedStringResource, _ valueResource: LocalizedStringResource, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityCustomContent<V>(_ labelKey: LocalizedStringKey, _ value: V, importance: AXCustomContent.Importance = .default) -> ModifiedContent<Content, Modifier> where V : StringProtocol
 }
@@ -34193,7 +34510,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, *)
-    nonisolated public func badge(_ resource: LocalizedStringResource?) -> some View
+    @export(implementation) nonisolated public func badge(_ resource: LocalizedStringResource?) -> some View
 
 
     nonisolated public func badge<S>(_ label: S?) -> some View where S : StringProtocol
@@ -34246,14 +34563,14 @@ extension EnvironmentValues {
 extension View {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
-    nonisolated public func autocorrectionDisabled(_ disable: Bool = true) -> some View
+    @export(implementation) nonisolated public func autocorrectionDisabled(_ disable: Bool = true) -> some View
 
 }
 
 extension EnvironmentValues {
 
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
-    public var autocorrectionDisabled: Bool
+    @export(implementation) public var autocorrectionDisabled: Bool
 }
 
 extension View {
@@ -34300,13 +34617,13 @@ extension ViewBuilder {
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     @available(visionOS, unavailable)
-    public static func buildLimitedAvailability(_ content: any Commands) -> some Commands
+    @export(implementation) public static func buildLimitedAvailability(_ content: any Commands) -> some Commands
 
 
     @available(iOS 14.0, macOS 11.0, *)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    public static func buildBlock<each Content>(_ content: repeat each Content) -> some Commands where repeat each Content : Commands
+    @export(implementation) public static func buildBlock<each Content>(_ content: repeat each Content) -> some Commands where repeat each Content : Commands
 
 }
 
@@ -34381,11 +34698,11 @@ extension ForEach : TableRowContent where Content : TableRowContent {
 
     public typealias TableRowBody = Never
 
-    nonisolated public init<V>(_ data: Data, @TableRowBuilder<V> content: @escaping (Data.Element) -> Content) where ID == Data.Element.ID, V == Content.TableRowValue, Data.Element : Identifiable
+    @export(implementation) nonisolated public init<V>(_ data: Data, @TableRowBuilder<V> content: @escaping (Data.Element) -> Content) where ID == Data.Element.ID, V == Content.TableRowValue, Data.Element : Identifiable
 
     nonisolated public init<V>(_ data: Data, id: KeyPath<Data.Element, ID>, @TableRowBuilder<V> content: @escaping (Data.Element) -> Content) where V == Content.TableRowValue
 
-    nonisolated public init(_ data: Data) where ID == Data.Element.ID, Content == TableRow<Data.Element>, Data.Element : Identifiable
+    @export(implementation) nonisolated public init(_ data: Data) where ID == Data.Element.ID, Content == TableRow<Data.Element>, Data.Element : Identifiable
 
     nonisolated public init<V>(_ data: Range<Int>, @TableRowBuilder<V> content: @escaping (Int) -> Content) where Data == Range<Int>, ID == Int, V == Content.TableRowValue
 }
@@ -34640,13 +34957,15 @@ extension Group : SceneAccessoryContent where Content : SceneAccessoryContent {
 @available(visionOS, unavailable)
 extension ViewBuilder {
 
-    public static func buildLimitedAvailability(_ content: any SceneAccessoryContent) -> some SceneAccessoryContent
+    @export(implementation) public static func buildLimitedAvailability(_ content: any SceneAccessoryContent) -> some SceneAccessoryContent
 
 }
 
-@available(iOS 14.0, macOS 11.0, *)
+@available(iOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable instead.")
+@available(macOS, introduced: 11.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable instead.")
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable instead.")
 extension View {
 
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentType: UTType, defaultFilename: String? = nil, onCompletion: @escaping (_ result: Result<URL, any Error>) -> Void) -> some View where D : FileDocument
@@ -34673,15 +34992,27 @@ extension View {
     nonisolated public func fileExporter<C, T>(isPresented: Binding<Bool>, items: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: @escaping () -> Void = { }) -> some View where C : Collection, T : Transferable, T == C.Element
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentTypes: [UTType] = [], defaultFilename: String? = nil, onCompletion: @escaping (Result<URL, any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where D : FileDocument
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentTypes: [UTType] = [], defaultFilename: String? = nil, onCompletion: @escaping (Result<URL, any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where D : ReferenceFileDocument
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your type to WritableDocument or Transferable instead.")
     nonisolated public func fileExporter<C>(isPresented: Binding<Bool>, documents: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where C : Collection, C.Element : FileDocument
 
 
+    @available(iOS, introduced: 17.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(macOS, introduced: 14.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
+    @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "Conform your document type to WritableDocument or Transferable protocol instead.")
     nonisolated public func fileExporter<C>(isPresented: Binding<Bool>, documents: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: @escaping () -> Void = {}) -> some View where C : Collection, C.Element : ReferenceFileDocument
 
 }
@@ -34692,6 +35023,9 @@ extension View {
 extension View {
 
     nonisolated public func fileExporter<D>(isPresented: Binding<Bool>, document: D?, contentType: UTType? = nil, defaultFilename: String? = nil, onCompletion: @escaping (Result<URL, any Error>) -> Void, onCancellation: (() -> Void)? = nil) -> some View where D : WritableDocument, D.Writer.Destination == URL
+
+
+    nonisolated public func fileExporter<C>(isPresented: Binding<Bool>, documents: C, contentTypes: [UTType] = [], onCompletion: @escaping (Result<[URL], any Error>) -> Void, onCancellation: (() -> Void)? = nil) -> some View where C : Collection, C.Element : WritableDocument, C.Element.Writer.Destination == URL
 
 }
 
@@ -34778,7 +35112,7 @@ extension View {
 @available(visionOS, unavailable)
 extension ShapeStyle where Self == WindowBackgroundShapeStyle {
 
-    public static var windowBackground: WindowBackgroundShapeStyle { get }
+    @export(implementation) public static var windowBackground: WindowBackgroundShapeStyle { get }
 }
 
 extension View {
@@ -34923,7 +35257,7 @@ extension View {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 
@@ -34931,7 +35265,7 @@ extension View {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -34945,7 +35279,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 
@@ -34953,7 +35287,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource, isEnabled: Bool) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S, isEnabled: Bool) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -34983,7 +35317,7 @@ extension View {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 
@@ -34991,7 +35325,7 @@ extension View {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -35005,7 +35339,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDragPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDragPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 
@@ -35013,7 +35347,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
     nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringKey) -> ModifiedContent<Content, Modifier>
 
-    nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -35088,7 +35422,7 @@ extension View {
     nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 
     nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
@@ -35099,7 +35433,7 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
@@ -35111,7 +35445,7 @@ extension View {
 
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    nonisolated public func help(_ textKey: LocalizedStringResource) -> some View
+    @export(implementation) nonisolated public func help(_ textKey: LocalizedStringResource) -> some View
 
 
     nonisolated public func help(_ text: Text) -> some View
@@ -35287,51 +35621,51 @@ extension Image {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == LinearGradient {
 
-    public static func linearGradient(_ gradient: Gradient, startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+    @export(implementation) public static func linearGradient(_ gradient: Gradient, startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
 
-    public static func linearGradient(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+    @export(implementation) public static func linearGradient(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
 
-    public static func linearGradient(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
+    @export(implementation) public static func linearGradient(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint) -> LinearGradient
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == RadialGradient {
 
-    public static func radialGradient(_ gradient: Gradient, center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+    @export(implementation) public static func radialGradient(_ gradient: Gradient, center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
 
-    public static func radialGradient(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+    @export(implementation) public static func radialGradient(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
 
-    public static func radialGradient(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
+    @export(implementation) public static func radialGradient(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) -> RadialGradient
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ShapeStyle where Self == EllipticalGradient {
 
-    public static func ellipticalGradient(_ gradient: Gradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+    @export(implementation) public static func ellipticalGradient(_ gradient: Gradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
 
-    public static func ellipticalGradient(colors: [Color], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+    @export(implementation) public static func ellipticalGradient(colors: [Color], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
 
-    public static func ellipticalGradient(stops: [Gradient.Stop], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
+    @export(implementation) public static func ellipticalGradient(stops: [Gradient.Stop], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> EllipticalGradient
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == AngularGradient {
 
-    public static func angularGradient(_ gradient: Gradient, center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+    @export(implementation) public static func angularGradient(_ gradient: Gradient, center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
 
-    public static func angularGradient(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+    @export(implementation) public static func angularGradient(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
 
-    public static func angularGradient(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
+    @export(implementation) public static func angularGradient(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle) -> AngularGradient
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == AngularGradient {
 
-    public static func conicGradient(_ gradient: Gradient, center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+    @export(implementation) public static func conicGradient(_ gradient: Gradient, center: UnitPoint, angle: Angle = .zero) -> AngularGradient
 
-    public static func conicGradient(colors: [Color], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+    @export(implementation) public static func conicGradient(colors: [Color], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
 
-    public static func conicGradient(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
+    @export(implementation) public static func conicGradient(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero) -> AngularGradient
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -35508,9 +35842,9 @@ extension AnyTransition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == OffsetTransition {
 
-    @MainActor @preconcurrency public static func offset(_ offset: CGSize) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func offset(_ offset: CGSize) -> Self
 
-    @MainActor @preconcurrency public static func offset(x: CGFloat = 0, y: CGFloat = 0) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func offset(x: CGFloat = 0, y: CGFloat = 0) -> Self
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -35559,7 +35893,7 @@ extension View {
     @inlinable nonisolated public func fixedSize(horizontal: Bool, vertical: Bool) -> some View
 
 
-    nonisolated public func fixedSize() -> some View
+    @export(implementation) nonisolated public func fixedSize() -> some View
 
 }
 
@@ -35634,31 +35968,31 @@ extension VisualEffect {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == LinearGradient {
 
-    public static func linearGradient(_ gradient: AnyGradient, startPoint: UnitPoint, endPoint: UnitPoint) -> some ShapeStyle
+    @export(implementation) public static func linearGradient(_ gradient: AnyGradient, startPoint: UnitPoint, endPoint: UnitPoint) -> some ShapeStyle
 
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == RadialGradient {
 
-    public static func radialGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadius: CGFloat = 0, endRadius: CGFloat) -> some ShapeStyle
+    @export(implementation) public static func radialGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadius: CGFloat = 0, endRadius: CGFloat) -> some ShapeStyle
 
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == EllipticalGradient {
 
-    public static func ellipticalGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> some ShapeStyle
+    @export(implementation) public static func ellipticalGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) -> some ShapeStyle
 
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AngularGradient {
 
-    public static func angularGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startAngle: Angle, endAngle: Angle) -> some ShapeStyle
+    @export(implementation) public static func angularGradient(_ gradient: AnyGradient, center: UnitPoint = .center, startAngle: Angle, endAngle: Angle) -> some ShapeStyle
 
 
-    public static func conicGradient(_ gradient: AnyGradient, center: UnitPoint = .center, angle: Angle = .zero) -> some ShapeStyle
+    @export(implementation) public static func conicGradient(_ gradient: AnyGradient, center: UnitPoint = .center, angle: Angle = .zero) -> some ShapeStyle
 
 }
 
@@ -35701,7 +36035,7 @@ extension View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == ImagePaint {
 
-    public static func image(_ image: Image, sourceRect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) -> ImagePaint
+    @export(implementation) public static func image(_ image: Image, sourceRect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) -> ImagePaint
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
@@ -35721,19 +36055,19 @@ extension VisualEffect {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule where Self == PeriodicTimelineSchedule {
 
-    public static func periodic(from startDate: Date, by interval: TimeInterval) -> PeriodicTimelineSchedule
+    @export(implementation) public static func periodic(from startDate: Date, by interval: TimeInterval) -> PeriodicTimelineSchedule
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule where Self == EveryMinuteTimelineSchedule {
 
-    public static var everyMinute: EveryMinuteTimelineSchedule { get }
+    @export(implementation) public static var everyMinute: EveryMinuteTimelineSchedule { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineSchedule {
 
-    public static func explicit<S>(_ dates: S) -> ExplicitTimelineSchedule<S> where Self == ExplicitTimelineSchedule<S>, S : Sequence, S.Element == Date
+    @export(implementation) public static func explicit<S>(_ dates: S) -> ExplicitTimelineSchedule<S> where Self == ExplicitTimelineSchedule<S>, S : Sequence, S.Element == Date
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -35903,7 +36237,7 @@ extension VisualEffect {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Group {
 
-    nonisolated public init(@ContentBuilder content: () -> Content)
+    @export(implementation) nonisolated public init(@ContentBuilder content: () -> Content)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -36111,17 +36445,17 @@ extension Spring {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Spring {
 
-    public static var smooth: Spring { get }
+    @export(implementation) public static var smooth: Spring { get }
 
-    public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+    @export(implementation) public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
 
-    public static var snappy: Spring { get }
+    @export(implementation) public static var snappy: Spring { get }
 
-    public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+    @export(implementation) public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
 
-    public static var bouncy: Spring { get }
+    @export(implementation) public static var bouncy: Spring { get }
 
-    public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
+    @export(implementation) public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Spring
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -36189,7 +36523,7 @@ extension EnvironmentValues {
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension EnvironmentValues {
 
-    public var buttonSizing: ButtonSizing
+    public var buttonSizing: ButtonSizing { get }
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
@@ -36208,7 +36542,7 @@ extension AnyTransition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == MoveTransition {
 
-    @MainActor @preconcurrency public static func move(edge: Edge) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func move(edge: Edge) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -36364,13 +36698,13 @@ extension AnyTransition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == OpacityTransition {
 
-    @MainActor @preconcurrency public static var opacity: OpacityTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var opacity: OpacityTransition { get }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AnyShapeStyle {
 
-    public static func opacity(_ opacity: Double) -> some ShapeStyle
+    @export(implementation) public static func opacity(_ opacity: Double) -> some ShapeStyle
 
 }
 
@@ -36418,7 +36752,7 @@ extension VisualEffect {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
-    nonisolated public func geometryGroup() -> some View
+    @export(implementation) nonisolated public func geometryGroup() -> some View
 
 }
 
@@ -36457,17 +36791,17 @@ extension Anchor.Source where Value == CGPoint {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ViewBuilder {
 
-    public static func buildIf<Content>(_ content: Content?) -> Content?
+    @export(implementation) public static func buildIf<Content>(_ content: Content?) -> Content?
 
-    public static func buildEither<TrueContent, FalseContent>(first: TrueContent) -> _ConditionalContent<TrueContent, FalseContent>
+    @export(implementation) public static func buildEither<TrueContent, FalseContent>(first: TrueContent) -> _ConditionalContent<TrueContent, FalseContent>
 
-    public static func buildEither<TrueContent, FalseContent>(second: FalseContent) -> _ConditionalContent<TrueContent, FalseContent>
+    @export(implementation) public static func buildEither<TrueContent, FalseContent>(second: FalseContent) -> _ConditionalContent<TrueContent, FalseContent>
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ViewBuilder {
 
-    public static func buildLimitedAvailability<Content>(_ content: Content) -> AnyView where Content : View
+    @export(implementation) public static func buildLimitedAvailability<Content>(_ content: Content) -> AnyView where Content : View
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -36519,7 +36853,7 @@ extension Text {
 @available(watchOS, unavailable)
 extension TextSelectability where Self == EnabledTextSelectability {
 
-    public static var enabled: EnabledTextSelectability { get }
+    @export(implementation) public static var enabled: EnabledTextSelectability { get }
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -36527,7 +36861,7 @@ extension TextSelectability where Self == EnabledTextSelectability {
 @available(watchOS, unavailable)
 extension TextSelectability where Self == DisabledTextSelectability {
 
-    public static var disabled: DisabledTextSelectability { get }
+    @export(implementation) public static var disabled: DisabledTextSelectability { get }
 }
 
 @available(iOS 16.0, macOS 13, tvOS 16.0, watchOS 9.0, *)
@@ -36660,7 +36994,7 @@ extension View {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension View {
 
-    @preconcurrency nonisolated public func onGeometryChange<T>(for type: T.Type, of transform: @escaping @Sendable (GeometryProxy) -> T, action: @escaping (_ newValue: T) -> Void) -> some View where T : Equatable, T : Sendable
+    @export(implementation) @preconcurrency nonisolated public func onGeometryChange<T>(for type: T.Type, of transform: @escaping @Sendable (GeometryProxy) -> T, action: @escaping (_ newValue: T) -> Void) -> some View where T : Equatable, T : Sendable
 
 }
 
@@ -36773,22 +37107,22 @@ extension ShapeStyle {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AnyShapeStyle {
 
-    public static func blendMode(_ mode: BlendMode) -> some ShapeStyle
+    @export(implementation) public static func blendMode(_ mode: BlendMode) -> some ShapeStyle
 
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 10.0, *)
 extension ShapeStyle where Self == Material {
 
-    public static var regularMaterial: Material { get }
+    @export(implementation) public static var regularMaterial: Material { get }
 
-    public static var thickMaterial: Material { get }
+    @export(implementation) public static var thickMaterial: Material { get }
 
-    public static var thinMaterial: Material { get }
+    @export(implementation) public static var thinMaterial: Material { get }
 
-    public static var ultraThinMaterial: Material { get }
+    @export(implementation) public static var ultraThinMaterial: Material { get }
 
-    public static var ultraThickMaterial: Material { get }
+    @export(implementation) public static var ultraThickMaterial: Material { get }
 }
 
 @available(iOS 15.0, macOS 12.0, *)
@@ -36796,7 +37130,7 @@ extension ShapeStyle where Self == Material {
 @available(watchOS, unavailable)
 extension ShapeStyle where Self == Material {
 
-    public static var bar: Material { get }
+    @export(implementation) public static var bar: Material { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 10.0, *)
@@ -36915,19 +37249,19 @@ extension _VariadicView.Tree : View where Root : _VariadicView_ViewRoot, Content
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ShapeStyle where Self == HierarchicalShapeStyle {
 
-    public static var primary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var primary: HierarchicalShapeStyle { get }
 
-    public static var secondary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var secondary: HierarchicalShapeStyle { get }
 
-    public static var tertiary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var tertiary: HierarchicalShapeStyle { get }
 
-    public static var quaternary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var quaternary: HierarchicalShapeStyle { get }
 }
 
 @available(iOS 16.0, macOS 12.0, macCatalyst 15.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == HierarchicalShapeStyle {
 
-    public static var quinary: HierarchicalShapeStyle { get }
+    @export(implementation) public static var quinary: HierarchicalShapeStyle { get }
 }
 
 @available(iOS 16.0, macOS 12.0, macCatalyst 15.0, tvOS 17.0, watchOS 10.0, *)
@@ -36939,13 +37273,13 @@ extension HierarchicalShapeStyle {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle {
 
-    public var secondary: some ShapeStyle { get }
+    @export(implementation) public var secondary: some ShapeStyle { get }
 
-    public var tertiary: some ShapeStyle { get }
+    @export(implementation) public var tertiary: some ShapeStyle { get }
 
-    public var quaternary: some ShapeStyle { get }
+    @export(implementation) public var quaternary: some ShapeStyle { get }
 
-    public var quinary: some ShapeStyle { get }
+    @export(implementation) public var quinary: some ShapeStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -36976,7 +37310,7 @@ extension EnvironmentValues {
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension View {
 
-    nonisolated public func symbolVariableValueMode(_ mode: SymbolVariableValueMode?) -> some View
+    @export(implementation) nonisolated public func symbolVariableValueMode(_ mode: SymbolVariableValueMode?) -> some View
 
 }
 
@@ -36995,7 +37329,7 @@ extension EnvironmentValues {
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension View {
 
-    nonisolated public func symbolColorRenderingMode(_ mode: SymbolColorRenderingMode?) -> some View
+    @export(implementation) nonisolated public func symbolColorRenderingMode(_ mode: SymbolColorRenderingMode?) -> some View
 
 }
 
@@ -37232,42 +37566,42 @@ extension Color {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == Color {
 
-    public static var red: Color { get }
+    @export(implementation) public static var red: Color { get }
 
-    public static var orange: Color { get }
+    @export(implementation) public static var orange: Color { get }
 
-    public static var yellow: Color { get }
+    @export(implementation) public static var yellow: Color { get }
 
-    public static var green: Color { get }
-
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var mint: Color { get }
+    @export(implementation) public static var green: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var teal: Color { get }
+    @export(implementation) public static var mint: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var cyan: Color { get }
-
-    public static var blue: Color { get }
+    @export(implementation) public static var teal: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var indigo: Color { get }
+    @export(implementation) public static var cyan: Color { get }
 
-    public static var purple: Color { get }
-
-    public static var pink: Color { get }
+    @export(implementation) public static var blue: Color { get }
 
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public static var brown: Color { get }
+    @export(implementation) public static var indigo: Color { get }
 
-    public static var white: Color { get }
+    @export(implementation) public static var purple: Color { get }
 
-    public static var gray: Color { get }
+    @export(implementation) public static var pink: Color { get }
 
-    public static var black: Color { get }
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @export(implementation) public static var brown: Color { get }
 
-    public static var clear: Color { get }
+    @export(implementation) public static var white: Color { get }
+
+    @export(implementation) public static var gray: Color { get }
+
+    @export(implementation) public static var black: Color { get }
+
+    @export(implementation) public static var clear: Color { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -37455,7 +37789,7 @@ extension AttributeDynamicLookup {
 @available(iOS 17.0, macOS 10.15, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == SeparatorShapeStyle {
 
-    public static var separator: SeparatorShapeStyle { get }
+    @export(implementation) public static var separator: SeparatorShapeStyle { get }
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
@@ -37463,23 +37797,23 @@ extension Color {
 
     @frozen public struct ResolvedHDR : Hashable, Sendable {
 
-        public init(_ color: Color.Resolved, headroom: Float? = nil)
+        @export(implementation) public init(_ color: Color.Resolved, headroom: Float? = nil)
 
-        public var linearRed: Float
+        @export(implementation) public var linearRed: Float
 
-        public var linearGreen: Float
+        @export(implementation) public var linearGreen: Float
 
-        public var linearBlue: Float
+        @export(implementation) public var linearBlue: Float
 
-        public var red: Float
+        @export(implementation) public var red: Float
 
-        public var green: Float
+        @export(implementation) public var green: Float
 
-        public var blue: Float
+        @export(implementation) public var blue: Float
 
-        public var opacity: Float
+        @export(implementation) public var opacity: Float
 
-        public var headroom: Float?
+        @export(implementation) public var headroom: Float?
 
         public static func == (lhs: Color.ResolvedHDR, rhs: Color.ResolvedHDR) -> Bool
 
@@ -37534,6 +37868,14 @@ extension GeometryProxy {
     public var containerCornerInsets: RectangleCornerInsets { get }
 }
 
+@available(anyAppleOS 27.0, *)
+extension GeometryProxy {
+
+    public var concentricCornerRadii: RectangleCornerRadii? { get }
+
+    public func concentricCornerRadii(in frame: CGRect) -> RectangleCornerRadii?
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Transaction {
 
@@ -37571,7 +37913,7 @@ extension Color {
 
     public func headroom(_ headroom: Double?) -> Color
 
-    public func exposureAdjust(_ stops: Double) -> Color
+    @export(implementation) public func exposureAdjust(_ stops: Double) -> Color
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -37611,7 +37953,7 @@ extension View {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension Layout {
 
-    public func callAsFunction<V>(@ContentBuilder _ content: () -> V) -> some View where V : View
+    @export(implementation) public func callAsFunction<V>(@ContentBuilder _ content: () -> V) -> some View where V : View
 
 }
 
@@ -37633,7 +37975,7 @@ extension AnyTransition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == SlideTransition {
 
-    @MainActor @preconcurrency public static var slide: SlideTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var slide: SlideTransition { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -37727,7 +38069,7 @@ extension ShapeStyle {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension ShapeStyle where Self == AnyShapeStyle {
 
-    public static func shadow(_ style: ShadowStyle) -> some ShapeStyle
+    @export(implementation) public static func shadow(_ style: ShadowStyle) -> some ShapeStyle
 
 }
 
@@ -37866,11 +38208,11 @@ extension Image {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension VectorArithmetic {
 
-    public func scaled(by rhs: Double) -> Self
+    @export(implementation) public func scaled(by rhs: Double) -> Self
 
-    public mutating func interpolate(towards other: Self, amount: Double)
+    @export(implementation) public mutating func interpolate(towards other: Self, amount: Double)
 
-    public func interpolated(towards other: Self, amount: Double) -> Self
+    @export(implementation) public func interpolated(towards other: Self, amount: Double) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -37970,7 +38312,7 @@ extension Font.Resolved {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ShapeStyle where Self == BackgroundStyle {
 
-    public static var background: BackgroundStyle { get }
+    @export(implementation) public static var background: BackgroundStyle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -38003,7 +38345,7 @@ extension View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ShapeStyle where Self == ForegroundStyle {
 
-    public static var foreground: ForegroundStyle { get }
+    @export(implementation) public static var foreground: ForegroundStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -38038,21 +38380,21 @@ extension AttributedTextFormatting {
     @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
     @resultBuilder public struct DefinitionBuilder<Scope> : ~Sendable {
 
-        public static func buildExpression<D>(_ definition: D) -> D where Scope == D.Scope, D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildExpression<D>(_ definition: D) -> D where Scope == D.Scope, D : AttributedTextFormattingDefinition
 
-        public static func buildBlock<D>(_ definition: D) -> D where D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildBlock<D>(_ definition: D) -> D where D : AttributedTextFormattingDefinition
 
-        public static func buildBlock<S>() -> AttributedTextFormatting.EmptyDefinition<S> where S : AttributeScope
+        @export(implementation) public static func buildBlock<S>() -> AttributedTextFormatting.EmptyDefinition<S> where S : AttributeScope
 
-        public static func buildBlock<F, each D>(_ first: F, _ definition: repeat each D) -> AttributedTextFormatting.TupleDefinition<F.Scope, F, repeat each D> where F : AttributedTextFormattingDefinition, repeat each D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildBlock<F, each D>(_ first: F, _ definition: repeat each D) -> AttributedTextFormatting.TupleDefinition<F.Scope, F, repeat each D> where F : AttributedTextFormattingDefinition, repeat each D : AttributedTextFormattingDefinition
 
-        public static func buildLimitedAvailability<D>(_ definition: D) -> AttributedTextFormatting.AnyDefinition<Scope> where Scope == D.Scope, D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildLimitedAvailability<D>(_ definition: D) -> AttributedTextFormatting.AnyDefinition<Scope> where Scope == D.Scope, D : AttributedTextFormattingDefinition
 
-        public static func buildIf<D>(_ definition: D?) -> D? where Scope == D.Scope, D : AttributedTextFormattingDefinition
+        @export(implementation) public static func buildIf<D>(_ definition: D?) -> D? where Scope == D.Scope, D : AttributedTextFormattingDefinition
 
-        public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
+        @export(implementation) public static func buildEither<T, F>(first: T) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
 
-        public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
+        @export(implementation) public static func buildEither<T, F>(second: F) -> _ConditionalContent<T, F> where Scope == T.Scope, T : AttributedTextFormattingDefinition, F : AttributedTextFormattingDefinition, T.Scope == F.Scope
     }
 }
 
@@ -38363,43 +38705,43 @@ extension Transaction {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Rectangle {
 
-    public static var rect: Rectangle { get }
+    @export(implementation) public static var rect: Rectangle { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == RoundedRectangle {
 
-    public static func rect(cornerSize: CGSize, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(cornerSize: CGSize, style: RoundedCornerStyle = .continuous) -> Self
 
-    public static func rect(cornerRadius: CGFloat, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(cornerRadius: CGFloat, style: RoundedCornerStyle = .continuous) -> Self
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension Shape where Self == UnevenRoundedRectangle {
 
-    public static func rect(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) -> Self
 
-    public static func rect(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous) -> Self
+    @export(implementation) public static func rect(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Capsule {
 
-    public static var capsule: Capsule { get }
+    @export(implementation) public static var capsule: Capsule { get }
 
-    public static func capsule(style: RoundedCornerStyle) -> Self
+    @export(implementation) public static func capsule(style: RoundedCornerStyle) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Ellipse {
 
-    public static var ellipse: Ellipse { get }
+    @export(implementation) public static var ellipse: Ellipse { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Shape where Self == Circle {
 
-    public static var circle: Circle { get }
+    @export(implementation) public static var circle: Circle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -38507,9 +38849,9 @@ extension Animation {
 
     public static func interpolatingSpring(mass: Double = 1.0, stiffness: Double, damping: Double, initialVelocity: Double = 0.0) -> Animation
 
-    public static func interpolatingSpring(duration: TimeInterval = 0.5, bounce: Double = 0.0, initialVelocity: Double = 0.0) -> Animation
+    @export(implementation) public static func interpolatingSpring(duration: TimeInterval = 0.5, bounce: Double = 0.0, initialVelocity: Double = 0.0) -> Animation
 
-    public static var interpolatingSpring: Animation { get }
+    @export(implementation) public static var interpolatingSpring: Animation { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -38616,17 +38958,17 @@ extension Alignment {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Alignment {
 
-    public static var centerFirstTextBaseline: Alignment { get }
+    @export(implementation) public static var centerFirstTextBaseline: Alignment { get }
 
-    public static var centerLastTextBaseline: Alignment { get }
+    @export(implementation) public static var centerLastTextBaseline: Alignment { get }
 
-    public static var leadingFirstTextBaseline: Alignment { get }
+    @export(implementation) public static var leadingFirstTextBaseline: Alignment { get }
 
-    public static var leadingLastTextBaseline: Alignment { get }
+    @export(implementation) public static var leadingLastTextBaseline: Alignment { get }
 
-    public static var trailingFirstTextBaseline: Alignment { get }
+    @export(implementation) public static var trailingFirstTextBaseline: Alignment { get }
 
-    public static var trailingLastTextBaseline: Alignment { get }
+    @export(implementation) public static var trailingLastTextBaseline: Alignment { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -38642,7 +38984,7 @@ extension AnyTransition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == PushTransition {
 
-    @MainActor @preconcurrency public static func push(from edge: Edge) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func push(from edge: Edge) -> Self
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -38715,7 +39057,7 @@ extension Binding : DynamicProperty {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
-    nonisolated public func tag<V>(_ tag: V, includeOptional: Bool = true) -> some View where V : Hashable
+    @export(implementation) nonisolated public func tag<V>(_ tag: V, includeOptional: Bool = true) -> some View where V : Hashable
 
 }
 
@@ -38744,22 +39086,22 @@ extension Animation {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Shape {
 
-    nonisolated public func intersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func intersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func union<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func union<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func subtracting<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func subtracting<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func symmetricDifference<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func symmetricDifference<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func lineIntersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func lineIntersection<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 
-    nonisolated public func lineSubtraction<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
+    @export(implementation) nonisolated public func lineSubtraction<T>(_ other: T, eoFill: Bool = false) -> some Shape where T : Shape
 
 }
 
@@ -38770,13 +39112,13 @@ extension ScaledMetric : Sendable where Value : Sendable {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension ContentSizeCategory {
 
-    public static func < (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func < (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 
-    public static func <= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func <= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 
-    public static func > (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func > (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 
-    public static func >= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
+    @export(implementation) public static func >= (lhs: ContentSizeCategory, rhs: ContentSizeCategory) -> Bool
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, visionOS 1.0, *)
@@ -39029,7 +39371,7 @@ extension Anchor.Source where Value == CGRect {
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension View {
 
-    nonisolated public func containerValue<V>(_ keyPath: WritableKeyPath<ContainerValues, V>, _ value: V) -> some View
+    @export(implementation) nonisolated public func containerValue<V>(_ keyPath: WritableKeyPath<ContainerValues, V>, _ value: V) -> some View
 
 }
 
@@ -39111,15 +39453,15 @@ extension LazyState where Value : ExpressibleByNilLiteral {
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension TextRenderer {
 
-    public func sizeThatFits(proposal: ProposedViewSize, text: TextProxy) -> CGSize
+    @export(implementation) public func sizeThatFits(proposal: ProposedViewSize, text: TextProxy) -> CGSize
 
-    public var displayPadding: EdgeInsets { get }
+    @export(implementation) public var displayPadding: EdgeInsets { get }
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension View {
 
-    nonisolated public func textRenderer<T>(_ renderer: T) -> some View where T : TextRenderer
+    @export(implementation) nonisolated public func textRenderer<T>(_ renderer: T) -> some View where T : TextRenderer
 
 }
 
@@ -39145,11 +39487,11 @@ extension Text {
 
         @frozen public struct CharacterIndex : Comparable, Hashable, Strideable, Sendable {
 
-            public static func < (lhs: Text.Layout.CharacterIndex, rhs: Text.Layout.CharacterIndex) -> Bool
+            @export(implementation) public static func < (lhs: Text.Layout.CharacterIndex, rhs: Text.Layout.CharacterIndex) -> Bool
 
-            public func advanced(by n: Int) -> Text.Layout.CharacterIndex
+            @export(implementation) public func advanced(by n: Int) -> Text.Layout.CharacterIndex
 
-            public func distance(to other: Text.Layout.CharacterIndex) -> Int
+            @export(implementation) public func distance(to other: Text.Layout.CharacterIndex) -> Int
 
             @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
             public typealias Stride = Int
@@ -39171,7 +39513,7 @@ extension Text {
 
             public var leading: CGFloat
 
-            public init()
+            @export(implementation) public init()
 
             public var rect: CGRect { get }
 
@@ -39332,9 +39674,9 @@ extension Text.Layout {
 
         public let rawValue: UInt32
 
-        public init(rawValue: UInt32)
+        @export(implementation) public init(rawValue: UInt32)
 
-        public static var disablesSubpixelQuantization: Text.Layout.DrawingOptions { get }
+        @export(implementation) public static var disablesSubpixelQuantization: Text.Layout.DrawingOptions { get }
 
         @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
         public typealias ArrayLiteralElement = Text.Layout.DrawingOptions
@@ -39456,29 +39798,29 @@ extension View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Animation {
 
-    public static func spring(duration: TimeInterval = 0.5, bounce: Double = 0.0, blendDuration: Double = 0) -> Animation
+    @export(implementation) public static func spring(duration: TimeInterval = 0.5, bounce: Double = 0.0, blendDuration: Double = 0) -> Animation
 
     public static func spring(response: Double = 0.5, dampingFraction: Double = 0.825, blendDuration: TimeInterval = 0) -> Animation
 
-    public static var spring: Animation { get }
+    @export(implementation) public static var spring: Animation { get }
 
     public static func interactiveSpring(response: Double = 0.15, dampingFraction: Double = 0.86, blendDuration: TimeInterval = 0.25) -> Animation
 
-    public static var interactiveSpring: Animation { get }
+    @export(implementation) public static var interactiveSpring: Animation { get }
 
-    public static func interactiveSpring(duration: TimeInterval = 0.15, extraBounce: Double = 0.0, blendDuration: TimeInterval = 0.25) -> Animation
+    @export(implementation) public static func interactiveSpring(duration: TimeInterval = 0.15, extraBounce: Double = 0.0, blendDuration: TimeInterval = 0.25) -> Animation
 
-    public static var smooth: Animation { get }
+    @export(implementation) public static var smooth: Animation { get }
 
-    public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+    @export(implementation) public static func smooth(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
 
-    public static var snappy: Animation { get }
+    @export(implementation) public static var snappy: Animation { get }
 
-    public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+    @export(implementation) public static func snappy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
 
-    public static var bouncy: Animation { get }
+    @export(implementation) public static var bouncy: Animation { get }
 
-    public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
+    @export(implementation) public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -39506,21 +39848,21 @@ extension View where Self : Equatable {
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension Shape where Self == ConcentricRectangle {
 
-    public static func rect(corners: Edge.Corner.Style, isUniform: Bool = false) -> Self
+    @export(implementation) public static func rect(corners: Edge.Corner.Style, isUniform: Bool = false) -> Self
 
-    public static func rect(topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformTopCorners: Edge.Corner.Style, uniformBottomCorners: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformTopCorners: Edge.Corner.Style, uniformBottomCorners: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformLeadingCorners: Edge.Corner.Style, uniformTrailingCorners: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformLeadingCorners: Edge.Corner.Style, uniformTrailingCorners: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformTopCorners: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformTopCorners: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformBottomCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformBottomCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformLeadingCorners: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformLeadingCorners: Edge.Corner.Style, topTrailingCorner: Edge.Corner.Style, bottomTrailingCorner: Edge.Corner.Style) -> Self
 
-    public static func rect(uniformTrailingCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style) -> Self
+    @export(implementation) public static func rect(uniformTrailingCorners: Edge.Corner.Style, topLeadingCorner: Edge.Corner.Style, bottomLeadingCorner: Edge.Corner.Style) -> Self
 }
 
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
@@ -39586,6 +39928,10 @@ extension View {
 
     nonisolated public func onChange<V>(of value: V, initial: Bool = false, _ action: @escaping () -> Void) -> some View where V : Equatable
 
+}
+
+@available(anyAppleOS 27.0, *)
+extension OnChangeValue : Sendable where Value : Sendable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -39699,7 +40045,7 @@ extension LocalizedStringKey.StringInterpolation {
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Shape where Self == ContainerRelativeShape {
 
-    public static var containerRelative: ContainerRelativeShape { get }
+    @export(implementation) public static var containerRelative: ContainerRelativeShape { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -39968,7 +40314,7 @@ extension EnvironmentValues {
 @available(watchOS, unavailable)
 extension View {
 
-    nonisolated public func allowedDynamicRange(_ range: Image.DynamicRange?) -> some View
+    @export(implementation) nonisolated public func allowedDynamicRange(_ range: Image.DynamicRange?) -> some View
 
 }
 
@@ -40098,7 +40444,7 @@ extension Transition {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension View {
 
-    nonisolated public func contentTransition(_ transition: ContentTransition) -> some View
+    @export(implementation) nonisolated public func contentTransition(_ transition: ContentTransition) -> some View
 
 }
 
@@ -40142,7 +40488,7 @@ extension AnyTransition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == IdentityTransition {
 
-    nonisolated public static var identity: IdentityTransition { get }
+    @export(implementation) nonisolated public static var identity: IdentityTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -40306,7 +40652,7 @@ extension View {
 @available(anyAppleOS 27.0, *)
 extension View {
 
-    nonisolated public func ignoresSafeArea(_ regions: SafeAreaRegions = .all, edges: Edge.Set = .all, alignment: Alignment?) -> some View
+    @export(implementation) nonisolated public func ignoresSafeArea(_ regions: SafeAreaRegions = .all, edges: Edge.Set = .all, alignment: Alignment?) -> some View
 
 }
 
@@ -40472,27 +40818,27 @@ extension ForEach : View where Content : View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach where ID == Data.Element.ID, Data.Element : Identifiable {
 
-    public init(_ data: Data, @ContentBuilder content: @escaping (Data.Element) -> Content)
+    @export(implementation) public init(_ data: Data, @ContentBuilder content: @escaping (Data.Element) -> Content)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach {
 
-    public init(_ data: Data, id: KeyPath<Data.Element, ID>, @ContentBuilder content: @escaping (Data.Element) -> Content)
+    @export(implementation) public init(_ data: Data, id: KeyPath<Data.Element, ID>, @ContentBuilder content: @escaping (Data.Element) -> Content)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach {
 
-    public init<C>(_ data: Binding<C>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, ID == C.Element.ID, C : MutableCollection, C : RandomAccessCollection, C.Element : Identifiable, C.Index : Hashable
+    @export(implementation) public init<C>(_ data: Binding<C>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, ID == C.Element.ID, C : MutableCollection, C : RandomAccessCollection, C.Element : Identifiable, C.Index : Hashable
 
-    public init<C>(_ data: Binding<C>, id: KeyPath<C.Element, ID>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, C : MutableCollection, C : RandomAccessCollection, C.Index : Hashable
+    @export(implementation) public init<C>(_ data: Binding<C>, id: KeyPath<C.Element, ID>, @ContentBuilder content: @escaping (Binding<C.Element>) -> Content) where Data == LazyMapSequence<C.Indices, (C.Index, ID)>, C : MutableCollection, C : RandomAccessCollection, C.Index : Hashable
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ForEach where Data == Range<Int>, ID == Int {
 
-    public init(_ data: Range<Int>, @ContentBuilder content: @escaping (Int) -> Content)
+    @export(implementation) public init(_ data: Range<Int>, @ContentBuilder content: @escaping (Int) -> Content)
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -40591,7 +40937,7 @@ extension View {
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func transaction(value: some Equatable, _ transform: @escaping (inout Transaction) -> Void) -> some View
+    @export(implementation) nonisolated public func transaction(value: some Equatable, _ transform: @escaping (inout Transaction) -> Void) -> some View
 
 
     @available(iOS, introduced: 13.0, deprecated: 15.0, message: "Use withAnimation or animation(_:value:) instead.")
@@ -40707,37 +41053,37 @@ extension ShapeStyle where Self : View, Self.Body == _ShapeView<Rectangle, Self>
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Shape {
 
-    nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> _ShapeView<Self, S> where S : ShapeStyle
+    @export(implementation) nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> _ShapeView<Self, S> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self, S, EmptyView> where S : ShapeStyle
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension InsettableShape {
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self, S, EmptyView> where S : ShapeStyle
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeView {
 
-    nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> FillShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func fill<S>(_ content: S = .foreground, style: FillStyle = FillStyle()) -> FillShapeView<Self.Content, S, Self> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, style: StrokeStyle, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
 
-    nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func stroke<S>(_ content: S, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeShapeView<Self.Content, S, Self> where S : ShapeStyle
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeView where Self.Content : InsettableShape {
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, style: StrokeStyle, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
 
-    nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
+    @export(implementation) nonisolated public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -40811,9 +41157,9 @@ extension EnvironmentValues {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == BlurReplaceTransition {
 
-    @MainActor @preconcurrency public static func blurReplace(_ config: BlurReplaceTransition.Configuration = .downUp) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func blurReplace(_ config: BlurReplaceTransition.Configuration = .downUp) -> Self
 
-    @MainActor @preconcurrency public static var blurReplace: BlurReplaceTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var blurReplace: BlurReplaceTransition { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -40892,13 +41238,13 @@ extension View {
     nonisolated public func simultaneousGesture<T>(_ gesture: T, including mask: GestureMask = .all) -> some View where T : Gesture
 
 
-    nonisolated public func gesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+    @export(implementation) nonisolated public func gesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
 
 
-    nonisolated public func highPriorityGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+    @export(implementation) nonisolated public func highPriorityGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
 
 
-    nonisolated public func simultaneousGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
+    @export(implementation) nonisolated public func simultaneousGesture<T>(_ gesture: T, isEnabled: Bool) -> some View where T : Gesture
 
 }
 
@@ -40939,9 +41285,9 @@ extension AnyTransition {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == ScaleTransition {
 
-    @MainActor @preconcurrency public static var scale: ScaleTransition { get }
+    @MainActor @export(implementation) @preconcurrency public static var scale: ScaleTransition { get }
 
-    @MainActor @preconcurrency public static func scale(_ scale: Double, anchor: UnitPoint = .center) -> Self
+    @MainActor @export(implementation) @preconcurrency public static func scale(_ scale: Double, anchor: UnitPoint = .center) -> Self
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -40971,15 +41317,15 @@ extension View {
 extension View {
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func safeAreaPadding(_ insets: EdgeInsets) -> some View
+    @export(implementation) nonisolated public func safeAreaPadding(_ insets: EdgeInsets) -> some View
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func safeAreaPadding(_ edges: Edge.Set = .all, _ length: CGFloat? = nil) -> some View
+    @export(implementation) nonisolated public func safeAreaPadding(_ edges: Edge.Set = .all, _ length: CGFloat? = nil) -> some View
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func safeAreaPadding(_ length: CGFloat) -> some View
+    @export(implementation) nonisolated public func safeAreaPadding(_ length: CGFloat) -> some View
 
 }
 
@@ -41176,7 +41522,7 @@ extension View {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ShapeStyle where Self == TintShapeStyle {
 
-    public static var tint: TintShapeStyle { get }
+    @export(implementation) public static var tint: TintShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -41299,6 +41645,41 @@ extension VisualEffect {
 
 }
 
+@available(anyAppleOS 27.0, *)
+extension View {
+
+    nonisolated public func textInputBorderShape(_ shape: TextInputBorderShape) -> some View
+
+}
+
+@available(anyAppleOS 27.0, *)
+extension TextInputBorderShape : Shape {
+
+    nonisolated public func path(in rect: CGRect) -> Path
+
+    @available(anyAppleOS 27.0, *)
+    public typealias AnimatableData = EmptyAnimatableData
+
+    @available(anyAppleOS 27.0, *)
+    public typealias Body
+}
+
+@available(anyAppleOS 27.0, *)
+extension TextInputBorderShape : InsettableShape {
+
+    @inlinable nonisolated public func inset(by amount: CGFloat) -> some InsettableShape
+
+
+    @available(anyAppleOS 27.0, *)
+    public typealias InsetShape = some InsettableShape
+}
+
+@available(anyAppleOS 27.0, *)
+extension Shape where Self == TextInputBorderShape {
+
+    public static var textInputBorder: TextInputBorderShape { get }
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -41306,7 +41687,7 @@ extension View {
 
 
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func transition<T>(_ transition: T) -> some View where T : Transition
+    @export(implementation) nonisolated public func transition<T>(_ transition: T) -> some View where T : Transition
 
 }
 
