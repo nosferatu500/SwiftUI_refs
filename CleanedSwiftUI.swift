@@ -1490,6 +1490,79 @@ extension AppStorage {
     public init(wrappedValue: Value = TabViewCustomization(), _ key: String, store: UserDefaults? = nil) where Value == TabViewCustomization
 }
 
+@available(anyAppleOS 27.1, *)
+nonisolated public struct ArrangementView<Primary, Secondary> : View, ~Sendable where Primary : View, Secondary : View {
+
+    nonisolated public init(@ContentBuilder primary: () -> Primary, @ContentBuilder secondary: () -> Secondary)
+
+    nonisolated public var body: some View { get }
+
+    @available(anyAppleOS 27.1, *)
+    public typealias Body = some View
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementView where Primary == ArrangementViewStyleConfiguration.Primary, Secondary == ArrangementViewStyleConfiguration.Secondary {
+
+    nonisolated public init(_ configuration: ArrangementViewStyleConfiguration)
+}
+
+@available(anyAppleOS 27.1, *)
+@MainActor @preconcurrency public protocol ArrangementViewStyle {
+
+    associatedtype Body : View
+
+    typealias Configuration = ArrangementViewStyleConfiguration
+
+    @ContentBuilder @MainActor @preconcurrency func makeBody(configuration: Self.Configuration) -> Self.Body
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyle where Self == SplitArrangementViewStyle {
+
+    @export(implementation) nonisolated public static var split: SplitArrangementViewStyle { get }
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyle where Self == OverlayArrangementViewStyle {
+
+    @export(implementation) nonisolated public static var overlay: OverlayArrangementViewStyle { get }
+}
+
+extension ArrangementViewStyle where Self == AutomaticArrangementViewStyle {
+
+    @available(anyAppleOS 27.1, *)
+    @export(implementation) nonisolated public static var automatic: AutomaticArrangementViewStyle { get }
+}
+
+@available(anyAppleOS 27.1, *)
+public struct ArrangementViewStyleConfiguration : ~Sendable {
+
+    @MainActor @preconcurrency public struct Primary : View {
+
+        @available(anyAppleOS 27.1, *)
+        public typealias Body = Never
+    }
+
+    @MainActor @preconcurrency public struct Secondary : View {
+
+        @available(anyAppleOS 27.1, *)
+        public typealias Body = Never
+    }
+
+    public var primary: ArrangementViewStyleConfiguration.Primary { get }
+
+    public var secondary: ArrangementViewStyleConfiguration.Secondary { get }
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyleConfiguration.Primary : Sendable {
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyleConfiguration.Secondary : Sendable {
+}
+
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 nonisolated public struct AssistiveAccess<Content> : Scene, ~Sendable where Content : View {
 
@@ -1803,6 +1876,18 @@ extension AttributedTextValueConstraint {
 extension AttributedTextValueConstraint {
 
     public typealias Attributes = AttributedTextFormatting.AttributeContainerProxy<Self.Scope, Self.AttributeKey>
+}
+
+@available(anyAppleOS 27.1, *)
+nonisolated public struct AutomaticArrangementViewStyle : ArrangementViewStyle, ~Sendable {
+
+    nonisolated public init()
+
+    nonisolated public func makeBody(configuration: AutomaticArrangementViewStyle.Configuration) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    public typealias Body = some View
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 17.0, *)
@@ -2596,6 +2681,29 @@ nonisolated public struct ButtonToggleStyle : ToggleStyle, ~Sendable {
     @available(macOS 12.0, iOS 15.0, watchOS 9.0, *)
     @available(tvOS, unavailable)
     public typealias Body = some View
+}
+
+@available(iOS 27.1, *)
+@available(macCatalyst, unavailable)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+nonisolated public struct CameraCaptureAccessory<Content> : SceneAccessoryContent where Content : View {
+
+    nonisolated public init(@ContentBuilder content: @escaping () -> Content)
+
+    nonisolated public init(isEnabled: Binding<Bool>, @ContentBuilder content: @escaping () -> Content)
+
+    nonisolated public var body: some SceneAccessoryContent { get }
+
+    @available(iOS 27.1, *)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(macCatalyst, unavailable)
+    @available(visionOS, unavailable)
+    public typealias Body = some SceneAccessoryContent
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -3628,6 +3736,16 @@ public struct ContainerValues : ~Sendable {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public typealias ContentBuilder = ViewBuilder
 
+@available(anyAppleOS 27.1, *)
+public struct ContentMarginGuide : ~Sendable {
+}
+
+@available(anyAppleOS 27.1, *)
+extension ContentMarginGuide {
+
+    public static var container: ContentMarginGuide { get }
+}
+
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 public struct ContentMarginPlacement : ~Sendable {
 
@@ -4274,6 +4392,13 @@ extension CustomizableToolbarContent {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension CustomizableToolbarContent {
+
+    nonisolated public func axisBehavior(_ behavior: ToolbarItemAxisBehavior) -> some CustomizableToolbarContent
+
+}
+
 extension CustomizableToolbarContent {
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -4707,6 +4832,47 @@ nonisolated public struct DefaultToolbarItem : ToolbarContent, ~Sendable {
 
     @available(macOS 26.0, iOS 26.0, tvOS 26.0, watchOS 26.0, *)
     public typealias Body = some ToolbarContent
+}
+
+@available(anyAppleOS 27.1, *)
+public struct DeviceHinge : Hashable, Sendable {
+
+    public var status: DeviceHinge.Status
+
+    public var angle: Angle
+
+    public static func == (a: DeviceHinge, b: DeviceHinge) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(anyAppleOS 27.1, *)
+extension DeviceHinge {
+
+    public struct Status : Hashable, Sendable {
+
+        public static var closed: DeviceHinge.Status { get }
+
+        public static var partiallyOpen: DeviceHinge.Status { get }
+
+        public static var fullyOpen: DeviceHinge.Status { get }
+
+        public static func == (a: DeviceHinge.Status, b: DeviceHinge.Status) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
+@available(anyAppleOS 27.1, *)
+public struct DeviceHingeContext : Equatable, Sendable {
+
+    public var hinge: DeviceHinge?
+
+    public static func == (a: DeviceHingeContext, b: DeviceHingeContext) -> Bool
 }
 
 @available(iOS 17.0, macOS 13.0, tvOS 17.0, watchOS 10.0, *)
@@ -6955,6 +7121,12 @@ extension EnvironmentValues {
     public var isHoverEffectEnabled: Bool
 }
 
+@available(anyAppleOS 27.1, *)
+extension EnvironmentValues {
+
+    public var toolbarVerticalEdge: HorizontalEdge? { get }
+}
+
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension EnvironmentValues {
 
@@ -6971,6 +7143,12 @@ extension EnvironmentValues {
 extension EnvironmentValues {
 
     public var buttonSizing: ButtonSizing { get }
+}
+
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.1, *)
+    public var splitArrangementAxis: Axis?
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 8.0, *)
@@ -7061,6 +7239,12 @@ extension EnvironmentValues {
 extension EnvironmentValues {
 
     public var backgroundStyle: AnyShapeStyle?
+}
+
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.1, *)
+    public var overlayArrangementZIndex: Int
 }
 
 @available(iOS 18.0, macOS 10.15, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -8564,6 +8748,9 @@ public struct GeometryProxy : ~Sendable {
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use overload that accepts a CoordinateSpaceProtocol instead")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use overload that accepts a CoordinateSpaceProtocol instead")
     public func frame(in coordinateSpace: CoordinateSpace) -> CGRect
+
+    @available(anyAppleOS 27.1, *)
+    public func reservedRegions(kind: ReservedRegion.Kind, options: ReservedRegion.QueryOptions = [], layoutDirectionBehavior: LayoutDirectionBehavior = .mirrors) -> [ReservedRegion]
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -8586,6 +8773,12 @@ extension GeometryProxy {
     public var concentricCornerRadii: RectangleCornerRadii? { get }
 
     public func concentricCornerRadii(in frame: CGRect) -> RectangleCornerRadii?
+}
+
+@available(anyAppleOS 27.1, *)
+extension GeometryProxy {
+
+    public func contentMargins(for guide: ContentMarginGuide, edges: Edge.Set = .all) -> EdgeInsets
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -13659,6 +13852,20 @@ nonisolated public struct OutlineSubgroupChildren : View, ~Sendable {
     public typealias Body = Never
 }
 
+@available(anyAppleOS 27.1, *)
+nonisolated public struct OverlayArrangementViewStyle : ArrangementViewStyle, ~Sendable {
+
+    nonisolated public init()
+
+    nonisolated public func axes(_ axes: Axis.Set) -> OverlayArrangementViewStyle
+
+    nonisolated public func makeBody(configuration: OverlayArrangementViewStyle.Configuration) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    public typealias Body = some View
+}
+
 @available(iOS 14.0, tvOS 14.0, watchOS 8.0, *)
 @available(macOS, unavailable)
 public struct PageIndexViewStyle : IndexViewStyle, ~Sendable {
@@ -15300,6 +15507,78 @@ public struct ReorderableSingleCollectionIdentifier : Hashable, Sendable {
     public func hash(into hasher: inout Hasher)
 
     public var hashValue: Int { get }
+}
+
+@available(anyAppleOS 27.1, *)
+public struct ReservedRegion : Equatable, Hashable, Identifiable, Sendable {
+
+    public var id: ReservedRegion.ID { get }
+
+    public var kind: ReservedRegion.Kind { get }
+
+    public var frame: CGRect { get }
+
+    public var margins: EdgeInsets { get }
+
+    public var isActive: Bool { get }
+
+    public static func == (a: ReservedRegion, b: ReservedRegion) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(anyAppleOS 27.1, *)
+extension ReservedRegion {
+
+    public struct ID : Hashable, Sendable {
+
+        public static func == (a: ReservedRegion.ID, b: ReservedRegion.ID) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public struct Kind : Hashable, Sendable {
+
+        public static var occlusion: ReservedRegion.Kind { get }
+
+        public static var division: ReservedRegion.Kind { get }
+
+        public static func == (a: ReservedRegion.Kind, b: ReservedRegion.Kind) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    @frozen public struct QueryOptions : OptionSet, Equatable, Hashable {
+
+        public let rawValue: Int
+
+        public init(rawValue: Int)
+
+        public static var includeInactive: ReservedRegion.QueryOptions { get }
+
+        @available(anyAppleOS 27.1, *)
+        public typealias ArrayLiteralElement = ReservedRegion.QueryOptions
+
+        @available(anyAppleOS 27.1, *)
+        public typealias Element = ReservedRegion.QueryOptions
+
+        @available(anyAppleOS 27.1, *)
+        public typealias RawValue = Int
+    }
+}
+
+@available(anyAppleOS 27.1, *)
+extension ReservedRegion.QueryOptions : Sendable {
+}
+
+@available(anyAppleOS 27.1, *)
+extension ReservedRegion.QueryOptions : BitwiseCopyable {
 }
 
 @available(iOS 17.0, macOS 14.0, *)
@@ -18614,6 +18893,20 @@ nonisolated public struct SpatialTapGesture : Gesture, ~Sendable {
 extension SpatialTapGesture {
 
     nonisolated public init(count: Int = 1, coordinateSpace: some CoordinateSpaceProtocol = .local, inputKinds: GestureInputKinds = .all)
+}
+
+@available(anyAppleOS 27.1, *)
+nonisolated public struct SplitArrangementViewStyle : ArrangementViewStyle, ~Sendable {
+
+    nonisolated public init()
+
+    nonisolated public func axes(_ axes: Axis.Set) -> SplitArrangementViewStyle
+
+    nonisolated public func makeBody(configuration: SplitArrangementViewStyle.Configuration) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    public typealias Body = some View
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -22860,6 +23153,13 @@ extension ToolbarContent {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension ToolbarContent {
+
+    nonisolated public func axisBehavior(_ behavior: ToolbarItemAxisBehavior) -> some ToolbarContent
+
+}
+
 @available(iOS 26.0, *)
 @available(macOS, unavailable)
 @available(tvOS, unavailable)
@@ -23114,6 +23414,30 @@ extension ToolbarItem : CustomizableToolbarContent where ID == String {
 extension ToolbarItem : Identifiable where ID : Hashable {
 
     nonisolated public var id: ID { get }
+}
+
+@available(anyAppleOS 27.1, *)
+public struct ToolbarItemAxisBehavior : Hashable, Sendable {
+
+    public static let automatic: ToolbarItemAxisBehavior
+
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let horizontalOnly: ToolbarItemAxisBehavior
+
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let verticalPreferred: ToolbarItemAxisBehavior
+
+    public static func == (a: ToolbarItemAxisBehavior, b: ToolbarItemAxisBehavior) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -23448,6 +23772,46 @@ nonisolated public struct ToolbarTitleMenu<Content> : ToolbarContent, Customizab
 
     @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
     public typealias Body = Never
+}
+
+@available(anyAppleOS 27.1, *)
+public struct ToolbarVerticalBehavior : Hashable, Sendable {
+
+    public static let automatic: ToolbarVerticalBehavior
+
+    public static let disabled: ToolbarVerticalBehavior
+
+    public static func == (a: ToolbarVerticalBehavior, b: ToolbarVerticalBehavior) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
+@available(anyAppleOS 27.1, *)
+public struct ToolbarVerticalCompressionBehavior : Hashable, Sendable {
+
+    public static let automatic: ToolbarVerticalCompressionBehavior
+
+    @available(iOS 27.1, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let prefersToolbarItems: ToolbarVerticalCompressionBehavior
+
+    @available(iOS 27.1, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let prefersTabBar: ToolbarVerticalCompressionBehavior
+
+    public static func == (a: ToolbarVerticalCompressionBehavior, b: ToolbarVerticalCompressionBehavior) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -27376,6 +27740,13 @@ extension View {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func toolbarVerticalCompressionBehavior(_ behavior: ToolbarVerticalCompressionBehavior) -> some View
+
+}
+
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension View {
 
@@ -28214,6 +28585,13 @@ extension View {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func toolbarVerticalBehavior(_ behavior: ToolbarVerticalBehavior) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, watchOS 10.0, *)
 @available(tvOS, unavailable)
 extension View {
@@ -28226,6 +28604,13 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func disabled(_ disabled: Bool) -> some View
+
+}
+
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func contentMargins(for guide: ContentMarginGuide, edges: Edge.Set = .all, alignment: Alignment? = nil) -> some View
 
 }
 
@@ -28442,6 +28827,25 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func blur(radius: CGFloat, opaque: Bool = false) -> some View
+
+}
+
+extension View {
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementLayoutRatio(_ ratio: CGFloat?) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementLayoutRatio(minHorizontal: CGFloat? = nil, idealHorizontal: CGFloat? = nil, maxHorizontal: CGFloat? = nil, minVertical: CGFloat? = nil, idealVertical: CGFloat? = nil, maxVertical: CGFloat? = nil) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementLayoutSize(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementFixedLayoutSize(horizontal: Bool = true, vertical: Bool = true) -> some View
 
 }
 
@@ -28891,6 +29295,17 @@ extension View {
 
 }
 
+extension View {
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func overlayArrangementEdge(_ edge: VerticalEdge?) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func overlayArrangementEdge(_ edge: HorizontalEdge?) -> some View
+
+}
+
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
@@ -29006,6 +29421,13 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func contentShape<S>(_ kind: ContentShapeKinds, _ shape: S, eoFill: Bool = false) -> some View where S : Shape
+
+}
+
+extension View {
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func arrangementViewStyle(_ style: some ArrangementViewStyle) -> some View
 
 }
 
@@ -29382,6 +29804,13 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func preferredColorScheme(_ colorScheme: ColorScheme?) -> some View
+
+}
+
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func onHingeChange(isEnabled: Bool = true, _ action: @escaping (_ oldContext: DeviceHingeContext, _ newContext: DeviceHingeContext) -> Void) -> some View
 
 }
 
@@ -34144,6 +34573,13 @@ extension View {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func toolbarVerticalCompressionBehavior(_ behavior: ToolbarVerticalCompressionBehavior) -> some View
+
+}
+
 @available(macOS 26.0, iOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension EnvironmentValues {
 
@@ -35408,6 +35844,13 @@ extension View {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func toolbarVerticalBehavior(_ behavior: ToolbarVerticalBehavior) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, watchOS 10.0, *)
 @available(tvOS, unavailable)
 extension View {
@@ -35665,6 +36108,13 @@ extension ScrollPosition {
 extension ScrollPosition : Equatable {
 
     public static func == (lhs: ScrollPosition, rhs: ScrollPosition) -> Bool
+}
+
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func contentMargins(for guide: ContentMarginGuide, edges: Edge.Set = .all, alignment: Alignment? = nil) -> some View
+
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -35987,6 +36437,12 @@ extension VisualEffect {
 
     public func layerEffect(_ shader: Shader, maxSampleOffset: CGSize, isEnabled: Bool = true) -> some VisualEffect
 
+}
+
+@available(anyAppleOS 27.1, *)
+extension EnvironmentValues {
+
+    public var toolbarVerticalEdge: HorizontalEdge? { get }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -36529,6 +36985,37 @@ extension VisualEffect {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyle where Self == SplitArrangementViewStyle {
+
+    @export(implementation) nonisolated public static var split: SplitArrangementViewStyle { get }
+}
+
+extension View {
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementLayoutRatio(_ ratio: CGFloat?) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementLayoutRatio(minHorizontal: CGFloat? = nil, idealHorizontal: CGFloat? = nil, maxHorizontal: CGFloat? = nil, minVertical: CGFloat? = nil, idealVertical: CGFloat? = nil, maxVertical: CGFloat? = nil) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementLayoutSize(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func splitArrangementFixedLayoutSize(horizontal: Bool = true, vertical: Bool = true) -> some View
+
+}
+
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.1, *)
+    public var splitArrangementAxis: Axis?
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -36540,6 +37027,50 @@ extension View {
 extension Color {
 
     public var gradient: AnyGradient { get }
+}
+
+@available(anyAppleOS 27.1, *)
+extension ReservedRegion {
+
+    public struct ID : Hashable, Sendable {
+
+        public static func == (a: ReservedRegion.ID, b: ReservedRegion.ID) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    public struct Kind : Hashable, Sendable {
+
+        public static var occlusion: ReservedRegion.Kind { get }
+
+        public static var division: ReservedRegion.Kind { get }
+
+        public static func == (a: ReservedRegion.Kind, b: ReservedRegion.Kind) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+
+    @frozen public struct QueryOptions : OptionSet, Equatable, Hashable {
+
+        public let rawValue: Int
+
+        public init(rawValue: Int)
+
+        public static var includeInactive: ReservedRegion.QueryOptions { get }
+
+        @available(anyAppleOS 27.1, *)
+        public typealias ArrayLiteralElement = ReservedRegion.QueryOptions
+
+        @available(anyAppleOS 27.1, *)
+        public typealias Element = ReservedRegion.QueryOptions
+
+        @available(anyAppleOS 27.1, *)
+        public typealias RawValue = Int
+    }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -37897,6 +38428,12 @@ extension GeometryProxy {
     public func concentricCornerRadii(in frame: CGRect) -> RectangleCornerRadii?
 }
 
+@available(anyAppleOS 27.1, *)
+extension GeometryProxy {
+
+    public func contentMargins(for guide: ContentMarginGuide, edges: Edge.Set = .all) -> EdgeInsets
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Transaction {
 
@@ -38635,6 +39172,29 @@ extension View {
     @available(visionOS, unavailable)
     @MainActor @preconcurrency public func glassEffectUnion(id: (some Hashable & Sendable)?, namespace: Namespace.ID) -> some View
 
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyle where Self == OverlayArrangementViewStyle {
+
+    @export(implementation) nonisolated public static var overlay: OverlayArrangementViewStyle { get }
+}
+
+extension View {
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func overlayArrangementEdge(_ edge: VerticalEdge?) -> some View
+
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func overlayArrangementEdge(_ edge: HorizontalEdge?) -> some View
+
+}
+
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.1, *)
+    public var overlayArrangementZIndex: Int
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -39839,6 +40399,38 @@ extension View {
 
 }
 
+@available(anyAppleOS 27.1, *)
+extension ArrangementView where Primary == ArrangementViewStyleConfiguration.Primary, Secondary == ArrangementViewStyleConfiguration.Secondary {
+
+    nonisolated public init(_ configuration: ArrangementViewStyleConfiguration)
+}
+
+extension View {
+
+    @available(anyAppleOS 27.1, *)
+    nonisolated public func arrangementViewStyle(_ style: some ArrangementViewStyle) -> some View
+
+}
+
+@available(anyAppleOS 27.1, *)
+extension DeviceHinge {
+
+    public struct Status : Hashable, Sendable {
+
+        public static var closed: DeviceHinge.Status { get }
+
+        public static var partiallyOpen: DeviceHinge.Status { get }
+
+        public static var fullyOpen: DeviceHinge.Status { get }
+
+        public static func == (a: DeviceHinge.Status, b: DeviceHinge.Status) -> Bool
+
+        public func hash(into hasher: inout Hasher)
+
+        public var hashValue: Int { get }
+    }
+}
+
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension View {
 
@@ -40239,6 +40831,12 @@ extension View {
 
 }
 
+extension ArrangementViewStyle where Self == AutomaticArrangementViewStyle {
+
+    @available(anyAppleOS 27.1, *)
+    @export(implementation) nonisolated public static var automatic: AutomaticArrangementViewStyle { get }
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension _ViewDebug.Data : Encodable {
 
@@ -40420,6 +41018,12 @@ extension EnvironmentValues {
 extension Image {
 
     public init(size: CGSize, label: Text? = nil, opaque: Bool = false, colorMode: ColorRenderingMode = .nonLinear, renderer: @escaping (inout GraphicsContext) -> Void)
+}
+
+@available(anyAppleOS 27.1, *)
+extension ContentMarginGuide {
+
+    public static var container: ContentMarginGuide { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -41312,6 +41916,13 @@ extension Image : View {
     public typealias Body = Never
 }
 
+@available(anyAppleOS 27.1, *)
+extension View {
+
+    nonisolated public func onHingeChange(isEnabled: Bool = true, _ action: @escaping (_ oldContext: DeviceHingeContext, _ newContext: DeviceHingeContext) -> Void) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension CGRect : Animatable {
 
@@ -42133,6 +42744,14 @@ extension ProjectionTransform : Sendable {
 extension ProjectionTransform : BitwiseCopyable {
 }
 
+@available(anyAppleOS 27.1, *)
+extension ReservedRegion.QueryOptions : Sendable {
+}
+
+@available(anyAppleOS 27.1, *)
+extension ReservedRegion.QueryOptions : BitwiseCopyable {
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ColorRenderingMode : Equatable {
 }
@@ -42501,6 +43120,14 @@ extension Text.Layout.DrawingOptions : Sendable {
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Text.Layout.DrawingOptions : BitwiseCopyable {
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyleConfiguration.Primary : Sendable {
+}
+
+@available(anyAppleOS 27.1, *)
+extension ArrangementViewStyleConfiguration.Secondary : Sendable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
