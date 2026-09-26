@@ -16,6 +16,7 @@ import QuartzCore
 import Spatial
 import SwiftUI.Radar163532015
 import SwiftUI.Radar164105942
+import SwiftUI.Radar182324215
 import Symbols
 import UIKit
 import UniformTypeIdentifiers
@@ -3803,7 +3804,7 @@ public struct ContentTransition : Equatable, Sendable {
     public static func == (a: ContentTransition, b: ContentTransition) -> Bool
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 extension ContentTransition {
 
     public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> ContentTransition where T : ContentTransitionSymbolEffect, T : SymbolEffect
@@ -4188,6 +4189,14 @@ public protocol CustomHoverEffect {
 @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
+extension CustomHoverEffect where Self.Body == Never {
+
+    public func body(content: Self.Content) -> Self.Body
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
 extension CustomHoverEffect where Self == AutomaticHoverEffect {
 
     nonisolated public static var automatic: AutomaticHoverEffect { get }
@@ -4216,14 +4225,6 @@ extension CustomHoverEffect {
 
     public func hoverEffectDisabled(_ isDisabled: Bool = true) -> some CustomHoverEffect
 
-}
-
-@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension CustomHoverEffect where Self.Body == Never {
-
-    public func body(content: Self.Content) -> Self.Body
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -6702,20 +6703,6 @@ extension EnvironmentValues {
     public var refresh: RefreshAction? { get }
 }
 
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension EnvironmentValues {
-
-    public var accessibilityAssistiveAccessEnabled: Bool { get }
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension EnvironmentValues {
-
-    public var accessibilityVoiceOverEnabled: Bool { get }
-
-    public var accessibilitySwitchControlEnabled: Bool { get }
-}
-
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension EnvironmentValues {
 
@@ -6843,12 +6830,6 @@ extension EnvironmentValues {
     public subscript<K>(key: K.Type) -> K.Value where K : UITraitBridgedEnvironmentKey
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension EnvironmentValues {
-
-    public var accessibilityLargeContentViewerEnabled: Bool { get }
-}
-
 @available(iOS 15.0, macOS 12.0, *)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
@@ -6950,6 +6931,20 @@ extension EnvironmentValues {
 extension EnvironmentValues {
 
     public var isEnabled: Bool
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityAssistiveAccessEnabled: Bool { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityVoiceOverEnabled: Bool { get }
+
+    public var accessibilitySwitchControlEnabled: Bool { get }
 }
 
 @available(iOS 17.0, tvOS 17.0, visionOS 1.0, *)
@@ -7091,6 +7086,12 @@ extension EnvironmentValues {
     @available(watchOS, introduced: 6.0, deprecated: 100000.0, renamed: "dynamicTypeSize")
     @available(visionOS, introduced: 1.0, deprecated: 100000.0, renamed: "dynamicTypeSize")
     public var sizeCategory: ContentSizeCategory
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityLargeContentViewerEnabled: Bool { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -14428,6 +14429,36 @@ public struct PresentationMode : ~Sendable {
     public mutating func dismiss()
 }
 
+@available(anyAppleOS 27.0, *)
+public struct PresentationPlacement : Hashable, Sendable {
+
+    public static let automatic: PresentationPlacement
+
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let leading: PresentationPlacement
+
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let center: PresentationPlacement
+
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    public static let trailing: PresentationPlacement
+
+    public static func == (a: PresentationPlacement, b: PresentationPlacement) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
+}
+
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *)
 public protocol PresentationSizing {
 
@@ -17495,12 +17526,6 @@ public protocol ShapeStyle : Sendable {
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension ShapeStyle where Self == FillShapeStyle {
-
-    @export(implementation) public static var fill: FillShapeStyle { get }
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ShapeStyle where Self == PlaceholderTextShapeStyle {
 
     @export(implementation) public static var placeholder: PlaceholderTextShapeStyle { get }
@@ -17612,6 +17637,12 @@ extension ShapeStyle where Self == AngularGradient {
 extension ShapeStyle where Self == ImagePaint {
 
     @export(implementation) public static func image(_ image: Image, sourceRect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) -> ImagePaint
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ShapeStyle where Self == FillShapeStyle {
+
+    @export(implementation) public static var fill: FillShapeStyle { get }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -19133,7 +19164,7 @@ public struct SymbolColorRenderingMode : Equatable, Sendable {
     public static func == (a: SymbolColorRenderingMode, b: SymbolColorRenderingMode) -> Bool
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 @MainActor @frozen @preconcurrency public struct SymbolEffectTransition : Transition, ~Sendable {
 
     @MainActor @export(implementation) @preconcurrency public init<T>(effect: T, options: SymbolEffectOptions) where T : SymbolEffect, T : TransitionSymbolEffect
@@ -19143,7 +19174,7 @@ public struct SymbolColorRenderingMode : Equatable, Sendable {
 
     @MainActor @preconcurrency public static let properties: TransitionProperties
 
-    @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)
+    @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
     public typealias Body = some View
 }
 
@@ -21254,18 +21285,6 @@ extension Text {
     nonisolated public func accessibilityLabel<S>(_ label: S) -> Text where S : StringProtocol
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Text {
-
-    public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> Text
-
-    public func speechSpellsOutCharacters(_ value: Bool = true) -> Text
-
-    public func speechAdjustedPitch(_ value: Double) -> Text
-
-    public func speechAnnouncementsQueued(_ value: Bool = true) -> Text
-}
-
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension Text {
 
@@ -21322,6 +21341,18 @@ extension Text {
 
         public var hashValue: Int { get }
     }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text {
+
+    public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> Text
+
+    public func speechSpellsOutCharacters(_ value: Bool = true) -> Text
+
+    public func speechAdjustedPitch(_ value: Double) -> Text
+
+    public func speechAnnouncementsQueued(_ value: Bool = true) -> Text
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -23531,14 +23562,6 @@ public protocol TransactionKey {
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension Transition where Self == SymbolEffectTransition {
-
-    @MainActor @export(implementation) @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
-
-    @MainActor @export(implementation) @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension Transition where Self == OffsetTransition {
 
     @MainActor @export(implementation) @preconcurrency public static func offset(_ offset: CGSize) -> Self
@@ -23568,6 +23591,14 @@ extension Transition where Self == SlideTransition {
 extension Transition where Self == PushTransition {
 
     @MainActor @export(implementation) @preconcurrency public static func push(from edge: Edge) -> Self
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
+extension Transition where Self == SymbolEffectTransition {
+
+    @MainActor @export(implementation) @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
+
+    @MainActor @export(implementation) @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -24889,22 +24920,6 @@ extension View {
 
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center) -> some View
-
-
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, count: Int, span: Int = 1, spacing: CGFloat, alignment: Alignment = .center) -> some View
-
-
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center, _ length: @escaping (CGFloat, Axis) -> CGFloat) -> some View
-
-}
-
 extension View {
 
     @available(iOS, introduced: 16.0, deprecated: 100000.0, message: "use overload that accepts a CoordinateSpaceProtocol instead")
@@ -25024,6 +25039,18 @@ extension View {
 extension View {
 
     nonisolated public func dropDestination<T>(for type: T.Type = T.self, isEnabled: Bool = true, action: @escaping (_ items: [T], _ session: DropSession) -> Void) -> some View where T : Transferable
+
+}
+
+@available(iOS 27.0, macOS 26.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func onDropSessionUpdated(_ onUpdate: @escaping (DropSession) -> Void) -> some View
+
+
+    nonisolated public func dropConfiguration(_ configuration: @escaping (DropSession) -> DropConfiguration) -> some View
 
 }
 
@@ -25240,22 +25267,6 @@ extension View {
 
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> some View
-
-
-    nonisolated public func speechSpellsOutCharacters(_ value: Bool = true) -> some View
-
-
-    nonisolated public func speechAdjustedPitch(_ value: Double) -> some View
-
-
-    nonisolated public func speechAnnouncementsQueued(_ value: Bool = true) -> some View
-
-}
-
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
@@ -25352,23 +25363,6 @@ extension View {
 extension View {
 
     nonisolated public func onContinuousHover(coordinateSpace: some CoordinateSpaceProtocol = .local, perform action: @escaping (HoverPhase) -> Void) -> some View
-
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    @export(implementation) nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
-
-
-    @export(implementation) nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
-
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    @inlinable nonisolated public func layoutDirectionBehavior(_ behavior: LayoutDirectionBehavior) -> some View
 
 }
 
@@ -25918,48 +25912,6 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func projectionEffect(_ transform: ProjectionTransform) -> some View
-
-}
-
-@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension View {
-
-    nonisolated public func hoverEffect(_ effect: some CustomHoverEffect = .automatic, isEnabled: Bool = true) -> some View
-
-}
-
-@available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension View {
-
-    @available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic) -> some View
-
-}
-
-@available(iOS 17.0, tvOS 17.0, visionOS 1.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension View {
-
-    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic, isEnabled: Bool = true) -> some View
-
-
-    nonisolated public func defaultHoverEffect(_ effect: HoverEffect?) -> some View
-
-
-    @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    nonisolated public func defaultHoverEffect(_ effect: some CustomHoverEffect) -> some View
-
-
-    nonisolated public func hoverEffectDisabled(_ disabled: Bool = true) -> some View
 
 }
 
@@ -26906,24 +26858,6 @@ extension View {
 
 }
 
-@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-extension View {
-
-    @inlinable nonisolated public func coordinateSpace<T>(name: T) -> some View where T : Hashable
-
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    nonisolated public func coordinateSpace(_ name: NamedCoordinateSpace) -> some View
-
-}
-
 @available(iOS 27.0, *)
 @available(macCatalyst, unavailable)
 @available(macOS, unavailable)
@@ -27080,13 +27014,6 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func deleteDisabled(_ isDisabled: Bool) -> some View
-
-}
-
-@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension View {
-
-    @inlinable nonisolated public func accessibilityIgnoresInvertColors(_ active: Bool = true) -> some View
 
 }
 
@@ -27548,16 +27475,6 @@ extension View {
 
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func accessibilityShowsLargeContentViewer<V>(@ContentBuilder _ largeContentView: () -> V) -> some View where V : View
-
-
-    nonisolated public func accessibilityShowsLargeContentViewer() -> some View
-
-}
-
 @available(iOS 16.0, macOS 12.0, *)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
@@ -27740,6 +27657,13 @@ extension View {
 
 
     nonisolated public func presentationContentInteraction(_ behavior: PresentationContentInteraction) -> some View
+
+}
+
+@available(anyAppleOS 27.0, *)
+extension View {
+
+    nonisolated public func presentationPlacement(_ placement: PresentationPlacement) -> some View
 
 }
 
@@ -28270,6 +28194,12 @@ extension View {
     @available(watchOS, unavailable)
     nonisolated public func onDragSessionUpdated(_ onUpdate: @escaping (DragSession) -> Void) -> some View
 
+
+    @available(iOS 27.0, macOS 26.0, *)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    nonisolated public func dragConfiguration(_ configuration: DragConfiguration) -> some View
+
 }
 
 @available(iOS 16.0, macOS 13.0, *)
@@ -28323,6 +28253,48 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func rotationEffect(_ angle: Angle, anchor: UnitPoint = .center) -> some View
+
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func hoverEffect(_ effect: some CustomHoverEffect = .automatic, isEnabled: Bool = true) -> some View
+
+}
+
+@available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    @available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic) -> some View
+
+}
+
+@available(iOS 17.0, tvOS 17.0, visionOS 1.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic, isEnabled: Bool = true) -> some View
+
+
+    nonisolated public func defaultHoverEffect(_ effect: HoverEffect?) -> some View
+
+
+    @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    nonisolated public func defaultHoverEffect(_ effect: some CustomHoverEffect) -> some View
+
+
+    nonisolated public func hoverEffectDisabled(_ disabled: Bool = true) -> some View
 
 }
 
@@ -28494,6 +28466,13 @@ extension View {
 
 }
 
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    @inlinable nonisolated public func layoutDirectionBehavior(_ behavior: LayoutDirectionBehavior) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -28584,6 +28563,13 @@ extension View {
 
 }
 
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    @inlinable nonisolated public func accessibilityIgnoresInvertColors(_ active: Bool = true) -> some View
+
+}
+
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension View {
 
@@ -28593,6 +28579,22 @@ extension View {
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     nonisolated public func strikethrough(_ isActive: Bool = true, pattern: Text.LineStyle.Pattern = .solid, color: Color? = nil) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> some View
+
+
+    nonisolated public func speechSpellsOutCharacters(_ value: Bool = true) -> some View
+
+
+    nonisolated public func speechAdjustedPitch(_ value: Double) -> some View
+
+
+    nonisolated public func speechAnnouncementsQueued(_ value: Bool = true) -> some View
 
 }
 
@@ -28642,6 +28644,24 @@ extension View {
 extension View {
 
     @inlinable nonisolated public func transformEffect(_ transform: CGAffineTransform) -> some View
+
+}
+
+@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+extension View {
+
+    @inlinable nonisolated public func coordinateSpace<T>(name: T) -> some View where T : Hashable
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func coordinateSpace(_ name: NamedCoordinateSpace) -> some View
 
 }
 
@@ -28871,6 +28891,22 @@ extension View {
 
 }
 
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, count: Int, span: Int = 1, spacing: CGFloat, alignment: Alignment = .center) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center, _ length: @escaping (CGFloat, Axis) -> CGFloat) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -28959,17 +28995,27 @@ extension View {
 
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, visionOS 1.0, watchOS 6.0, *)
 extension View {
 
     @inlinable nonisolated public func contentShape<S>(_ shape: S, eoFill: Bool = false) -> some View where S : Shape
 
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, visionOS 1.0, watchOS 8.0, *)
 extension View {
 
     @inlinable nonisolated public func contentShape<S>(_ kind: ContentShapeKinds, _ shape: S, eoFill: Bool = false) -> some View where S : Shape
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
+extension View {
+
+    @export(implementation) nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
+
+
+    @export(implementation) nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
 
 }
 
@@ -29014,6 +29060,16 @@ extension View {
 
 
     nonisolated public func onChange<V>(of value: V, initial: Bool = false, _ action: @escaping () -> Void) -> some View where V : Equatable
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func accessibilityShowsLargeContentViewer<V>(@ContentBuilder _ largeContentView: () -> V) -> some View where V : View
+
+
+    nonisolated public func accessibilityShowsLargeContentViewer() -> some View
 
 }
 
@@ -30475,22 +30531,6 @@ extension EnvironmentValues {
     public var isPresented: Bool { get }
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center) -> some View
-
-
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, count: Int, span: Int = 1, spacing: CGFloat, alignment: Alignment = .center) -> some View
-
-
-    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center, _ length: @escaping (CGFloat, Axis) -> CGFloat) -> some View
-
-}
-
 extension View {
 
     @available(iOS, introduced: 16.0, deprecated: 100000.0, message: "use overload that accepts a CoordinateSpaceProtocol instead")
@@ -30636,12 +30676,6 @@ extension View {
 
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension ShapeStyle where Self == FillShapeStyle {
-
-    @export(implementation) public static var fill: FillShapeStyle { get }
-}
-
 @available(iOS 14.0, macOS 11.0, *)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
@@ -30673,6 +30707,18 @@ extension View {
 extension View {
 
     nonisolated public func dropDestination<T>(for type: T.Type = T.self, isEnabled: Bool = true, action: @escaping (_ items: [T], _ session: DropSession) -> Void) -> some View where T : Transferable
+
+}
+
+@available(iOS 27.0, macOS 26.0, *)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func onDropSessionUpdated(_ onUpdate: @escaping (DropSession) -> Void) -> some View
+
+
+    nonisolated public func dropConfiguration(_ configuration: @escaping (DropSession) -> DropConfiguration) -> some View
 
 }
 
@@ -30998,34 +31044,6 @@ extension View {
 
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Text {
-
-    public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> Text
-
-    public func speechSpellsOutCharacters(_ value: Bool = true) -> Text
-
-    public func speechAdjustedPitch(_ value: Double) -> Text
-
-    public func speechAnnouncementsQueued(_ value: Bool = true) -> Text
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> some View
-
-
-    nonisolated public func speechSpellsOutCharacters(_ value: Bool = true) -> some View
-
-
-    nonisolated public func speechAdjustedPitch(_ value: Double) -> some View
-
-
-    nonisolated public func speechAnnouncementsQueued(_ value: Bool = true) -> some View
-
-}
-
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension View {
 
@@ -31159,45 +31177,6 @@ extension View {
 extension View {
 
     nonisolated public func onContinuousHover(coordinateSpace: some CoordinateSpaceProtocol = .local, perform action: @escaping (HoverPhase) -> Void) -> some View
-
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    @export(implementation) nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
-
-
-    @export(implementation) nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
-
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension Transition where Self == SymbolEffectTransition {
-
-    @MainActor @export(implementation) @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
-
-    @MainActor @export(implementation) @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension ContentTransition {
-
-    public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> ContentTransition where T : ContentTransitionSymbolEffect, T : SymbolEffect
-
-    @export(implementation) public static var symbolEffect: ContentTransition { get }
-}
-
-@available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension WiggleSymbolEffect {
-
-    @export(implementation) public func custom(angle: Angle) -> WiggleSymbolEffect
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    @inlinable nonisolated public func layoutDirectionBehavior(_ behavior: LayoutDirectionBehavior) -> some View
 
 }
 
@@ -31989,64 +31968,8 @@ extension UIView {
     @MainActor @preconcurrency public static func animate(_ animation: Animation, changes: () -> Void, completion: (() -> Void)? = nil)
 }
 
-@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension View {
-
-    nonisolated public func hoverEffect(_ effect: some CustomHoverEffect = .automatic, isEnabled: Bool = true) -> some View
-
-}
-
-@available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension View {
-
-    @available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic) -> some View
-
-}
-
-@available(iOS 17.0, tvOS 17.0, visionOS 1.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension View {
-
-    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic, isEnabled: Bool = true) -> some View
-
-
-    nonisolated public func defaultHoverEffect(_ effect: HoverEffect?) -> some View
-
-
-    @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    nonisolated public func defaultHoverEffect(_ effect: some CustomHoverEffect) -> some View
-
-
-    nonisolated public func hoverEffectDisabled(_ disabled: Bool = true) -> some View
-
-}
-
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Never : ToolbarContent, CustomizableToolbarContent {
-}
-
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension EnvironmentValues {
-
-    public var accessibilityAssistiveAccessEnabled: Bool { get }
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension EnvironmentValues {
-
-    public var accessibilityVoiceOverEnabled: Bool { get }
-
-    public var accessibilitySwitchControlEnabled: Bool { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 7.0, *)
@@ -32530,30 +32453,6 @@ extension ModifiedContent : DynamicTableRowContent where Content : DynamicTableR
     @available(tvOS, unavailable, introduced: 13.0)
     @available(watchOS, unavailable, introduced: 6.0)
     public typealias Data = Content.Data
-}
-
-@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension CustomHoverEffect where Self == AutomaticHoverEffect {
-
-    nonisolated public static var automatic: AutomaticHoverEffect { get }
-}
-
-@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension CustomHoverEffect where Self == HighlightHoverEffect {
-
-    public static var highlight: HighlightHoverEffect { get }
-}
-
-@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension CustomHoverEffect where Self == LiftHoverEffect {
-
-    public static var lift: LiftHoverEffect { get }
 }
 
 extension View {
@@ -33281,33 +33180,6 @@ extension Shape where Self == ButtonBorderShape {
     public static var buttonBorder: ButtonBorderShape { get }
 }
 
-@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
-extension View {
-
-    @inlinable nonisolated public func coordinateSpace<T>(name: T) -> some View where T : Hashable
-
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    nonisolated public func coordinateSpace(_ name: NamedCoordinateSpace) -> some View
-
-}
-
-@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-extension CustomHoverEffect {
-
-    public func hoverEffectDisabled(_ isDisabled: Bool = true) -> some CustomHoverEffect
-
-}
-
 @available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
 extension AttributedString {
 
@@ -33527,13 +33399,6 @@ extension View {
 @available(iOS 14.0, macOS 11.0, watchOS 9.0, visionOS 1.0, *)
 @available(tvOS, unavailable)
 extension Never : WidgetConfiguration {
-}
-
-@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension View {
-
-    @inlinable nonisolated public func accessibilityIgnoresInvertColors(_ active: Bool = true) -> some View
-
 }
 
 @available(iOS 18.0, macOS 26.0, watchOS 26.0, *)
@@ -34446,22 +34311,6 @@ extension EnvironmentValues {
     public subscript<K>(key: K.Type) -> K.Value where K : UITraitBridgedEnvironmentKey
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension EnvironmentValues {
-
-    public var accessibilityLargeContentViewerEnabled: Bool { get }
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func accessibilityShowsLargeContentViewer<V>(@ContentBuilder _ largeContentView: () -> V) -> some View where V : View
-
-
-    nonisolated public func accessibilityShowsLargeContentViewer() -> some View
-
-}
-
 @available(iOS 16.0, macOS 12.0, *)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
@@ -34748,6 +34597,13 @@ extension View {
 
 
     nonisolated public func presentationContentInteraction(_ behavior: PresentationContentInteraction) -> some View
+
+}
+
+@available(anyAppleOS 27.0, *)
+extension View {
+
+    nonisolated public func presentationPlacement(_ placement: PresentationPlacement) -> some View
 
 }
 
@@ -35532,6 +35388,12 @@ extension View {
     @available(watchOS, unavailable)
     nonisolated public func onDragSessionUpdated(_ onUpdate: @escaping (DragSession) -> Void) -> some View
 
+
+    @available(iOS 27.0, macOS 26.0, *)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    nonisolated public func dragConfiguration(_ configuration: DragConfiguration) -> some View
+
 }
 
 @available(iOS 16.0, macOS 13.0, *)
@@ -35812,6 +35674,20 @@ extension AnyTransition {
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityAssistiveAccessEnabled: Bool { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityVoiceOverEnabled: Bool { get }
+
+    public var accessibilitySwitchControlEnabled: Bool { get }
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension ScrollTarget : Hashable, Equatable {
 
     public func hash(into hasher: inout Hasher)
@@ -35921,6 +35797,8 @@ extension CustomHoverEffect where Self.Body == Never {
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 extension Never : CustomHoverEffect {
+
+    public typealias Body = Never
 }
 
 @available(iOS 17.0, tvOS 17.0, visionOS 1.0, *)
@@ -36002,6 +35880,59 @@ extension Animation {
     public func speed(_ speed: Double) -> Animation
 }
 
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func hoverEffect(_ effect: some CustomHoverEffect = .automatic, isEnabled: Bool = true) -> some View
+
+}
+
+@available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    @available(iOS 13.4, tvOS 16.0, visionOS 1.0, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic) -> some View
+
+}
+
+@available(iOS 17.0, tvOS 17.0, visionOS 1.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension View {
+
+    nonisolated public func hoverEffect(_ effect: HoverEffect = .automatic, isEnabled: Bool = true) -> some View
+
+
+    nonisolated public func defaultHoverEffect(_ effect: HoverEffect?) -> some View
+
+
+    @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    nonisolated public func defaultHoverEffect(_ effect: some CustomHoverEffect) -> some View
+
+
+    nonisolated public func hoverEffectDisabled(_ disabled: Bool = true) -> some View
+
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension HoverEffect : CustomHoverEffect {
+
+    @available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    public typealias Body = Never
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -36036,6 +35967,12 @@ extension View {
 extension ShapeStyle where Self == ImagePaint {
 
     @export(implementation) public static func image(_ image: Image, sourceRect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) -> ImagePaint
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ShapeStyle where Self == FillShapeStyle {
+
+    @export(implementation) public static var fill: FillShapeStyle { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
@@ -36675,6 +36612,13 @@ extension VisualEffect {
 
 }
 
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    @inlinable nonisolated public func layoutDirectionBehavior(_ behavior: LayoutDirectionBehavior) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension View {
 
@@ -36842,6 +36786,30 @@ extension View {
 
 }
 
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension CustomHoverEffect where Self == AutomaticHoverEffect {
+
+    nonisolated public static var automatic: AutomaticHoverEffect { get }
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension CustomHoverEffect where Self == HighlightHoverEffect {
+
+    public static var highlight: HighlightHoverEffect { get }
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension CustomHoverEffect where Self == LiftHoverEffect {
+
+    public static var lift: LiftHoverEffect { get }
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Text {
 
@@ -36943,6 +36911,13 @@ extension Text : View {
 extension AnimatableValues : Sendable where repeat each Value : Sendable {
 }
 
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    @inlinable nonisolated public func accessibilityIgnoresInvertColors(_ active: Bool = true) -> some View
+
+}
+
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension AXChartDescriptorRepresentable {
 
@@ -36988,6 +36963,34 @@ extension View {
 
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     nonisolated public func strikethrough(_ isActive: Bool = true, pattern: Text.LineStyle.Pattern = .solid, color: Color? = nil) -> some View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text {
+
+    public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> Text
+
+    public func speechSpellsOutCharacters(_ value: Bool = true) -> Text
+
+    public func speechAdjustedPitch(_ value: Double) -> Text
+
+    public func speechAnnouncementsQueued(_ value: Bool = true) -> Text
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func speechAlwaysIncludesPunctuation(_ value: Bool = true) -> some View
+
+
+    nonisolated public func speechSpellsOutCharacters(_ value: Bool = true) -> some View
+
+
+    nonisolated public func speechAdjustedPitch(_ value: Double) -> some View
+
+
+    nonisolated public func speechAnnouncementsQueued(_ value: Bool = true) -> some View
 
 }
 
@@ -37280,6 +37283,24 @@ extension ShapeStyle {
     @export(implementation) public var quaternary: some ShapeStyle { get }
 
     @export(implementation) public var quinary: some ShapeStyle { get }
+}
+
+@available(iOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(macOS, introduced: 10.15, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(tvOS, introduced: 13.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(watchOS, introduced: 6.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+@available(visionOS, introduced: 1.0, deprecated: 100000.0, message: "use coordinateSpace(_:) instead")
+extension View {
+
+    @inlinable nonisolated public func coordinateSpace<T>(name: T) -> some View where T : Hashable
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func coordinateSpace(_ name: NamedCoordinateSpace) -> some View
+
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -38826,6 +38847,22 @@ extension Circle : InsettableShape {
     public typealias InsetShape = some InsettableShape
 }
 
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, count: Int, span: Int = 1, spacing: CGFloat, alignment: Alignment = .center) -> some View
+
+
+    @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+    nonisolated public func containerRelativeFrame(_ axes: Axis.Set, alignment: Alignment = .center, _ length: @escaping (CGFloat, Axis) -> CGFloat) -> some View
+
+}
+
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ProjectionTransform : Equatable {
 
@@ -39788,11 +39825,50 @@ extension View {
 
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, visionOS 1.0, watchOS 6.0, *)
 extension View {
 
     @inlinable nonisolated public func contentShape<S>(_ shape: S, eoFill: Bool = false) -> some View where S : Shape
 
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, visionOS 1.0, watchOS 8.0, *)
+extension View {
+
+    @inlinable nonisolated public func contentShape<S>(_ kind: ContentShapeKinds, _ shape: S, eoFill: Bool = false) -> some View where S : Shape
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
+extension View {
+
+    @export(implementation) nonisolated public func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default, isActive: Bool = true) -> some View where T : IndefiniteSymbolEffect, T : SymbolEffect
+
+
+    @export(implementation) nonisolated public func symbolEffect<T, U>(_ effect: T, options: SymbolEffectOptions = .default, value: U) -> some View where T : DiscreteSymbolEffect, T : SymbolEffect, U : Equatable
+
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
+extension Transition where Self == SymbolEffectTransition {
+
+    @MainActor @export(implementation) @preconcurrency public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> SymbolEffectTransition where T : SymbolEffect, T : TransitionSymbolEffect
+
+    @MainActor @export(implementation) @preconcurrency public static var symbolEffect: SymbolEffectTransition { get }
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
+extension ContentTransition {
+
+    public static func symbolEffect<T>(_ effect: T, options: SymbolEffectOptions = .default) -> ContentTransition where T : ContentTransitionSymbolEffect, T : SymbolEffect
+
+    @export(implementation) public static var symbolEffect: ContentTransition { get }
+}
+
+@available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension WiggleSymbolEffect {
+
+    @export(implementation) public func custom(angle: Angle) -> WiggleSymbolEffect
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -39821,13 +39897,6 @@ extension Animation {
     @export(implementation) public static var bouncy: Animation { get }
 
     @export(implementation) public static func bouncy(duration: TimeInterval = 0.5, extraBounce: Double = 0.0) -> Animation
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    @inlinable nonisolated public func contentShape<S>(_ kind: ContentShapeKinds, _ shape: S, eoFill: Bool = false) -> some View where S : Shape
-
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -39974,6 +40043,22 @@ extension Color {
 extension Color.Resolved {
 
     public var cgColor: CGColor { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension EnvironmentValues {
+
+    public var accessibilityLargeContentViewerEnabled: Bool { get }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func accessibilityShowsLargeContentViewer<V>(@ContentBuilder _ largeContentView: () -> V) -> some View where V : View
+
+
+    nonisolated public func accessibilityShowsLargeContentViewer() -> some View
+
 }
 
 extension Font {
@@ -40413,6 +40498,15 @@ extension State : Sendable where Value : Sendable {
 extension State where Value : ExpressibleByNilLiteral {
 
     @inlinable public init()
+}
+
+@available(iOS 18.0, tvOS 18.0, visionOS 2.0, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+extension CustomHoverEffect {
+
+    public func hoverEffectDisabled(_ isDisabled: Bool = true) -> some CustomHoverEffect
+
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -41915,6 +42009,10 @@ extension Namespace.ID : Sendable {
 extension Namespace.ID : BitwiseCopyable {
 }
 
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension FillShapeStyle : BitwiseCopyable {
+}
+
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension TimelineScheduleMode : Equatable {
 }
@@ -42326,6 +42424,14 @@ extension Circle : BitwiseCopyable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AccessibilityAdjustmentDirection : Equatable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension AccessibilityAdjustmentDirection : Hashable {
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension HorizontalAlignment : Sendable {
 }
 
@@ -42467,6 +42573,22 @@ extension Visibility : Sendable {
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Visibility : BitwiseCopyable {
+}
+
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension AccessibilityZoomGestureAction.Direction : Equatable {
+}
+
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension AccessibilityZoomGestureAction.Direction : Hashable {
+}
+
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension AccessibilityZoomGestureAction.Direction : Sendable {
+}
+
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension AccessibilityZoomGestureAction.Direction : BitwiseCopyable {
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
