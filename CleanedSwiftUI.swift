@@ -17,6 +17,8 @@ import Spatial
 import SwiftUI.Radar163532015
 import SwiftUI.Radar164105942
 import SwiftUI.Radar182324215
+import SwiftUI.Radar187617951
+import SwiftUI.Radar188242242
 import Symbols
 import UIKit
 import UniformTypeIdentifiers
@@ -4361,6 +4363,13 @@ extension CustomPresentationDetent {
 public protocol CustomizableToolbarContent : ToolbarContent where Self.Body : CustomizableToolbarContent {
 }
 
+@available(iOS 26.4, macOS 15.0, tvOS 27.2, watchOS 27.2, *)
+extension CustomizableToolbarContent {
+
+    nonisolated public func hidden(_ hidden: Bool = true) -> some CustomizableToolbarContent
+
+}
+
 @available(anyAppleOS 27.0, *)
 extension CustomizableToolbarContent {
 
@@ -6923,6 +6932,12 @@ extension EnvironmentValues {
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
     public var documentConfiguration: DocumentConfiguration? { get }
+}
+
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.2, *)
+    public var toolbarTitleAlignment: ToolbarTitleAlignment
 }
 
 extension EnvironmentValues {
@@ -11460,7 +11475,7 @@ nonisolated public struct LazyHStack<Content> : View, ~Sendable where Content : 
     public typealias Body = Never
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 @frozen public struct LazyState<Value> : DynamicProperty {
 
     public enum Storage : @unchecked Sendable {
@@ -11482,7 +11497,7 @@ nonisolated public struct LazyHStack<Content> : View, ~Sendable where Content : 
 extension LazyState : Sendable where Value : Sendable {
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 @available(*, deprecated)
 extension LazyState where Value : ExpressibleByNilLiteral {
 
@@ -12449,6 +12464,51 @@ extension MeshGradient.BezierPoint : BitwiseCopyable {
     @inlinable nonisolated public init(content: Content, modifier: Modifier)
 }
 
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+
+    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+
+    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier> where S : StringProtocol
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityTextContentType(_ textContentType: AccessibilityTextContentType) -> ModifiedContent<Content, Modifier>
+
+    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Content, Modifier>
+}
+
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
@@ -12511,20 +12571,6 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityLabel<S>(_ label: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Content, Modifier>
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityTextContentType(_ textContentType: AccessibilityTextContentType) -> ModifiedContent<Content, Modifier>
-
-    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Content, Modifier>
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
@@ -12673,12 +12719,6 @@ extension ModifiedContent : DynamicTableRowContent where Content : DynamicTableR
     public typealias Data = Content.Data
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Content, Modifier>
-}
-
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
@@ -12787,12 +12827,6 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     nonisolated public func accessibility(removeTraits traits: AccessibilityTraits) -> ModifiedContent<Content, Modifier>
 }
 
-@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Content, Modifier>
-}
-
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
 
@@ -12851,25 +12885,6 @@ extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
     @export(implementation) nonisolated public func accessibilityDropPoint(_ point: UnitPoint, description: LocalizedStringResource) -> ModifiedContent<Content, Modifier>
 
     nonisolated public func accessibilityDropPoint<S>(_ point: UnitPoint, description: S) -> ModifiedContent<Content, Modifier> where S : StringProtocol
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-
-    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-}
-
-@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-
-    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -15573,6 +15588,36 @@ extension ReservedRegion {
     }
 }
 
+@available(anyAppleOS 27.2, *)
+extension ReservedRegion : CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+
+    public var description: String { get }
+
+    public var debugDescription: String { get }
+
+    public var customMirror: Mirror { get }
+}
+
+@available(anyAppleOS 27.2, *)
+extension ReservedRegion.ID : CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+
+    public var description: String { get }
+
+    public var debugDescription: String { get }
+
+    public var customMirror: Mirror { get }
+}
+
+@available(anyAppleOS 27.2, *)
+extension ReservedRegion.Kind : CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+
+    public var description: String { get }
+
+    public var debugDescription: String { get }
+
+    public var customMirror: Mirror { get }
+}
+
 @available(anyAppleOS 27.1, *)
 extension ReservedRegion.QueryOptions : Sendable {
 }
@@ -17116,9 +17161,9 @@ extension SectionedFetchRequest.Configuration where Result : NSManagedObject {
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-@MainActor @preconcurrency public struct SectionedFetchResults<SectionIdentifier, Result> : RandomAccessCollection where SectionIdentifier : Hashable, Result : NSFetchRequestResult {
+@MainActor @preconcurrency public struct SectionedFetchResults<SectionIdentifier, Result> : nonisolated RandomAccessCollection where SectionIdentifier : Hashable, Result : NSFetchRequestResult {
 
-    @MainActor @preconcurrency public struct Section : @preconcurrency Identifiable, RandomAccessCollection {
+    @MainActor @preconcurrency public struct Section : @preconcurrency Identifiable, nonisolated RandomAccessCollection {
 
         nonisolated public var startIndex: Int { get }
 
@@ -21561,23 +21606,6 @@ extension TapGesture {
     public static func == (a: Text, b: Text) -> Bool
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Text {
-
-    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> Text
-
-    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> Text
-
-    nonisolated public func accessibilityLabel(_ label: Text) -> Text
-
-    nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> Text
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
-
-    nonisolated public func accessibilityLabel<S>(_ label: S) -> Text where S : StringProtocol
-}
-
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension Text {
 
@@ -22090,6 +22118,23 @@ extension Text {
 
         public var hashValue: Int { get }
     }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text {
+
+    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> Text
+
+    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> Text
+
+    nonisolated public func accessibilityLabel(_ label: Text) -> Text
+
+    nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> Text
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
+
+    nonisolated public func accessibilityLabel<S>(_ label: S) -> Text where S : StringProtocol
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -23129,6 +23174,13 @@ nonisolated public struct ToolbarCommands : Commands, ~Sendable {
     @ContentBuilder @MainActor @preconcurrency var body: Self.Body { get }
 }
 
+@available(iOS 26.4, macOS 15.0, tvOS 27.2, watchOS 27.2, *)
+extension ToolbarContent {
+
+    nonisolated public func hidden(_ hidden: Bool = true) -> some ToolbarContent
+
+}
+
 @available(anyAppleOS 27.0, *)
 extension ToolbarContent {
 
@@ -23745,6 +23797,22 @@ nonisolated public struct ToolbarSpacer : ToolbarContent, CustomizableToolbarCon
     @available(watchOS, unavailable)
     @available(visionOS, unavailable)
     public typealias Body = Never
+}
+
+@available(anyAppleOS 27.2, *)
+public struct ToolbarTitleAlignment : Hashable, Sendable {
+
+    public static let automatic: ToolbarTitleAlignment
+
+    public static let leading: ToolbarTitleAlignment
+
+    public static let center: ToolbarTitleAlignment
+
+    public static func == (a: ToolbarTitleAlignment, b: ToolbarTitleAlignment) -> Bool
+
+    public func hash(into hasher: inout Hasher)
+
+    public var hashValue: Int { get }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
@@ -25072,6 +25140,90 @@ extension VerticalEdge.Set : BitwiseCopyable {
     @ContentBuilder @MainActor @preconcurrency var body: Self.Body { get }
 }
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func hidden() -> some View
+
+}
+
+extension View {
+
+    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
+    nonisolated public func containerBackground<S>(_ style: S, for container: ContainerBackgroundPlacement) -> some View where S : ShapeStyle
+
+
+    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
+    nonisolated public func containerBackground<V>(for container: ContainerBackgroundPlacement, alignment: Alignment = .center, @ContentBuilder content: () -> V) -> some View where V : View
+
+}
+
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func accessibilityAction<Label>(action: @escaping () -> Void, @ContentBuilder label: () -> Label) -> some View where Label : View
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    nonisolated public func accessibilityActions<Content>(@ContentBuilder _ content: () -> Content) -> some View where Content : View
+
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension View {
+
+    nonisolated public func accessibilityActions<Content>(category: AccessibilityActionCategory, @ContentBuilder _ content: () -> Content) -> some View where Content : View
+
+}
+
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension View {
 
@@ -25158,13 +25310,6 @@ extension View {
 extension View {
 
     nonisolated public func listStyle<S>(_ style: S) -> some View where S : ListStyle
-
-}
-
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension View {
-
-    nonisolated public func accessibilityActions<Content>(category: AccessibilityActionCategory, @ContentBuilder _ content: () -> Content) -> some View where Content : View
 
 }
 
@@ -25328,20 +25473,6 @@ extension View {
 
     nonisolated public func textSelection<S>(_ selectability: S) -> some View where S : TextSelectability
 
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension View {
-
-    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
 }
 
 @available(iOS 18.0, macOS 15.0, visionOS 2.0, *)
@@ -26952,12 +27083,6 @@ extension View {
 
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension View {
 
@@ -26972,17 +27097,6 @@ extension View {
 extension View {
 
     nonisolated public func labelsHidden() -> some View
-
-}
-
-extension View {
-
-    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
-    nonisolated public func containerBackground<S>(_ style: S, for container: ContainerBackgroundPlacement) -> some View where S : ShapeStyle
-
-
-    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
-    nonisolated public func containerBackground<V>(for container: ContainerBackgroundPlacement, alignment: Alignment = .center, @ContentBuilder content: () -> V) -> some View where V : View
 
 }
 
@@ -27381,6 +27495,17 @@ extension View {
 
 }
 
+@available(iOS 27.2, *)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension View {
+
+    nonisolated public func toolbarTitleAlignment(_ alignment: ToolbarTitleAlignment) -> some View
+
+}
+
 extension View {
 
     @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
@@ -27730,13 +27855,6 @@ extension View {
 
 
     nonisolated public func onKeyPress(phases: KeyPress.Phases = [.down, .repeat], action: @escaping (KeyPress) -> KeyPress.Result) -> some View
-
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension View {
-
-    @inlinable nonisolated public func hidden() -> some View
 
 }
 
@@ -28328,12 +28446,6 @@ extension View {
 
 }
 
-@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-extension View {
-
-    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
 extension View {
 
     @available(iOS 27.0, *)
@@ -28436,39 +28548,6 @@ extension View {
 
     @inlinable nonisolated public func focusedSceneObject<T>(_ object: T?) -> some View where T : ObservableObject
 
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension View {
-
-    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func accessibilityAction<Label>(action: @escaping () -> Void, @ContentBuilder label: () -> Label) -> some View where Label : View
-
-}
-
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-extension View {
-
-    nonisolated public func accessibilityActions<Content>(@ContentBuilder _ content: () -> Content) -> some View where Content : View
-
-}
-
-@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension View {
-
-    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -30630,6 +30709,164 @@ public func withTransaction<Result>(_ transaction: Transaction, _ body: () throw
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 @export(implementation) public func withTransaction<R, V>(_ keyPath: WritableKeyPath<Transaction, V>, _ value: V, _ body: () throws -> R) rethrows -> R
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    @inlinable nonisolated public func hidden() -> some View
+
+}
+
+extension View {
+
+    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
+    nonisolated public func containerBackground<S>(_ style: S, for container: ContainerBackgroundPlacement) -> some View where S : ShapeStyle
+
+
+    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
+    nonisolated public func containerBackground<V>(for container: ContainerBackgroundPlacement, alignment: Alignment = .center, @ContentBuilder content: () -> V) -> some View where V : View
+
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text.LineStyle {
+
+    public init?(nsUnderlineStyle: NSUnderlineStyle)
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension NSUnderlineStyle {
+
+    public init(_ lineStyle: Text.LineStyle)
+}
+
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+
+    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func accessibilityAction<Label>(action: @escaping () -> Void, @ContentBuilder label: () -> Label) -> some View where Label : View
+
+}
+
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+extension View {
+
+    nonisolated public func accessibilityActions<Content>(@ContentBuilder _ content: () -> Content) -> some View where Content : View
+
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension View {
+
+    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
+
+    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier> where S : StringProtocol
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Text {
+
+    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> Text
+
+    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> Text
+
+    nonisolated public func accessibilityLabel(_ label: Text) -> Text
+
+    nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> Text
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
+
+    nonisolated public func accessibilityLabel<S>(_ label: S) -> Text where S : StringProtocol
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension View {
+
+    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+
+    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityTextContentType(_ textContentType: AccessibilityTextContentType) -> ModifiedContent<Content, Modifier>
+
+    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension View {
+
+    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension View {
+
+    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
+
+    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Content, Modifier>
+}
+
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+extension View {
+
+    nonisolated public func accessibilityActions<Content>(category: AccessibilityActionCategory, @ContentBuilder _ content: () -> Content) -> some View where Content : View
+
+}
+
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension View {
 
@@ -30778,13 +31015,6 @@ extension View {
 extension View {
 
     nonisolated public func listStyle<S>(_ style: S) -> some View where S : ListStyle
-
-}
-
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension View {
-
-    nonisolated public func accessibilityActions<Content>(category: AccessibilityActionCategory, @ContentBuilder _ content: () -> Content) -> some View where Content : View
 
 }
 
@@ -31023,51 +31253,6 @@ extension View {
 
     nonisolated public func textSelection<S>(_ selectability: S) -> some View where S : TextSelectability
 
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension View {
-
-    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityAdjustableAction(_ handler: @escaping (AccessibilityAdjustmentDirection) -> Void) -> ModifiedContent<Content, Modifier>
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Text {
-
-    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> Text
-
-    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> Text
-
-    nonisolated public func accessibilityLabel(_ label: Text) -> Text
-
-    nonisolated public func accessibilityLabel(_ labelKey: LocalizedStringKey) -> Text
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @export(implementation) nonisolated public func accessibilityLabel(_ label: LocalizedStringResource) -> Text
-
-    nonisolated public func accessibilityLabel<S>(_ label: S) -> Text where S : StringProtocol
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func accessibilityTextContentType(_ value: AccessibilityTextContentType) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityTextContentType(_ textContentType: AccessibilityTextContentType) -> ModifiedContent<Content, Modifier>
-
-    nonisolated public func accessibilityHeading(_ level: AccessibilityHeadingLevel) -> ModifiedContent<Content, Modifier>
 }
 
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -33233,18 +33418,6 @@ extension EnvironmentValues {
     public var horizontalScrollBounceBehavior: ScrollBounceBehavior
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension View {
-
-    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityDirectTouch(_ isDirectTouchArea: Bool = true, options: AccessibilityDirectTouchOptions = []) -> ModifiedContent<Content, Modifier>
-}
-
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension View {
 
@@ -33259,17 +33432,6 @@ extension View {
 extension View {
 
     nonisolated public func labelsHidden() -> some View
-
-}
-
-extension View {
-
-    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
-    nonisolated public func containerBackground<S>(_ style: S, for container: ContainerBackgroundPlacement) -> some View where S : ShapeStyle
-
-
-    @available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *)
-    nonisolated public func containerBackground<V>(for container: ContainerBackgroundPlacement, alignment: Alignment = .center, @ContentBuilder content: () -> V) -> some View where V : View
 
 }
 
@@ -33836,6 +33998,23 @@ extension Never : WidgetConfiguration {
 extension Never : ControlWidgetTemplate {
 }
 
+@available(iOS 27.2, *)
+@available(macOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension View {
+
+    nonisolated public func toolbarTitleAlignment(_ alignment: ToolbarTitleAlignment) -> some View
+
+}
+
+extension EnvironmentValues {
+
+    @available(anyAppleOS 27.2, *)
+    public var toolbarTitleAlignment: ToolbarTitleAlignment
+}
+
 @available(iOS 27.0, macOS 27.0, tvOS 27.0, watchOS 27.0, *)
 extension EmptyView : ToolbarContent {
 }
@@ -33918,18 +34097,6 @@ extension EnvironmentValues {
     @available(macOS, unavailable)
     @available(watchOS, unavailable)
     public var editMode: Binding<EditMode>?
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Text.LineStyle {
-
-    public init?(nsUnderlineStyle: NSUnderlineStyle)
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension NSUnderlineStyle {
-
-    public init(_ lineStyle: Text.LineStyle)
 }
 
 extension View {
@@ -34563,13 +34730,6 @@ extension View {
 
 
     nonisolated public func onKeyPress(phases: KeyPress.Phases = [.down, .repeat], action: @escaping (KeyPress) -> KeyPress.Result) -> some View
-
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension View {
-
-    @inlinable nonisolated public func hidden() -> some View
 
 }
 
@@ -35502,18 +35662,6 @@ extension EnvironmentValues {
     public var badgeProminence: BadgeProminence
 }
 
-@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-extension View {
-
-    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
-@available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityZoomAction(_ handler: @escaping (AccessibilityZoomGestureAction) -> Void) -> ModifiedContent<Content, Modifier>
-}
-
 extension View {
 
     @available(iOS 27.0, *)
@@ -35676,58 +35824,6 @@ extension View {
 
     @inlinable nonisolated public func focusedSceneObject<T>(_ object: T?) -> some View where T : ObservableObject
 
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension View {
-
-    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-}
-
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityAction(_ actionKind: AccessibilityActionKind = .default, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-
-    nonisolated public func accessibilityAction(named name: Text, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension View {
-
-    nonisolated public func accessibilityAction<Label>(action: @escaping () -> Void, @ContentBuilder label: () -> Label) -> some View where Label : View
-
-}
-
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-extension View {
-
-    nonisolated public func accessibilityActions<Content>(@ContentBuilder _ content: () -> Content) -> some View where Content : View
-
-}
-
-@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension View {
-
-    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier>
-
-    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Self, AccessibilityAttachmentModifier> where S : StringProtocol
-}
-
-@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ModifiedContent where Modifier == AccessibilityAttachmentModifier {
-
-    nonisolated public func accessibilityAction(named nameKey: LocalizedStringKey, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-
-    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-    @export(implementation) nonisolated public func accessibilityAction(named nameResource: LocalizedStringResource, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier>
-
-    nonisolated public func accessibilityAction<S>(named name: S, _ handler: @escaping () -> Void) -> ModifiedContent<Content, Modifier> where S : StringProtocol
 }
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -37071,6 +37167,36 @@ extension ReservedRegion {
         @available(anyAppleOS 27.1, *)
         public typealias RawValue = Int
     }
+}
+
+@available(anyAppleOS 27.2, *)
+extension ReservedRegion.ID : CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+
+    public var description: String { get }
+
+    public var debugDescription: String { get }
+
+    public var customMirror: Mirror { get }
+}
+
+@available(anyAppleOS 27.2, *)
+extension ReservedRegion.Kind : CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+
+    public var description: String { get }
+
+    public var debugDescription: String { get }
+
+    public var customMirror: Mirror { get }
+}
+
+@available(anyAppleOS 27.2, *)
+extension ReservedRegion : CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+
+    public var description: String { get }
+
+    public var debugDescription: String { get }
+
+    public var customMirror: Mirror { get }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
@@ -40040,7 +40166,7 @@ extension View {
 extension LazyState : Sendable where Value : Sendable {
 }
 
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 @available(*, deprecated)
 extension LazyState where Value : ExpressibleByNilLiteral {
 
